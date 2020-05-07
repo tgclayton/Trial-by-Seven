@@ -1,33 +1,45 @@
 import Phaser from 'phaser'
+import { createMapArray, test } from './mapfunctions'
+// const mapFunc = require ('./map')
+
+var map = null
+map = createMapArray()
+console.log(map)
 
 var actors = [
   {
     name: 'warrior1',
+    sprite: 'warrior',
     x: 48,
     y: 48
   },
   {
     name: 'warrior2',
+    sprite: 'warrior',
     x: 48,
     y: 92
   },
   {
     name: 'warrior3',
+    sprite: 'warrior',
     x: 48,
     y: 144
   },
   {
     name: 'enemy1',
+    sprite: 'enemywarrior',
     x: 48,
     y: 192
   },
   {
     name: 'enemy2',
+    sprite: 'enemywarrior',
     x: 48,
     y: 240
   },
   {
     name: 'enemy3',
+    sprite: 'enemywarrior',
     x: 48,
     y: 288
   }
@@ -58,6 +70,7 @@ var cursors
 
 function preload () {
   this.load.image('warrior', 'src/assets/images/warrior.png')
+  this.load.image('enemywarrior', 'src/assets/images/enemywarrior.png')
   this.load.image('cursor', 'src/assets/images/green-cursor.png')
   this.load.image('testmap2', 'src/assets/images/testmap2.png')
 }
@@ -67,7 +80,7 @@ function create () {
   cursors = this.input.keyboard.createCursorKeys()
 
   actors.forEach((actor, idx) => {
-    actors[idx] = this.physics.add.image(actor.x, actor.y, 'warrior').setOrigin(0, 0)
+    actors[idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
   })
   player = this.physics.add.image(0, 0, 'cursor').setOrigin(0, 0)
   player.setCollideWorldBounds(true)
