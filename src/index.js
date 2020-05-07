@@ -1,85 +1,81 @@
 import Phaser from 'phaser'
-// import mapJson from 'assets/map/testmap'
 
-// const config = {
-//   type: Phaser.AUTO,
-//   parent: 'phaser-example',
-//   width: 800,
-//   height: 600,
-//   scene: {
-//     preload: preload,
-//     create: create
-//   }
-// }
+// document.addEventListener('keydown', keyPressed())
+var playerX = 48
+var playerY = 48
 
 var config = {
-  type: Phaser.WEBGL,
-  width: 800,
-  height: 600,
-  backgroundColor: '#2d2d2d',
-  parent: 'phaser-example',
-  pixelArt: true,
+  type: Phaser.AUTO,
+  width: 960,
+  height: 960,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: false
+    }
+  },
   scene: {
-      preload: preload,
-      create: create,
-      update: update
+    preload: preload,
+    create: create,
+    update: update
   }
-};
+}
 
 var game = new Phaser.Game(config)
-var controls
+var player
+var cursors
 
 function preload () {
-  // this.load.image('tiles', logoImg)
-  this.load.tilemapTiledJSON('map', 'src/assets/map/testmap.json')
-  this.load.image('Desert', 'src/assets/map/tmw_desert_spacing')
-  // this.load.image('drawtiles-spaced', 'assets/tiles/drawtiles-spaced.png')
-
+  this.load.image('warrior', 'src/assets/images/warrior.png')
+  this.load.image('sky', 'src/assets/images/sky.png')
+  this.load.image('testmap2', 'src/assets/images/testmap2.png')
+  this.load.image('testmap2unzoomed', 'src/assets/images/testmap2unzoomed.png')
+  this.load.image('ground', 'src/assets/images/platform.png')
+  this.load.image('star', 'src/assets/images/star.png')
+  this.load.image('bomb', 'src/assets/images/bomb.png')
+  this.load.spritesheet('dude', 'src/assets/spritesheets/dude.png',
+    { frameWidth: 32, frameHeight: 48 }
+  )
 }
 
 function create () {
-  var map = this.make.tilemap({ key: 'map' })
-
-  var tiles = map.addTilesetImage('tileset', 'Desert')
-
-  var layer = map.createStaticLayer(0, tiles, 0, 0)
-
-  this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels)
-
-  var cursors = this.input.keyboard.createCursorKeys();
-    var controlConfig = {
-        camera: this.cameras.main,
-        left: cursors.left,
-        right: cursors.right,
-        up: cursors.up,
-        down: cursors.down,
-        speed: 0.5
-    };
-    controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
-
-    var help = this.add.text(16, 16, 'Arrow keys to scroll', {
-        fontSize: '18px',
-        padding: { x: 10, y: 5 },
-        backgroundColor: '#000000',
-        fill: '#ffffff'
-    });
-    help.setScrollFactor(0);
+  this.add.image(480, 480, 'testmap2')
+  // this.physics.startSystem(Phaser.Physics.P2JS)
+  // this.add.image(480, 480, 'warrior').setOrigin(0, 0)
+  // player = this.physics.add.sprite(480, 480, 'warrior')
+  // player = this.add.sprite(playerX, playerY, 'warrior')
+  cursors = this.input.keyboard.createCursorKeys()
+  player = this.physics.add.image(playerX, playerY, 'warrior').setOrigin(0, 0)
+  player.setCollideWorldBounds(true)
+  player.setData('notMoving', true)
+  // this.physics.p2.enable(player)
 }
 
-function update (time, delta)
-{
-    controls.update(delta);
+function setfixedMovement (val, axis) {
+  if (axis === 'x') {
+    playerX += val
+  } else if (axis === 'y') {
+    playerY += val
+  }
+
+  player.setPosition(playerX, playerY)
+  player.setData('notMoving', false)
+  setTimeout(() => {
+    player.setData('notMoving', true)
+  }, 100)
 }
 
-
-  // const logo = this.add.image(400, 150, 'logo')
-
-  // this.tweens.add({
-  //   targets: logo,
-  //   y: 450,
-  //   duration: 2000,
-  //   ease: 'Power2',
-  //   yoyo: true,
-  //   loop: -1
-  // })
-
+function update () {
+  if (player.getData('notMoving')) {
+    if (cursors.left.isDown) {
+      setfixedMovement(-48, 'x')
+    } else if (cursors.right.isDown) {
+      setfixedMovement(48, 'x')
+    } else if (cursors.up.isDown) {
+      setfixedMovement(-48, 'y')
+    } else if (cursors.down.isDown) {
+      setfixedMovement(48, 'y')
+    }
+  }
+}
