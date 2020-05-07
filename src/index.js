@@ -1,85 +1,103 @@
 import Phaser from 'phaser'
-// import mapJson from 'assets/map/testmap'
 
-// const config = {
-//   type: Phaser.AUTO,
-//   parent: 'phaser-example',
-//   width: 800,
-//   height: 600,
-//   scene: {
-//     preload: preload,
-//     create: create
-//   }
-// }
-
-var config = {
-  type: Phaser.WEBGL,
-  width: 800,
-  height: 600,
-  backgroundColor: '#2d2d2d',
-  parent: 'phaser-example',
-  pixelArt: true,
-  scene: {
-      preload: preload,
-      create: create,
-      update: update
+var actors = [
+  {
+    name: 'warrior1',
+    x: 48,
+    y: 48
+  },
+  {
+    name: 'warrior2',
+    x: 48,
+    y: 92
+  },
+  {
+    name: 'warrior3',
+    x: 48,
+    y: 144
+  },
+  {
+    name: 'enemy1',
+    x: 48,
+    y: 192
+  },
+  {
+    name: 'enemy2',
+    x: 48,
+    y: 240
+  },
+  {
+    name: 'enemy3',
+    x: 48,
+    y: 288
   }
-};
+
+]
+var config = {
+  type: Phaser.AUTO,
+  width: 960,
+  height: 960,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: false
+    }
+  },
+  scene: {
+    preload: preload,
+    create: create,
+    update: update
+  }
+}
 
 var game = new Phaser.Game(config)
-var controls
+var player
+var cursor
+var cursors
 
 function preload () {
-  // this.load.image('tiles', logoImg)
-  this.load.tilemapTiledJSON('map', 'src/assets/map/testmap.json')
-  this.load.image('Desert', 'src/assets/map/tmw_desert_spacing')
-  // this.load.image('drawtiles-spaced', 'assets/tiles/drawtiles-spaced.png')
-
+  this.load.image('warrior', 'src/assets/images/warrior.png')
+  this.load.image('cursor', 'src/assets/images/green-cursor.png')
+  this.load.image('testmap2', 'src/assets/images/testmap2.png')
 }
 
 function create () {
-  var map = this.make.tilemap({ key: 'map' })
+  this.add.image(480, 480, 'testmap2')
+  cursors = this.input.keyboard.createCursorKeys()
 
-  var tiles = map.addTilesetImage('tileset', 'Desert')
-
-  var layer = map.createStaticLayer(0, tiles, 0, 0)
-
-  this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels)
-
-  var cursors = this.input.keyboard.createCursorKeys();
-    var controlConfig = {
-        camera: this.cameras.main,
-        left: cursors.left,
-        right: cursors.right,
-        up: cursors.up,
-        down: cursors.down,
-        speed: 0.5
-    };
-    controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
-
-    var help = this.add.text(16, 16, 'Arrow keys to scroll', {
-        fontSize: '18px',
-        padding: { x: 10, y: 5 },
-        backgroundColor: '#000000',
-        fill: '#ffffff'
-    });
-    help.setScrollFactor(0);
+  actors.forEach((actor, idx) => {
+    actors[idx] = this.physics.add.image(actor.x, actor.y, 'warrior').setOrigin(0, 0)
+  })
+  player = this.physics.add.image(0, 0, 'cursor').setOrigin(0, 0)
+  player.setCollideWorldBounds(true)
+  player.setData('notMoving', true)
 }
 
-function update (time, delta)
-{
-    controls.update(delta);
+function setfixedMovement (val, axis) {
+  if (axis === 'x') {
+    player.x += val
+  } else if (axis === 'y') {
+    player.y += val
+  }
+
+  player.setPosition(player.x, player.y)
+  player.setData('notMoving', false)
+  setTimeout(() => {
+    player.setData('notMoving', true)
+  }, 100)
 }
 
-
-  // const logo = this.add.image(400, 150, 'logo')
-
-  // this.tweens.add({
-  //   targets: logo,
-  //   y: 450,
-  //   duration: 2000,
-  //   ease: 'Power2',
-  //   yoyo: true,
-  //   loop: -1
-  // })
-
+function update () {
+  if (player.getData('notMoving')) {
+    if (cursors.left.isDown) {
+      setfixedMovement(-48, 'x')
+    } else if (cursors.right.isDown) {
+      setfixedMovement(48, 'x')
+    } else if (cursors.up.isDown) {
+      setfixedMovement(-48, 'y')
+    } else if (cursors.down.isDown) {
+      setfixedMovement(48, 'y')
+    }
+  }
+}
