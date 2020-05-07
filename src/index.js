@@ -1,9 +1,38 @@
 import Phaser from 'phaser'
 
-// document.addEventListener('keydown', keyPressed())
-var playerX = 48
-var playerY = 48
+var actors = [
+  {
+    name: 'warrior1',
+    x: 48,
+    y: 48
+  },
+  {
+    name: 'warrior2',
+    x: 48,
+    y: 92
+  },
+  {
+    name: 'warrior3',
+    x: 48,
+    y: 144
+  },
+  {
+    name: 'enemy1',
+    x: 48,
+    y: 192
+  },
+  {
+    name: 'enemy2',
+    x: 48,
+    y: 240
+  },
+  {
+    name: 'enemy3',
+    x: 48,
+    y: 288
+  }
 
+]
 var config = {
   type: Phaser.AUTO,
   width: 960,
@@ -22,9 +51,9 @@ var config = {
   }
 }
 
-var tom = 'is cool'
 var game = new Phaser.Game(config)
 var player
+var cursor
 var cursors
 
 function preload () {
@@ -38,19 +67,19 @@ function preload () {
   this.load.spritesheet('dude', 'src/assets/spritesheets/dude.png',
     { frameWidth: 32, frameHeight: 48 }
   )
+  cursor = new Phaser.Cursor()
 }
 
 function create () {
   this.add.image(480, 480, 'testmap2')
-  // this.physics.startSystem(Phaser.Physics.P2JS)
-  // this.add.image(480, 480, 'warrior').setOrigin(0, 0)
-  // player = this.physics.add.sprite(480, 480, 'warrior')
-  // player = this.add.sprite(playerX, playerY, 'warrior')
   cursors = this.input.keyboard.createCursorKeys()
-  player = this.physics.add.image(playerX, playerY, 'warrior').setOrigin(0, 0)
+
+  actors.forEach((actor, idx) => {
+    actors[idx] = this.physics.add.image(actor.x, actor.y, 'warrior').setOrigin(0, 0)
+  })
+  this.cursor.load(48, 48)
   player.setCollideWorldBounds(true)
   player.setData('notMoving', true)
-  // this.physics.p2.enable(player)
 }
 
 function setfixedMovement (val, axis) {
