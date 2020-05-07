@@ -58,16 +58,8 @@ var cursors
 
 function preload () {
   this.load.image('warrior', 'src/assets/images/warrior.png')
-  this.load.image('sky', 'src/assets/images/sky.png')
+  this.load.image('cursor', 'src/assets/images/green-cursor.png')
   this.load.image('testmap2', 'src/assets/images/testmap2.png')
-  this.load.image('testmap2unzoomed', 'src/assets/images/testmap2unzoomed.png')
-  this.load.image('ground', 'src/assets/images/platform.png')
-  this.load.image('star', 'src/assets/images/star.png')
-  this.load.image('bomb', 'src/assets/images/bomb.png')
-  this.load.spritesheet('dude', 'src/assets/spritesheets/dude.png',
-    { frameWidth: 32, frameHeight: 48 }
-  )
-  cursor = new Phaser.Cursor()
 }
 
 function create () {
@@ -77,19 +69,19 @@ function create () {
   actors.forEach((actor, idx) => {
     actors[idx] = this.physics.add.image(actor.x, actor.y, 'warrior').setOrigin(0, 0)
   })
-  this.cursor.load(48, 48)
+  player = this.physics.add.image(0, 0, 'cursor').setOrigin(0, 0)
   player.setCollideWorldBounds(true)
   player.setData('notMoving', true)
 }
 
 function setfixedMovement (val, axis) {
   if (axis === 'x') {
-    playerX += val
+    player.x += val
   } else if (axis === 'y') {
-    playerY += val
+    player.y += val
   }
 
-  player.setPosition(playerX, playerY)
+  player.setPosition(player.x, player.y)
   player.setData('notMoving', false)
   setTimeout(() => {
     player.setData('notMoving', true)
