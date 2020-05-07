@@ -22,6 +22,7 @@ var config = {
   }
 }
 
+var tom = 'is cool'
 var game = new Phaser.Game(config)
 var player
 var cursors
