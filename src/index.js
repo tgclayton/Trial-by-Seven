@@ -133,11 +133,10 @@ function update () {
   if (keyX.isDown) {
     let idx = player.getData('idx')
     let coords = getCoordsFromIndex(idx)
-    coords[0] *= 48
-    coords[1] *= 48
-    player.destroy()
+    // player.destroy()
     console.log('index:', idx, 'coords:', coords)
-    player = this.physics.add.image(coords[0], coords[1], 'bcursor')
+    player = this.physics.add.image(0, 0, 'bcursor')
+    // player = this.physics.add.image(coords[0], coords[1], 'bcursor')
     player.setCollideWorldBounds(true)
     player.setData('notMoving', true)
     player.setData('idx', 0)
