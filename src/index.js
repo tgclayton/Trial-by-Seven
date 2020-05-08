@@ -130,6 +130,19 @@ function setCursorIndex () {
 }
 
 function update () {
+  if (keyX.isDown) {
+    let idx = player.getData('idx')
+    let coords = getCoordsFromIndex(idx)
+    coords[0] *= 48
+    coords[1] *= 48
+    player.destroy()
+    console.log('index:', idx, 'coords:', coords)
+    player = this.physics.add.image(coords[0], coords[1], 'bcursor')
+    player.setCollideWorldBounds(true)
+    player.setData('notMoving', true)
+    player.setData('idx', 0)
+  }
+
   setCursorIndex()
   if (player.getData('notMoving')) {
     if (cursors.left.isDown) {
@@ -143,15 +156,10 @@ function update () {
     }
   }
 
-  if (keyX.isDown) {
+  if (keyZ.isDown) {
     let idx = player.getData('idx')
     let coords = getCoordsFromIndex(idx)
-    player = this.physics.add.image(coords[0], coords[1], 'bcursor')
-    player.setCollideWorldBounds(true)
-    player.setData('notMoving', true)
-  }
-
-  if (keyZ.isDown) {
+    console.log('index:', idx, 'coords:', coords)
     let found = false
     actors.forEach(team => {
       team.units.forEach(actor => {
