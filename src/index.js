@@ -2,6 +2,26 @@ import Phaser from 'phaser'
 import { createMapArray, test } from './mapfunctions'
 // const mapFunc = require ('./map')
 
+// document.addEventListener('keydown', e => detectKeyStroke())
+
+var config = {
+  type: Phaser.AUTO,
+  width: 960,
+  height: 960,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: false
+    }
+  },
+  scene: {
+    preload: preload,
+    create: create,
+    update: update
+  }
+}
+
 var map = null
 map = createMapArray()
 console.log(map)
@@ -49,23 +69,6 @@ var actors = [
     ]
   }
 ]
-var config = {
-  type: Phaser.AUTO,
-  width: 960,
-  height: 960,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
-      debug: false
-    }
-  },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
-  }
-}
 
 var game = new Phaser.Game(config)
 var player
@@ -75,7 +78,6 @@ var keyZ
 var keyX
 
 function preload () {
-  this.l
   this.load.image('warrior', 'src/assets/images/warrior.png')
   this.load.image('enemywarrior', 'src/assets/images/enemywarrior.png')
   this.load.image('gcursor', 'src/assets/images/green-cursor.png')
@@ -85,7 +87,9 @@ function preload () {
 }
 
 function create () {
-  this.add.image(480, 480, 'testmap2')
+  this.input.keyboard.on('keydown-Z', checkTile, this)
+  this.input.keyboard.on('keydown-X', changeCursorColor, this)
+    this.add.image(480, 480, 'testmap2')
   cursors = this.input.keyboard.createCursorKeys()
   keyZ = this.input.keyboard.addKey('Z')
   keyX = this.input.keyboard.addKey('X')
@@ -103,6 +107,7 @@ function create () {
   player.setCollideWorldBounds(true)
   player.setData('notMoving', true)
   player.setData('idx', 0)
+  player.setData('sprite', 'gcursor')
 }
 
 function getCoordsFromIndex (idx) {
@@ -123,26 +128,15 @@ function setfixedMovement (val, axis) {
   setTimeout(() => {
     player.setData('notMoving', true)
   }, 100)
+  setCursorIndex()
 }
 
 function setCursorIndex () {
+  // console.log('x: ', player.x, 'y:', player.y)
   player.setData('idx', ((player.x / 48) + ((player.y / 48) * 20)))
 }
 
 function update () {
-  if (keyX.isDown) {
-    let idx = player.getData('idx')
-    let coords = getCoordsFromIndex(idx)
-    // player.destroy()
-    console.log('index:', idx, 'coords:', coords)
-    player = this.physics.add.image(0, 0, 'bcursor')
-    // player = this.physics.add.image(coords[0], coords[1], 'bcursor')
-    player.setCollideWorldBounds(true)
-    player.setData('notMoving', true)
-    player.setData('idx', 0)
-  }
-
-  setCursorIndex()
   if (player.getData('notMoving')) {
     if (cursors.left.isDown) {
       setfixedMovement(-48, 'x')
@@ -154,24 +148,43 @@ function update () {
       setfixedMovement(48, 'y')
     }
   }
+}
 
-  if (keyZ.isDown) {
-    let idx = player.getData('idx')
-    let coords = getCoordsFromIndex(idx)
-    console.log('index:', idx, 'coords:', coords)
-    let found = false
-    actors.forEach(team => {
-      team.units.forEach(actor => {
-        let currentIdx = player.getData('idx')
-        if (actor.idx === currentIdx) {
-          found = true
-        }
-      })
+function checkTile () {
+  let idx = player.getData('idx')
+  let coords = getCoordsFromIndex(idx)
+  console.log('index:', idx, 'coords:', coords)
+  let found = false
+  actors.forEach(team => {
+    team.units.forEach(actor => {
+      let currentIdx = player.getData('idx')
+      if (actor.idx === currentIdx) {
+        found = true
+      }
     })
-    if (found) {
-      console.log('tile contains a unit')
-    } else {
-      console.log('tile does not contain a unit')
-    }
+  })
+  if (found) {
+    console.log('tile contains a unit')
+  } else {
+    console.log('tile does not contain a unit')
   }
+}
+
+function changeCursorColor () {
+  let sprite
+  if (player.getData('sprite') === 'gcursor') {
+    sprite = 'bcursor'
+  } else if (player.getData('sprite') === 'bcursor') {
+    sprite = 'gcursor'
+  }
+  let idx = player.getData('idx')
+  let coords = getCoordsFromIndex(idx)
+  player.destroy()
+  player = this.physics.add.image(coords[0], coords[1], sprite).setOrigin(0, 0)
+  player.setCollideWorldBounds(true)
+  player.setData('notMoving', true)
+  player.setData('idx', idx)
+  player.setData('sprite', sprite)
+  setCursorIndex()
+  // cursor = this.physics.add.image(96, 96, 'bcursor').setOrigin(0, 0)
 }
