@@ -74,8 +74,6 @@ var game = new Phaser.Game(config)
 var player
 var cursor
 var cursors
-var keyZ
-var keyX
 
 function preload () {
   this.load.image('warrior', 'src/assets/images/warrior.png')
@@ -89,10 +87,8 @@ function preload () {
 function create () {
   this.input.keyboard.on('keydown-Z', checkTile, this)
   this.input.keyboard.on('keydown-X', changeCursorColor, this)
-    this.add.image(480, 480, 'testmap2')
+  this.add.image(480, 480, 'testmap2')
   cursors = this.input.keyboard.createCursorKeys()
-  keyZ = this.input.keyboard.addKey('Z')
-  keyX = this.input.keyboard.addKey('X')
 
   actors.forEach(team => {
     team.units.forEach(actor => {
@@ -108,6 +104,20 @@ function create () {
   player.setData('notMoving', true)
   player.setData('idx', 0)
   player.setData('sprite', 'gcursor')
+}
+
+function update () {
+  if (player.getData('notMoving')) {
+    if (cursors.left.isDown) {
+      setfixedMovement(-48, 'x')
+    } else if (cursors.right.isDown) {
+      setfixedMovement(48, 'x')
+    } else if (cursors.up.isDown) {
+      setfixedMovement(-48, 'y')
+    } else if (cursors.down.isDown) {
+      setfixedMovement(48, 'y')
+    }
+  }
 }
 
 function getCoordsFromIndex (idx) {
@@ -134,20 +144,6 @@ function setfixedMovement (val, axis) {
 function setCursorIndex () {
   // console.log('x: ', player.x, 'y:', player.y)
   player.setData('idx', ((player.x / 48) + ((player.y / 48) * 20)))
-}
-
-function update () {
-  if (player.getData('notMoving')) {
-    if (cursors.left.isDown) {
-      setfixedMovement(-48, 'x')
-    } else if (cursors.right.isDown) {
-      setfixedMovement(48, 'x')
-    } else if (cursors.up.isDown) {
-      setfixedMovement(-48, 'y')
-    } else if (cursors.down.isDown) {
-      setfixedMovement(48, 'y')
-    }
-  }
 }
 
 function checkTile () {
