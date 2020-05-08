@@ -72,6 +72,7 @@ var player
 var cursor
 var cursors
 var keyZ
+var keyX
 
 function preload () {
   this.l
@@ -87,6 +88,7 @@ function create () {
   this.add.image(480, 480, 'testmap2')
   cursors = this.input.keyboard.createCursorKeys()
   keyZ = this.input.keyboard.addKey('Z')
+  keyX = this.input.keyboard.addKey('X')
 
   actors.forEach(team => {
     team.units.forEach(actor => {
@@ -140,6 +142,15 @@ function update () {
       setfixedMovement(48, 'y')
     }
   }
+
+  if (keyX.isDown) {
+    let idx = player.getData('idx')
+    let coords = getCoordsFromIndex(idx)
+    player = this.physics.add.image(coords[0], coords[1], 'bcursor')
+    player.setCollideWorldBounds(true)
+    player.setData('notMoving', true)
+  }
+
   if (keyZ.isDown) {
     let found = false
     actors.forEach(team => {
