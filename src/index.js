@@ -142,8 +142,21 @@ function setfixedMovement (val, axis) {
 }
 
 function setCursorIndex () {
+  let x = player.x / 48
+  let y = (player.y / 48) * 20
+  if (x > 19) {
+    x = 19
+  } else if (x < 0) {
+    x = 0
+  }
+
+  if (y > 380) {
+    y = 380
+  } else if (y < 0) {
+    y = 0
+  }
   // console.log('x: ', player.x, 'y:', player.y)
-  player.setData('idx', ((player.x / 48) + ((player.y / 48) * 20)))
+  player.setData('idx', x + y)
 }
 
 function checkTile () {
