@@ -4,7 +4,7 @@ import { createMapArray, test } from './mapfunctions'
 
 var map = null
 map = createMapArray()
-// console.log(map)
+console.log(map)
 
 var actors = [
   {
@@ -13,20 +13,18 @@ var actors = [
       {
         name: 'warrior2H',
         sprite: 'warrior',
-        x: 48,
-        y: 48
+        idx: 160
+
       },
       {
         name: 'warrior2',
         sprite: 'warrior',
-        x: 48,
-        y: 92
+        idx: 180
       },
       {
         name: 'warrior3',
         sprite: 'warrior',
-        x: 48,
-        y: 144
+        idx: 200
       }
     ]
   },
@@ -36,20 +34,17 @@ var actors = [
       {
         name: 'enemy1',
         sprite: 'enemywarrior',
-        x: 48,
-        y: 192
+        idx: 179
       },
       {
         name: 'enemy2',
         sprite: 'enemywarrior',
-        x: 48,
-        y: 240
+        idx: 199
       },
       {
         name: 'enemy3',
         sprite: 'enemywarrior',
-        x: 48,
-        y: 288
+        idx: 219
       }
     ]
   }
@@ -79,9 +74,12 @@ var cursors
 var keyZ
 
 function preload () {
+  this.l
   this.load.image('warrior', 'src/assets/images/warrior.png')
   this.load.image('enemywarrior', 'src/assets/images/enemywarrior.png')
-  this.load.image('cursor', 'src/assets/images/green-cursor.png')
+  this.load.image('gcursor', 'src/assets/images/green-cursor.png')
+  this.load.image('bcursor', 'src/assets/images/blue-cursor.png')
+  this.load.image('rcursor', 'src/assets/images/red-cursor.png')
   this.load.image('testmap2', 'src/assets/images/testmap2.png')
 }
 
@@ -90,18 +88,25 @@ function create () {
   cursors = this.input.keyboard.createCursorKeys()
   keyZ = this.input.keyboard.addKey('Z')
 
-  actors[0].units.forEach((actor, idx) => {
-    actors[0][idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
+  actors.forEach(team => {
+    team.units.forEach(actor => {
+      let coords = getCoordsFromIndex(actor.idx)
+      actor.x = coords[0]
+      actor.y = coords[1]
+      actor = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
+    })
   })
 
-  actors[1].units.forEach((actor, idx) => {
-    actors[1][idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
-  })
-
-  player = this.physics.add.image(0, 0, 'cursor').setOrigin(0, 0)
+  player = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
   player.setCollideWorldBounds(true)
   player.setData('notMoving', true)
   player.setData('idx', 0)
+}
+
+function getCoordsFromIndex (idx) {
+  var x = (idx % 20) * 48
+  var y = (Math.floor(idx / 20)) * 48
+  return [x, y]
 }
 
 function setfixedMovement (val, axis) {
@@ -136,6 +141,19 @@ function update () {
     }
   }
   if (keyZ.isDown) {
-    console.log('Tile index is:', player.getData('idx'))
+    let found = false
+    actors.forEach(team => {
+      team.units.forEach(actor => {
+        let currentIdx = player.getData('idx')
+        if (actor.idx === currentIdx) {
+          found = true
+        }
+      })
+    })
+    if (found) {
+      console.log('tile contains a unit')
+    } else {
+      console.log('tile does not contain a unit')
+    }
   }
 }
