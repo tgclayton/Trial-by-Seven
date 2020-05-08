@@ -4,7 +4,6 @@ import { createMapArray, test } from './mapfunctions'
 
 var map = null
 map = createMapArray()
-console.log(map)
 
 var actors = [
   {
@@ -67,6 +66,7 @@ var game = new Phaser.Game(config)
 var player
 var cursor
 var cursors
+var keyZ
 
 function preload () {
   this.load.image('warrior', 'src/assets/images/warrior.png')
@@ -79,12 +79,14 @@ function create () {
   this.add.image(480, 480, 'testmap2')
   cursors = this.input.keyboard.createCursorKeys()
 
+  keyZ = this.input.keyboard.addKey('Z')
   actors.forEach((actor, idx) => {
     actors[idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
   })
   player = this.physics.add.image(0, 0, 'cursor').setOrigin(0, 0)
   player.setCollideWorldBounds(true)
   player.setData('notMoving', true)
+  player.setData('idx', 0)
 }
 
 function setfixedMovement (val, axis) {
@@ -101,7 +103,12 @@ function setfixedMovement (val, axis) {
   }, 100)
 }
 
+function setCursorIndex() {
+  player.setData('idx', ((player.x / 48) + ((player.y / 48) * 20)))
+} 
+
 function update () {
+  setCursorIndex()
   if (player.getData('notMoving')) {
     if (cursors.left.isDown) {
       setfixedMovement(-48, 'x')
@@ -112,5 +119,8 @@ function update () {
     } else if (cursors.down.isDown) {
       setfixedMovement(48, 'y')
     }
+  }
+  if (keyZ.isDown) {
+    console.log(player.getData('idx'))
   }
 }
