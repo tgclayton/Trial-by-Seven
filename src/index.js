@@ -4,46 +4,55 @@ import { createMapArray, test } from './mapfunctions'
 
 var map = null
 map = createMapArray()
-console.log(map)
+// console.log(map)
 
 var actors = [
   {
-    name: 'warrior1',
-    sprite: 'warrior',
-    x: 48,
-    y: 48
+    team: 1,
+    units: [
+      {
+        name: 'warrior2H',
+        sprite: 'warrior',
+        x: 48,
+        y: 48
+      },
+      {
+        name: 'warrior2',
+        sprite: 'warrior',
+        x: 48,
+        y: 92
+      },
+      {
+        name: 'warrior3',
+        sprite: 'warrior',
+        x: 48,
+        y: 144
+      }
+    ]
   },
   {
-    name: 'warrior2',
-    sprite: 'warrior',
-    x: 48,
-    y: 92
-  },
-  {
-    name: 'warrior3',
-    sprite: 'warrior',
-    x: 48,
-    y: 144
-  },
-  {
-    name: 'enemy1',
-    sprite: 'enemywarrior',
-    x: 48,
-    y: 192
-  },
-  {
-    name: 'enemy2',
-    sprite: 'enemywarrior',
-    x: 48,
-    y: 240
-  },
-  {
-    name: 'enemy3',
-    sprite: 'enemywarrior',
-    x: 48,
-    y: 288
+    team: 2,
+    units: [
+      {
+        name: 'enemy1',
+        sprite: 'enemywarrior',
+        x: 48,
+        y: 192
+      },
+      {
+        name: 'enemy2',
+        sprite: 'enemywarrior',
+        x: 48,
+        y: 240
+      },
+      {
+        name: 'enemy3',
+        sprite: 'enemywarrior',
+        x: 48,
+        y: 288
+      }
+    ]
   }
-
 ]
 var config = {
   type: Phaser.AUTO,
@@ -79,11 +88,16 @@ function preload () {
 function create () {
   this.add.image(480, 480, 'testmap2')
   cursors = this.input.keyboard.createCursorKeys()
-
   keyZ = this.input.keyboard.addKey('Z')
-  actors.forEach((actor, idx) => {
-    actors[idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
+
+  actors[0].units.forEach((actor, idx) => {
+    actors[0][idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
   })
+
+  actors[1].units.forEach((actor, idx) => {
+    actors[1][idx] = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
+  })
+
   player = this.physics.add.image(0, 0, 'cursor').setOrigin(0, 0)
   player.setCollideWorldBounds(true)
   player.setData('notMoving', true)
@@ -104,9 +118,9 @@ function setfixedMovement (val, axis) {
   }, 100)
 }
 
-function setCursorIndex() {
+function setCursorIndex () {
   player.setData('idx', ((player.x / 48) + ((player.y / 48) * 20)))
-} 
+}
 
 function update () {
   setCursorIndex()
@@ -122,6 +136,6 @@ function update () {
     }
   }
   if (keyZ.isDown) {
-    console.log(player.getData('idx'))
+    console.log('Tile index is:', player.getData('idx'))
   }
 }
