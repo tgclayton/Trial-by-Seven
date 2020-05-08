@@ -21,7 +21,7 @@ export default {
   }
 }
 
-var game = new Phaser.Game(config)
+// var game = new Phaser.Game(config)
 var map = null
 map = createMapArray()
 console.log(map)
@@ -70,7 +70,7 @@ var actors = [
   }
 ]
 
-var game = new Phaser.Game(config)
+// var game = new Phaser.Game(config)
 var player
 var cursor
 var cursor
@@ -79,12 +79,12 @@ var keyZ
 var keyX
 
 function preload () {
-  this.load.image('warrior', 'src/assets/images/warrior.png')
-  this.load.image('enemywarrior', 'src/assets/images/enemywarrior.png')
-  this.load.image('gcursor', 'src/assets/images/green-cursor.png')
-  this.load.image('bcursor', 'src/assets/images/blue-cursor.png')
-  this.load.image('rcursor', 'src/assets/images/red-cursor.png')
-  this.load.image('testmap2', 'src/assets/images/testmap2.png')
+  this.load.image('warrior', '/assets/images/warrior.png')
+  this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
+  this.load.image('gcursor', '/assets/images/green-cursor.png')
+  this.load.image('bcursor', '/assets/images/blue-cursor.png')
+  this.load.image('rcursor', '/assets/images/red-cursor.png')
+  this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
 function create () {
