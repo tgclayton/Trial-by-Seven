@@ -1,24 +1,9 @@
-<<<<<<< HEAD:client/components/game.js
-// import Phaser from 'phaser'
-||||||| 9678057:src/index.js
-import Phaser from 'phaser'
-=======
 import Phaser from 'phaser'
 import { createMapArray, test } from './mapfunctions'
-// const mapFunc = require ('./map')
->>>>>>> game:src/index.js
 
 // document.addEventListener('keydown', e => detectKeyStroke())
 
-<<<<<<< HEAD:client/components/game.js
-]
 export default {
-||||||| 9678057:src/index.js
-]
-var config = {
-=======
-var config = {
->>>>>>> game:src/index.js
   type: Phaser.AUTO,
   width: 960,
   height: 960,
@@ -36,10 +21,7 @@ var config = {
   }
 }
 
-<<<<<<< HEAD:client/components/game.js
-||||||| 9678057:src/index.js
 var game = new Phaser.Game(config)
-=======
 var map = null
 map = createMapArray()
 console.log(map)
@@ -89,29 +71,20 @@ var actors = [
 ]
 
 var game = new Phaser.Game(config)
->>>>>>> game:src/index.js
 var player
 var cursor
 var cursor
 var cursors
+var keyZ
+var keyX
 
 function preload () {
-<<<<<<< HEAD:client/components/game.js
-  this.load.image('warrior', '/assets/images/warrior.png')
-  this.load.image('cursor', '/assets/images/green-cursor.png')
-  this.load.image('testmap2', '/assets/images/testmap2.png')
-||||||| 9678057:src/index.js
-  this.load.image('warrior', 'src/assets/images/warrior.png')
-  this.load.image('cursor', 'src/assets/images/green-cursor.png')
-  this.load.image('testmap2', 'src/assets/images/testmap2.png')
-=======
   this.load.image('warrior', 'src/assets/images/warrior.png')
   this.load.image('enemywarrior', 'src/assets/images/enemywarrior.png')
   this.load.image('gcursor', 'src/assets/images/green-cursor.png')
   this.load.image('bcursor', 'src/assets/images/blue-cursor.png')
   this.load.image('rcursor', 'src/assets/images/red-cursor.png')
   this.load.image('testmap2', 'src/assets/images/testmap2.png')
->>>>>>> game:src/index.js
 }
 
 function create () {
@@ -119,6 +92,8 @@ function create () {
   this.input.keyboard.on('keydown-X', changeCursorColor, this)
   this.add.image(480, 480, 'testmap2')
   cursors = this.input.keyboard.createCursorKeys()
+  keyZ = this.input.keyboard.addKey('Z')
+  keyX = this.input.keyboard.addKey('X')
 
   actors.forEach(team => {
     team.units.forEach(actor => {
@@ -134,20 +109,6 @@ function create () {
   player.setData('notMoving', true)
   player.setData('idx', 0)
   player.setData('sprite', 'gcursor')
-}
-
-function update () {
-  if (player.getData('notMoving')) {
-    if (cursors.left.isDown) {
-      setfixedMovement(-48, 'x')
-    } else if (cursors.right.isDown) {
-      setfixedMovement(48, 'x')
-    } else if (cursors.up.isDown) {
-      setfixedMovement(-48, 'y')
-    } else if (cursors.down.isDown) {
-      setfixedMovement(48, 'y')
-    }
-  }
 }
 
 function getCoordsFromIndex (idx) {
@@ -172,21 +133,22 @@ function setfixedMovement (val, axis) {
 }
 
 function setCursorIndex () {
-  let x = player.x / 48
-  let y = (player.y / 48) * 20
-  if (x > 19) {
-    x = 19
-  } else if (x < 0) {
-    x = 0
-  }
-
-  if (y > 380) {
-    y = 380
-  } else if (y < 0) {
-    y = 0
-  }
   // console.log('x: ', player.x, 'y:', player.y)
-  player.setData('idx', x + y)
+  player.setData('idx', ((player.x / 48) + ((player.y / 48) * 20)))
+}
+
+function update () {
+  if (player.getData('notMoving')) {
+    if (cursors.left.isDown) {
+      setfixedMovement(-48, 'x')
+    } else if (cursors.right.isDown) {
+      setfixedMovement(48, 'x')
+    } else if (cursors.up.isDown) {
+      setfixedMovement(-48, 'y')
+    } else if (cursors.down.isDown) {
+      setfixedMovement(48, 'y')
+    }
+  }
 }
 
 function checkTile () {
