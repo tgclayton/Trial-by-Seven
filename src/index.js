@@ -4,6 +4,7 @@ import { createMapArray, test } from './mapfunctions'
 
 var map = null
 map = createMapArray()
+console.log(map)
 
 var actors = [
   {
