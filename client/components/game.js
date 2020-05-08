@@ -80,7 +80,7 @@ function createActors () {
 //   }
 // ]
 
-var game = new Phaser.Game(config)
+// var game = new Phaser.Game(config)
 var player
 var cursor
 var cursors
