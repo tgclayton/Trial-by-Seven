@@ -20,9 +20,6 @@ class TitleForm extends React.Component {
     // addPlayers(this.state.championOne)
     // addPlayers(this.state.championTwo)
   }
-    // button leads you to phaser game page
-  
-
 
   render() {
     return(
@@ -31,7 +28,7 @@ class TitleForm extends React.Component {
         <h3>What should the heralds call you?</h3>
           <Form.Group>
             <Form.Input
-              label='championOne'
+              label='Champion One'
               placeholder='championOne'
               name='championOne'
               onChange={event => this.setState({championOne: event.target.value })}
@@ -39,14 +36,15 @@ class TitleForm extends React.Component {
           </Form.Group>
           <Form.Group>
             <Form.Input
-              label='championTwo'
+              label='Champion Two'
               placeholder='championTwo'
               name='championTwo'
               onChange={event => this.setState({championTwo: event.target.value })}
              />
           </Form.Group>
-          <Form.Button onClick={this.submitHandler}><Link to='/game'>Fight</Link></Form.Button>
-          
+          <Form.Button onClick={this.submitHandler}>
+            <Link to='/game'>Fight</Link>
+          </Form.Button>
         </Form>
       </div>
     )
