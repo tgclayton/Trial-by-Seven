@@ -65,9 +65,23 @@ body {
 }
 
 .form {
-  border: 1px solid black;
-  width: 80%;
-  background-color: rgba(76, 17, 30, 0.938);
+  width: 100%;
+}
+
+.formBodyBorder{
+  padding: 15px;
+  background-color: rgba(76, 17, 30, 0.582);
+  height: 300px;
+}
+
+.formBody{
+width: 500px;
+height: 200px;
+background-color: rgb(76, 17, 30);
+border-color: #FEAD01;
+border-width: 2px;
+border-style: solid;
+padding: 10px;
 }
 
 .logoText{
@@ -93,6 +107,14 @@ body {
   font-weight: 100;
   font-size: 90px;
   margin-left: 10px;
+
+}
+
+.formTitleText{
+  color: #FEAD01;
+  font-family: alagard;
+  font-weight: 100;
+  font-size: 20px;
 
 }
 
@@ -125,4 +147,9 @@ body {
   width: 240px;
   margin-left: 50px;
   margin-top: 20px;
+}
+
+.formGroup{
+  display: flex;
+  flex-direction: row;
 }

@@ -22,16 +22,18 @@ class TitleForm extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="formBodyBorder">
+      <div className="formBody">
         <Form>
-        <h3>What should the heralds call you?</h3>
-          <Form.Group>
+            <h3 className="formTitleText">What should the heralds call you?</h3>
+          <Form.Group className="formGroup">
+            <div>
             <Form.Input
               label='championOne'
               placeholder='championOne'
               name='championOne'
               onChange={event => this.setState({championOne: event.target.value })}
-             />
+             /></div>
           </Form.Group>
           <Form.Group>
             <Form.Input
@@ -44,6 +46,7 @@ class TitleForm extends React.Component {
           <Form.Button onClick={this.submitHandler}>Submit</Form.Button>
           <Link to='/game'>Temporary Link to PhaserGame</Link>
         </Form>
+      </div>
       </div>
     )
   }
