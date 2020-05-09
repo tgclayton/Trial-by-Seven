@@ -66,17 +66,6 @@ function create () {
 }
 
 function update () {
-  if (player.getData('notMoving')) {
-    if (cursors.left.isDown) {
-      setfixedMovement(-48, 'x')
-    } else if (cursors.right.isDown) {
-      setfixedMovement(48, 'x')
-    } else if (cursors.up.isDown) {
-      setfixedMovement(-48, 'y')
-    } else if (cursors.down.isDown) {
-      setfixedMovement(48, 'y')
-    }
-  }
 }
 
 function getCoordsFromIndex (idx) {
@@ -157,6 +146,18 @@ function keyDown (e) {
     case 'z':
       checkTile()
       break
-    default: console.log(key)
+    case 'ArrowUp':
+      setfixedMovement(-48, 'y')
+      break
+    case 'ArrowDown':
+      setfixedMovement(48, 'y')
+      break
+    case 'ArrowLeft':
+      setfixedMovement(-48, 'x')
+      break
+    case 'ArrowRight':
+      setfixedMovement(48, 'x')
+      break
+    // default: console.log(key)
   }
 }
