@@ -206,6 +206,12 @@ function keyDown(e) {
     case 'ArrowRight':
       setfixedMovement(48, 'x')
       break
+      case 't':
+        if (activeTeam === 0 ){
+          activeTeam = 1
+        } else {
+          activeTeam = 0
+        }
     // default: console.log(key)
   }
 }
