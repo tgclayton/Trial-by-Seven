@@ -2,7 +2,10 @@ import Phaser from 'phaser'
 import { createMapArray, addActorsToMapArr, createActors } from './mapfunctions'
 
 // document.addEventListener('keydown', e => detectKeyStroke())
-
+console.log('Press "m" to see map array')
+console.log('Press "c" to flip cursor colour blue/green')
+console.log('Press "t" to change active team')
+console.log('Active team is: team1(guys on the left)')
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -22,19 +25,19 @@ export default {
 }
 
 var map = createMapArray()
-
+var keyPressed = false
 var actors = createActors()
 var team1 = actors[0].name
 var team2 = actors[1].name
-var activeTeam = 0
 
 map = addActorsToMapArr(actors, map)
 
+var activeTeam = team1
 var cursor
 var targets = []
+var selectedUnit
 
-// console.log(map)
-function preload() {
+function preload () {
   this.load.image('warrior', '/assets/images/warrior.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
   this.load.image('gcursor', '/assets/images/green-cursor.png')
@@ -43,7 +46,7 @@ function preload() {
   this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
-function create() {
+function create () {
   this.input.keyboard.on('keydown', keyDown, this)
   this.add.image(480, 480, 'testmap2')
   actors.forEach(team => {
@@ -65,41 +68,109 @@ function create() {
   // console.log(actors)
 }
 
-function update() {
+function update () {
 }
 
-function getCoordsFromIndex(idx) {
+function getCoordsFromIndex (idx) {
   var x = (idx % 20) * 48
   var y = (Math.floor(idx / 20)) * 48
   return [x, y]
 }
 
-function setfixedMovement(val, axis) {
-  // console.log('targets for movement is:', targets)
-  targets.forEach(target => {
-    var newTarget
-    if (target !== cursor) {
-      newTarget = target.physObj
+function findDest (idx, val, axis) {
+  let dest
+  if (axis === 'x') {
+    if (val === 48) {
+      dest = idx + 1
     } else {
-      newTarget = target
+      dest = idx - 1
     }
-    // console.log(target)
-    if (axis === 'x') {
-      newTarget.x += val
-    } else if (axis === 'y') {
-      newTarget.y += val
+  }
+  if (axis === 'y') {
+    if (val === 48) {
+      dest = idx + 20
+    } else {
+      dest = idx - 20
     }
-    newTarget.setPosition(newTarget.x, newTarget.y)
-    newTarget.setData('notMoving', false)
-    setTimeout(() => {
-      newTarget.setData('notMoving', true)
-    }, 100)
-    // console.log('target is:', target)
-    setIndex(target)
-  })
+  }
+  // console.log('dest is:', dest)
+  return dest
 }
 
-function setIndex(target) {
+function checkDestIsFree (dest) {
+  if (map[dest].occupied) {
+    return false
+  } else {
+    return true
+  }
+}
+
+// function checkDestOccupantTeam (dest) {
+
+//   if (map[dest].occupant.teamName === activeTeam) {
+//     return false
+//   } else {
+//     return true
+//   }
+// }
+
+function checkDestOccupant (dest) {
+  if (map[dest].occupant === 'obstacle') {
+    console.log('You cannot move through this obstacle')
+    return false
+  } else {
+    attack(dest)
+  }
+}
+
+function attack (dest) {
+  // console.log('dest is:', dest)
+  // console.log('active tema is:', activeTeam, 'target team is:', map[dest].occupant.teamName)
+  // console.log('')
+  if (map[dest].occupantTeam === activeTeam) {
+    console.log('Probably shouldnt try to mutilate this poor chap')
+  } else {
+    console.log('This is a villainous cur, destroy him!')
+  }
+}
+
+function setfixedMovement (val, axis) {
+  let valid = true
+  // console.log('targets for movement is:', targets)
+  if (targets.length > 1) {
+    let dest = findDest(cursor.getData('idx'), val, axis)
+    valid = checkDestIsFree(dest)
+    // console.log('valid is:', valid)
+    if (!valid) {
+      checkDestOccupant(dest)
+    }
+  }
+  if (valid) {
+    targets.forEach(target => {
+      var newTarget
+      if (target !== cursor) {
+        newTarget = target.physObj
+      } else {
+        newTarget = target
+      }
+      // console.log(target)
+      if (axis === 'x') {
+        newTarget.x += val
+      } else if (axis === 'y') {
+        newTarget.y += val
+      }
+      newTarget.setPosition(newTarget.x, newTarget.y)
+      newTarget.setData('notMoving', false)
+      setTimeout(() => {
+        newTarget.setData('notMoving', true)
+      }, 300)
+      // console.log('target is:', target)
+      setIndex(target)
+    })
+  }
+}
+
+function setIndex (target) {
   let x
   let y
   if (target !== cursor) {
@@ -109,9 +180,6 @@ function setIndex(target) {
     x = cursor.x / 48
     y = (cursor.y / 48) * 20
   }
-  // console.log('got to set index')
-  // console.log('target in set index is:', target)
-
   if (x > 19) {
     x = 19
   } else if (x < 0) {
@@ -122,19 +190,20 @@ function setIndex(target) {
   } else if (y < 0) {
     y = 0
   }
-  // console.log('x: ', cursor.x, 'y:', cursor.y)
   if (target === cursor) {
     cursor.setData('idx', x + y)
   } else {
     map[target.idx].occupied = false
     map[target.idx].occupant = null
+    map[target.idx].occupantTeam = null
     target.idx = x + y
     map[target.idx].occupied = true
     map[target.idx].occupant = target.name
+    map[target.idx].occupantTeam = activeTeam
   }
 }
 
-function checkTile() {
+function checkTile () {
   let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
@@ -148,70 +217,77 @@ function checkTile() {
 
 // targets = [cursor, select]
 // targets = [cursor]
-function selectUnit(con) {
+function selectUnit (con) {
   let idx = cursor.getData('idx')
-  let tile = map[idx]
-  let select = actors[activeTeam].units.find(unit => unit.idx === idx)
+  let team = actors.filter(team => team.name === activeTeam)
+  let select = team[0].units.find(unit => unit.idx === idx)
   if (targets.length > 1) {
+    console.log(selectedUnit.name, 'unselected')
+    selectedUnit = null
     changeCursorColor(con)
     targets.splice(1, 1)
-    // console.log(targets)
   } else if (select) {
+    selectedUnit = select
     changeCursorColor(con)
     targets.push(select)
-    console.log('targets in select is:', targets)
+    console.log('Selected unit is', select.name)
   } else {
     console.log('No unit of your team here')
   }
 }
 
-function changeCursorColor(context) {
+function changeCursorColor (context) {
   let sprite
   if (cursor.getData('sprite') === 'gcursor') {
     sprite = 'bcursor'
   } else if (cursor.getData('sprite') === 'bcursor') {
     sprite = 'gcursor'
   }
-  let idx = cursor.getData('idx')
-  let coords = getCoordsFromIndex(idx)
-  cursor.destroy()
-  cursor = context.physics.add.image(coords[0], coords[1], sprite).setOrigin(0, 0)
-  cursor.setCollideWorldBounds(true)
-  cursor.setData('notMoving', true)
-  cursor.setData('idx', idx)
   cursor.setData('sprite', sprite)
-  targets[0] = cursor
-  setIndex(cursor)
-  // cursor = this.physics.add.image(96, 96, 'bcursor').setOrigin(0, 0)
+  cursor.setTexture(sprite)
 }
 
-function keyDown(e) {
+function keyDown (e) {
   let key = e.key
-  switch (key) {
-    case 'x':
-      selectUnit(this)
-      break
-    case 'z':
-      checkTile()
-      break
-    case 'ArrowUp':
-      setfixedMovement(-48, 'y')
-      break
-    case 'ArrowDown':
-      setfixedMovement(48, 'y')
-      break
-    case 'ArrowLeft':
-      setfixedMovement(-48, 'x')
-      break
-    case 'ArrowRight':
-      setfixedMovement(48, 'x')
-      break
+  if (!keyPressed) {
+    switch (key) {
+      case 'x':
+        selectUnit(this)
+        break
+      case 'z':
+        checkTile()
+        break
+      case 'ArrowUp':
+        setfixedMovement(-48, 'y')
+        break
+      case 'ArrowDown':
+        setfixedMovement(48, 'y')
+        break
+      case 'ArrowLeft':
+        setfixedMovement(-48, 'x')
+        break
+      case 'ArrowRight':
+        setfixedMovement(48, 'x')
+        break
       case 't':
-        if (activeTeam === 0 ){
-          activeTeam = 1
+        if (activeTeam === team1) {
+          activeTeam = team2
         } else {
-          activeTeam = 0
+          activeTeam = team1
         }
+        console.log('Active team is:', activeTeam)
+        break
+      case 'c':
+        changeCursorColor()
+        break
+      case 'm':
+        console.log(map)
+        break
     // default: console.log(key)
+    }
   }
+  keyPressed = true
+  setTimeout(() => {
+    keyPressed = false
+  }, 20)
 }
