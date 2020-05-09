@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { addPlayers } from '../api'
 
 class TitleForm extends React.Component {
   constructor(props) {
@@ -10,15 +11,15 @@ class TitleForm extends React.Component {
       championOne: '',
       championTwo: ''
     }
-
+    this.submitHandler = this.submitHandler.bind(this)
   }
 
-  submitHandler(){
-    // console.log(this.state.championOne)
+  submitHandler = event => {
+    event.preventDefault()
+    addPlayers(this.state)
+    // addPlayers(this.state.championOne)
+    // addPlayers(this.state.championTwo)
   }
-    // button leads you to phaser game page
-  
-
 
   render() {
     return(
@@ -56,3 +57,8 @@ class TitleForm extends React.Component {
 }
 
 export default TitleForm
+
+
+{/* <Link to='/Session' >
+<button className='mainButton' >PROCEED</button>
+</Link> */}
