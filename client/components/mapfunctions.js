@@ -1,9 +1,65 @@
 import mapData from '../../server/public/assets/maps/map.json'
-
-var team1 = 'team1'
-var team2 = 'team2'
-const actors = [{ name: team1, units: [] }, { name: team2, units: [] }]
-const teamSize = 5
+var names = ['Gauward', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
+var team1Name = 'team1'
+var team2Name = 'team2'
+var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'archer']
+var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
+const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
+export const classes = {
+  scout: {
+    teamName: null,
+    name: 'Scout',
+    sprite: 'scout',
+    idx: null,
+    actions: 6,
+    dead: false,
+    kills: 0,
+    wounds: 2
+  },
+  archer: {
+    teamName: null,
+    name: 'Archer',
+    sprite: 'archer',
+    idx: null,
+    actions: 6,
+    dead: false,
+    kills: 0,
+    wounds: 1,
+    ammo: 5
+  },
+  spearman: {
+    teamName: null,
+    name: 'Lancer',
+    sprite: 'spear',
+    idx: null,
+    actions: 4,
+    dead: false,
+    kills: 0,
+    wounds: 3
+  },
+  heavy: {
+    teamName: null,
+    name: 'Sentinel',
+    sprite: 'heavy',
+    idx: null,
+    actions: 2,
+    dead: false,
+    kills: 0,
+    wounds: 5
+  },
+  swordsman:
+  {
+    teamName: null,
+    name: 'Swordsman',
+    sprite: '2hand',
+    idx: null,
+    actions: 4,
+    dead: false,
+    kills: 0,
+    wounds: 4
+  }
+}
+var teamSize = 5
 
 // function findObstacles (mapArr) {
 //   var newArr = mapData.layers[0].data.map((tile, idx) => {
@@ -51,23 +107,32 @@ export function createActors (a) {
   let idx = 140
   let team1 = actorArr[0].name
   let team2 = actorArr[1].name
+  let unit = []
+  let current
+  let ranName
   for (let i = 0; i < teamSize; i++) {
-    let it = i + 1
-    actorArr[0].units.push({
-      teamName: team1,
-      name: 'warrior' + it,
-      sprite: 'warrior',
-      idx: idx + (i * 20),
-      actions: 5
-    })
-    actorArr[1].units.push({
-      teamName: team2,
-      name: 'enemy' + it,
-      sprite: 'enemywarrior',
-      idx: idx + (i * 20) + 19,
-      actions: 5
-    })
+    current = team1Units[i]
+    unit = JSON.parse(JSON.stringify(classes[current]))
+    // console.log('unit is:', unit)
+    ranName = names[Math.floor(Math.random() * names.length)]
+    names = names.filter(name => name !== ranName)
+    unit.teamName = team1
+    unit.sprite = 'r' + unit.sprite
+    unit.name = `${ranName} the ${unit.name}`
+    unit.idx = idx + (i * 20)
+    actorArr[0].units.push(unit)
+
+    current = team2Units[i]
+    unit = JSON.parse(JSON.stringify(classes[current]))
+    ranName = names[Math.floor(Math.random() * names.length)]
+    names = names.filter(name => name !== ranName)
+    unit.teamName = team2
+    unit.name = `${ranName} the ${unit.name}`
+    unit.sprite = 'l' + unit.sprite
+    unit.idx = idx + (i * 20) + 19
+    actorArr[1].units.push(unit)
   }
+  console.log('actors is:', actorArr)
   return actorArr
 }
 

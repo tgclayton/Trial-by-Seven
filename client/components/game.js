@@ -1,11 +1,12 @@
 import Phaser from 'phaser'
-import { createMapArray, addActorsToMapArr, createActors } from './mapfunctions'
+import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
 
 // document.addEventListener('keydown', e => detectKeyStroke())
 console.log('Press "m" to see map array')
 console.log('Press "c" to flip cursor colour blue/green')
 console.log('Press "t" to change active team')
 console.log('Active team is: team1(guys on the left)')
+console.log(classes)
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -43,6 +44,16 @@ function preload () {
   this.load.image('gcursor', '/assets/images/green-cursor.png')
   this.load.image('bcursor', '/assets/images/blue-cursor.png')
   this.load.image('rcursor', '/assets/images/red-cursor.png')
+  this.load.image('l2hand', '/assets/images/soldiers/L2hand.png')
+  this.load.image('r2hand', '/assets/images/soldiers/R2hand.png')
+  this.load.image('lspear', '/assets/images/soldiers/Lspear.png')
+  this.load.image('rspear', '/assets/images/soldiers/Rspear.png')
+  this.load.image('lscout', '/assets/images/soldiers/Lscout.png')
+  this.load.image('rscout', '/assets/images/soldiers/Rscout.png')
+  this.load.image('lheavy', '/assets/images/soldiers/Lheavy.png')
+  this.load.image('rheavy', '/assets/images/soldiers/Rheavy.png')
+  this.load.image('larcher', '/assets/images/soldiers/Larcher.png')
+  this.load.image('rarcher', '/assets/images/soldiers/Rarcher.png')
   this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
@@ -135,6 +146,7 @@ function attack (dest) {
 }
 
 function setfixedMovement (val, axis) {
+  let unit = targets[1]
   let valid = true
   // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
