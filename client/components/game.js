@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { createMapArray, test } from './mapfunctions'
+import { createMapArray, addActorsToMapArr, createActors } from './mapfunctions'
 
 // document.addEventListener('keydown', e => detectKeyStroke())
 
@@ -21,38 +21,18 @@ export default {
   }
 }
 
-const teamSize = 5
-var team1 = 'team1'
-var team2 = 'team2'
-
-var actors = [{ name: team1, units: [] }, { name: team2, units: [] }]
+var actors
 var map = null
 map = createMapArray()
-console.log(map)
 
-createActors()
-
-function createActors () {
-  let idx = 140
-  for (let i = 0; i < teamSize; i++) {
-    let it = i + 1
-    actors[0].units.push({
-      name: 'warrior' + it,
-      sprite: 'warrior',
-      idx: idx + (i * 20)
-    })
-    actors[1].units.push({
-      name: 'enemy' + it,
-      sprite: 'enemywarrior',
-      idx: idx + (i * 20) + 19
-    })
-  }
-}
+actors = createActors()
+map = addActorsToMapArr(actors, map)
 
 var player
 var cursor
 var cursors
 
+console.log(map)
 function preload () {
   this.load.image('warrior', '/assets/images/warrior.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
@@ -140,20 +120,12 @@ function setCursorIndex () {
 function checkTile () {
   let idx = player.getData('idx')
   let coords = getCoordsFromIndex(idx)
+  let tile = map[idx]
   console.log('index:', idx, 'coords:', coords)
-  let found = false
-  actors.forEach(team => {
-    team.units.forEach(actor => {
-      let currentIdx = player.getData('idx')
-      if (actor.idx === currentIdx) {
-        found = true
-      }
-    })
-  })
-  if (found) {
-    console.log('tile contains a unit')
+  if (tile.occupied) {
+    console.log('Tile contains:', tile.occupant)
   } else {
-    console.log('tile does not contain a unit')
+    console.log('Tile is empty')
   }
 }
 
@@ -181,5 +153,10 @@ function keyDown (e) {
   switch (key) {
     case 'x':
       changeCursorColor(this)
+      break
+    case 'z':
+      checkTile()
+      break
+    default: console.log(key)
   }
 }

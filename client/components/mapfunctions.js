@@ -1,9 +1,10 @@
 import mapData from '../../server/public/assets/maps/map.json'
 
-const obstacles = [47, 56, 63, 86, 87, 88, 89, 90, 110, 118, 121, 126, 130, 143, 146, 147, 148, 149, 150, 155,
-  241, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 254, 255, 263, 275, 278, 283, 295,
-  303, 307, 308, 310, 311, 315, 321, 323, 327, 331, 335, 343, 344, 345, 346, 347, 351, 352,
-  353, 354, 355, 358, 373, 388]
+var team1 = 'team1'
+var team2 = 'team2'
+const actors = [{ name: team1, units: [] }, { name: team2, units: [] }]
+const teamSize = 5
+
 
 // function findObstacles (mapArr) {
 //   var newArr = mapData.layers[0].data.map((tile, idx) => {
@@ -16,7 +17,7 @@ const obstacles = [47, 56, 63, 86, 87, 88, 89, 90, 110, 118, 121, 126, 130, 143,
 //   return newArr
 // }
 
-export function createMapArray() {
+export function createMapArray () {
   var mapArr = mapData.layers[0].data.map(tile => {
     if (tile === 10) {
       return {
@@ -33,24 +34,49 @@ export function createMapArray() {
   return mapArr
 }
 
-// export function createMapArray () {
-//   let mapArr = []
-//   for (let i = 0; i < 400; i++) {
-//     mapArr.push({
-//       occupied: false,
-//       occupant: null
-//     }
-//     )
-//   }
-//   mapArr = findObstacles(mapArr)
-//   // obstacles.forEach(idx => {
-//   //   mapArr[idx].occupied = true
-//   //   mapArr[idx].occupant = 'obstacle'
-//   // })
-//   console.log(mapArr)
-//   return mapArr
-// }
-
-export function test() {
-  return 'this is a test'
+export function addActorsToMapArr (actors, mapArr) {
+  let map = mapArr
+  actors.forEach(team => {
+    team.units.forEach(unit => {
+      map[unit.idx].occupied = true
+      map[unit.idx].occupant = unit.name
+    })
+  })
+  return map
 }
+
+export function createActors (a) {
+  var actorArr = actors
+  let idx = 140
+  for (let i = 0; i < teamSize; i++) {
+    let it = i + 1
+    actorArr[0].units.push({
+      name: 'warrior' + it,
+      sprite: 'warrior',
+      idx: idx + (i * 20)
+    })
+    actorArr[1].units.push({
+      name: 'enemy' + it,
+      sprite: 'enemywarrior',
+      idx: idx + (i * 20) + 19
+    })
+  }
+  return actorArr
+}
+
+// var friend = 'warrior'
+// var foe = 'enemy'
+
+// function createActors () {
+
+//   actors.forEach(team => {
+//     for (let i=0; i < teamSize; i++) {
+//       let it = i + 1
+//       team.units.push({
+//         name: team.team+it,
+//         sprite: team.team, 
+//         idx:
+//       })
+//     }
+//   })
+// }
