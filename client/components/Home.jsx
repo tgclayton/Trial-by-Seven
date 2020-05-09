@@ -5,7 +5,7 @@ import TitleForm from './TitleForm'
 class Home extends React.Component {
   render() {
     return(
-      <div>
+      <div className='home'>
         <Description />
         <TitleForm />
       </div>
