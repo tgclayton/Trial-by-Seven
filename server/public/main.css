@@ -5,6 +5,13 @@ body {
   justify-content: center; */
 }
 
+@font-face {
+  font-family: 'alagard';
+  src: url(../public/assets/font/alagard.ttf);
+  font-style: normal;
+  font-weight: 100;
+}
+
 .home {
   background-image: url('castle.png');
   background-repeat: no-repeat;
