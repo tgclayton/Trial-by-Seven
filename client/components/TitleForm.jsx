@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { addPlayers } from '../api'
 
 class TitleForm extends React.Component {
   constructor(props) {
@@ -10,11 +11,14 @@ class TitleForm extends React.Component {
       championOne: '',
       championTwo: ''
     }
-
+    this.submitHandler = this.submitHandler.bind(this)
   }
 
-  submitHandler(){
-    // console.log(this.state.championOne)
+  submitHandler = event => {
+    event.preventDefault()
+    addPlayers(this.state)
+    // addPlayers(this.state.championOne)
+    // addPlayers(this.state.championTwo)
   }
     // button leads you to phaser game page
   
@@ -22,7 +26,7 @@ class TitleForm extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className='form'>
         <Form>
         <h3>What should the heralds call you?</h3>
           <Form.Group>
@@ -41,8 +45,8 @@ class TitleForm extends React.Component {
               onChange={event => this.setState({championTwo: event.target.value })}
              />
           </Form.Group>
-          <Form.Button onClick={this.submitHandler}>Submit</Form.Button>
-          <Link to='/game'>Temporary Link to PhaserGame</Link>
+          <Form.Button onClick={this.submitHandler}><Link to='/game'>Fight</Link></Form.Button>
+          
         </Form>
       </div>
     )
@@ -50,3 +54,8 @@ class TitleForm extends React.Component {
 }
 
 export default TitleForm
+
+
+{/* <Link to='/Session' >
+<button className='mainButton' >PROCEED</button>
+</Link> */}

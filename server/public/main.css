@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  border: 2px solid blue;
-  /* display: flex;
-  justify-content: center; */
+  border: 2px solid blue; /* alicia reference box*/
 }
 
 @font-face {
@@ -20,7 +18,7 @@ body {
   flex-direction: center;
   width: 70%;
   height: 100%;
-  border: 3px solid red;
+  border: 3px solid red; /* alicia reference box*/
 }
 
 
