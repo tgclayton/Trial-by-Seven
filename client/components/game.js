@@ -1,12 +1,11 @@
 import Phaser from 'phaser'
 import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
 
-// document.addEventListener('keydown', e => detectKeyStroke())
 console.log('Press "m" to see map array')
 console.log('Press "c" to flip cursor colour blue/green')
 console.log('Press "t" to change active team')
 console.log('Active team is: team1(guys on the left)')
-console.log(classes)
+
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -147,6 +146,7 @@ function attack (dest) {
 
 function setfixedMovement (val, axis) {
   let unit = targets[1]
+  console.log(unit)
   let valid = true
   // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
@@ -209,6 +209,8 @@ function setIndex (target) {
     map[target.idx].occupant = null
     map[target.idx].occupantTeam = null
     target.idx = x + y
+    // target.x = x
+    // target.y = y
     map[target.idx].occupied = true
     map[target.idx].occupant = target.name
     map[target.idx].occupantTeam = activeTeam
@@ -219,16 +221,22 @@ function checkTile () {
   let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
+  let team
+  if (activeTeam === team1) {
+    team = 0
+  } else {
+    team = 1
+  }
   console.log('index:', idx, 'coords:', coords)
   if (tile.occupied) {
+    let occupant = actors[team].units.filter(unit => unit.name === tile.occupant)
     console.log('Tile contains:', tile.occupant)
+    console.log('His info is:', occupant)
   } else {
     console.log('Tile is empty')
   }
 }
 
-// targets = [cursor, select]
-// targets = [cursor]
 function selectUnit (con) {
   let idx = cursor.getData('idx')
   let team = actors.filter(team => team.name === activeTeam)

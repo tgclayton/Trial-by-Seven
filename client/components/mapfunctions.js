@@ -132,7 +132,7 @@ export function createActors (a) {
     unit.idx = idx + (i * 20) + 19
     actorArr[1].units.push(unit)
   }
-  console.log('actors is:', actorArr)
+  // console.log('actors is:', actorArr)
   return actorArr
 }
 
