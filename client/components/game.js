@@ -21,19 +21,20 @@ export default {
   }
 }
 
-var actors
-var map = null
-map = createMapArray()
+var map = createMapArray()
 
-actors = createActors()
+var actors = createActors()
+var team1 = actors[0].name
+var team2 = actors[1].name
+var activeTeam = 0
+
 map = addActorsToMapArr(actors, map)
 
-var player
 var cursor
-var cursors
+var targets = []
 
-console.log(map)
-function preload () {
+// console.log(map)
+function preload() {
   this.load.image('warrior', '/assets/images/warrior.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
   this.load.image('gcursor', '/assets/images/green-cursor.png')
@@ -42,56 +43,75 @@ function preload () {
   this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
-function create () {
+function create() {
   this.input.keyboard.on('keydown', keyDown, this)
-  // this.input.keyboard.on('keydown-Z', checkTile, this)
-  // this.input.keyboard.on('keydown-X', changeCursorColor, this)
   this.add.image(480, 480, 'testmap2')
-  cursors = this.input.keyboard.createCursorKeys()
-
   actors.forEach(team => {
     team.units.forEach(actor => {
       let coords = getCoordsFromIndex(actor.idx)
       actor.x = coords[0]
       actor.y = coords[1]
-      actor = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
+      actor.physObj = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
+      actor.physObj.setCollideWorldBounds(true)
     })
   })
 
-  player = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
-  player.setCollideWorldBounds(true)
-  player.setData('notMoving', true)
-  player.setData('idx', 0)
-  player.setData('sprite', 'gcursor')
+  cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
+  cursor.setCollideWorldBounds(true)
+  cursor.setData('notMoving', true)
+  cursor.setData('idx', 0)
+  cursor.setData('sprite', 'gcursor')
+  targets.push(cursor)
+  // console.log(actors)
 }
 
-function update () {
+function update() {
 }
 
-function getCoordsFromIndex (idx) {
+function getCoordsFromIndex(idx) {
   var x = (idx % 20) * 48
   var y = (Math.floor(idx / 20)) * 48
   return [x, y]
 }
 
-function setfixedMovement (val, axis) {
-  if (axis === 'x') {
-    player.x += val
-  } else if (axis === 'y') {
-    player.y += val
-  }
-
-  player.setPosition(player.x, player.y)
-  player.setData('notMoving', false)
-  setTimeout(() => {
-    player.setData('notMoving', true)
-  }, 100)
-  setCursorIndex()
+function setfixedMovement(val, axis) {
+  // console.log('targets for movement is:', targets)
+  targets.forEach(target => {
+    var newTarget
+    if (target !== cursor) {
+      newTarget = target.physObj
+    } else {
+      newTarget = target
+    }
+    // console.log(target)
+    if (axis === 'x') {
+      newTarget.x += val
+    } else if (axis === 'y') {
+      newTarget.y += val
+    }
+    newTarget.setPosition(newTarget.x, newTarget.y)
+    newTarget.setData('notMoving', false)
+    setTimeout(() => {
+      newTarget.setData('notMoving', true)
+    }, 100)
+    // console.log('target is:', target)
+    setIndex(target)
+  })
 }
 
-function setCursorIndex () {
-  let x = player.x / 48
-  let y = (player.y / 48) * 20
+function setIndex(target) {
+  let x
+  let y
+  if (target !== cursor) {
+    x = target.physObj.x / 48
+    y = (target.physObj.y / 48) * 20
+  } else {
+    x = cursor.x / 48
+    y = (cursor.y / 48) * 20
+  }
+  // console.log('got to set index')
+  // console.log('target in set index is:', target)
+
   if (x > 19) {
     x = 19
   } else if (x < 0) {
@@ -102,12 +122,20 @@ function setCursorIndex () {
   } else if (y < 0) {
     y = 0
   }
-  // console.log('x: ', player.x, 'y:', player.y)
-  player.setData('idx', x + y)
+  // console.log('x: ', cursor.x, 'y:', cursor.y)
+  if (target === cursor) {
+    cursor.setData('idx', x + y)
+  } else {
+    map[target.idx].occupied = false
+    map[target.idx].occupant = null
+    target.idx = x + y
+    map[target.idx].occupied = true
+    map[target.idx].occupant = target.name
+  }
 }
 
-function checkTile () {
-  let idx = player.getData('idx')
+function checkTile() {
+  let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
   console.log('index:', idx, 'coords:', coords)
@@ -118,30 +146,50 @@ function checkTile () {
   }
 }
 
-function changeCursorColor (context) {
+// targets = [cursor, select]
+// targets = [cursor]
+function selectUnit(con) {
+  let idx = cursor.getData('idx')
+  let tile = map[idx]
+  let select = actors[activeTeam].units.find(unit => unit.idx === idx)
+  if (targets.length > 1) {
+    changeCursorColor(con)
+    targets.splice(1, 1)
+    // console.log(targets)
+  } else if (select) {
+    changeCursorColor(con)
+    targets.push(select)
+    console.log('targets in select is:', targets)
+  } else {
+    console.log('No unit of your team here')
+  }
+}
+
+function changeCursorColor(context) {
   let sprite
-  if (player.getData('sprite') === 'gcursor') {
+  if (cursor.getData('sprite') === 'gcursor') {
     sprite = 'bcursor'
-  } else if (player.getData('sprite') === 'bcursor') {
+  } else if (cursor.getData('sprite') === 'bcursor') {
     sprite = 'gcursor'
   }
-  let idx = player.getData('idx')
+  let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
-  player.destroy()
-  player = context.physics.add.image(coords[0], coords[1], sprite).setOrigin(0, 0)
-  player.setCollideWorldBounds(true)
-  player.setData('notMoving', true)
-  player.setData('idx', idx)
-  player.setData('sprite', sprite)
-  setCursorIndex()
+  cursor.destroy()
+  cursor = context.physics.add.image(coords[0], coords[1], sprite).setOrigin(0, 0)
+  cursor.setCollideWorldBounds(true)
+  cursor.setData('notMoving', true)
+  cursor.setData('idx', idx)
+  cursor.setData('sprite', sprite)
+  targets[0] = cursor
+  setIndex(cursor)
   // cursor = this.physics.add.image(96, 96, 'bcursor').setOrigin(0, 0)
 }
 
-function keyDown (e) {
+function keyDown(e) {
   let key = e.key
   switch (key) {
     case 'x':
-      changeCursorColor(this)
+      selectUnit(this)
       break
     case 'z':
       checkTile()
