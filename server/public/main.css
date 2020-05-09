@@ -1,0 +1,28 @@
+html body {
+  margin: 0;
+}
+
+.descriptionDiv{
+  width: 500px;
+  height: 1000px;
+  background-color: rgba(76, 17, 30, 0.938);
+}
+
+.descriptionBorder{
+  width: 600px;
+  height: 100px;
+  border-color: #FEAD01;
+  border-style: solid;
+  border-width: 1px;
+  margin: 10px;
+  background-color: red;
+}
+
+.descriptionBodyText {
+  color: #FEAD01;
+
+}
+
+.form {
+  border: 1px solid black;
+}
