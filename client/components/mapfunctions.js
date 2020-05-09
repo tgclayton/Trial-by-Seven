@@ -1,5 +1,5 @@
 import mapData from '../../server/public/assets/maps/map.json'
-var names = ['Gauward', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
+var names = ['Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
 var team1Name = 'team1'
 var team2Name = 'team2'
 var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'archer']
@@ -14,7 +14,7 @@ export const classes = {
     actions: 6,
     dead: false,
     kills: 0,
-    wounds: 2
+    woundsRemaining: 2
   },
   archer: {
     teamName: null,
@@ -24,7 +24,7 @@ export const classes = {
     actions: 6,
     dead: false,
     kills: 0,
-    wounds: 1,
+    woundsRemaining: 1,
     ammo: 5
   },
   spearman: {
@@ -35,7 +35,7 @@ export const classes = {
     actions: 4,
     dead: false,
     kills: 0,
-    wounds: 3
+    woundsRemaining: 3
   },
   heavy: {
     teamName: null,
@@ -45,7 +45,7 @@ export const classes = {
     actions: 2,
     dead: false,
     kills: 0,
-    wounds: 5
+    woundsRemaining: 5
   },
   swordsman:
   {
@@ -56,7 +56,7 @@ export const classes = {
     actions: 4,
     dead: false,
     kills: 0,
-    wounds: 4
+    woundsRemaining: 4
   }
 }
 var teamSize = 5

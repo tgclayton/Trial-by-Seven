@@ -29,7 +29,7 @@ var keyPressed = false
 var actors = createActors()
 var team1 = actors[0].name
 var team2 = actors[1].name
-
+var scene
 map = addActorsToMapArr(actors, map)
 
 var activeTeam = team1
@@ -57,6 +57,7 @@ function preload () {
 }
 
 function create () {
+  scene = this
   this.input.keyboard.on('keydown', keyDown, this)
   this.add.image(480, 480, 'testmap2')
   actors.forEach(team => {
@@ -141,12 +142,12 @@ function attack (dest) {
     console.log('Probably shouldnt try to mutilate this poor chap')
   } else {
     console.log('This is a villainous cur, destroy him!')
+    scene.cameras.main.shake(200)
   }
 }
 
 function setfixedMovement (val, axis) {
   let unit = targets[1]
-  console.log(unit)
   let valid = true
   // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
