@@ -25,73 +25,41 @@ const teamSize = 5
 var team1 = 'team1'
 var team2 = 'team2'
 
-var actors = [{ name: team1 }, { name: team2 }]
+var actors = [{ name: team1, units: [] }, { name: team2, units: [] }]
 var map = null
 map = createMapArray()
 console.log(map)
 
-function createActors () {
-  for (let i = 0; i < teamSize; i++) {
+createActors()
 
+function createActors () {
+  let idx = 140
+  for (let i = 0; i < teamSize; i++) {
+    let it = i + 1
+    actors[0].units.push({
+      name: 'warrior' + it,
+      sprite: 'warrior',
+      idx: idx + (i * 20)
+    })
+    actors[1].units.push({
+      name: 'enemy' + it,
+      sprite: 'enemywarrior',
+      idx: idx + (i * 20) + 19
+    })
   }
 }
 
-// var actors = [
-//   {
-//     team: 1,
-//     units: [
-//       {
-//         name: 'warrior2H',
-//         sprite: 'warrior',
-//         idx: 160
-
-//       },
-//       {
-//         name: 'warrior2',
-//         sprite: 'warrior',
-//         idx: 180
-//       },
-//       {
-//         name: 'warrior3',
-//         sprite: 'warrior',
-//         idx: 200
-//       }
-//     ]
-//   },
-//   {
-//     team: 2,
-//     units: [
-//       {
-//         name: 'enemy1',
-//         sprite: 'enemywarrior',
-//         idx: 179
-//       },
-//       {
-//         name: 'enemy2',
-//         sprite: 'enemywarrior',
-//         idx: 199
-//       },
-//       {
-//         name: 'enemy3',
-//         sprite: 'enemywarrior',
-//         idx: 219
-//       }
-//     ]
-//   }
-// ]
-
-// var game = new Phaser.Game(config)
 var player
 var cursor
 var cursors
 
 function preload () {
-  this.load.image('warrior', '../../server/public/assets/images/warrior.png')
-  this.load.image('enemywarrior', '../../server/public/assets/images/enemywarrior.png')
-  this.load.image('gcursor', '../../server/public/assets/images/green-cursor.png')
-  this.load.image('bcursor', '../../server/public/assets/images/blue-cursor.png')
-  this.load.image('rcursor', '../../server/public/assets/images/red-cursor.png')
-  this.load.image('testmap2', '../../server/public/assets/images/testmap2.png')
+  this.load.image('warrior', '/assets/images/warrior.png')
+  this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
+  this.load.image('gcursor', '/assets/images/green-cursor.png')
+  this.load.image('bcursor', '/assets/images/blue-cursor.png')
+  this.load.image('rcursor', '/assets/images/red-cursor.png')
+  this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
 function create () {
