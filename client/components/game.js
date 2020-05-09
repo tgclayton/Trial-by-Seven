@@ -86,12 +86,12 @@ var cursor
 var cursors
 
 function preload () {
-  this.load.image('warrior', 'src/assets/images/warrior.png')
-  this.load.image('enemywarrior', 'src/assets/images/enemywarrior.png')
-  this.load.image('gcursor', 'src/assets/images/green-cursor.png')
-  this.load.image('bcursor', 'src/assets/images/blue-cursor.png')
-  this.load.image('rcursor', 'src/assets/images/red-cursor.png')
-  this.load.image('testmap2', 'src/assets/images/testmap2.png')
+  this.load.image('warrior', '../../server/public/assets/images/warrior.png')
+  this.load.image('enemywarrior', '../../server/public/assets/images/enemywarrior.png')
+  this.load.image('gcursor', '../../server/public/assets/images/green-cursor.png')
+  this.load.image('bcursor', '../../server/public/assets/images/blue-cursor.png')
+  this.load.image('rcursor', '../../server/public/assets/images/red-cursor.png')
+  this.load.image('testmap2', '../../server/public/assets/images/testmap2.png')
 }
 
 function create () {
