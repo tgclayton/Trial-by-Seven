@@ -17,7 +17,7 @@ export const classes = {
     actions: 6,
     dead: false,
     kills: 0,
-    woundsRemaining: 2
+    health: 2
   },
   archer: {
     damage: 1,
@@ -29,7 +29,7 @@ export const classes = {
     actions: 6,
     dead: false,
     kills: 0,
-    woundsRemaining: 1,
+    health: 1,
     ammo: 5
   },
   spearman: {
@@ -42,7 +42,7 @@ export const classes = {
     actions: 4,
     dead: false,
     kills: 0,
-    woundsRemaining: 3
+    health: 3
   },
   heavy: {
     damage: 3,
@@ -54,7 +54,7 @@ export const classes = {
     actions: 2,
     dead: false,
     kills: 0,
-    woundsRemaining: 5
+    health: 5
   },
   swordsman: {
     damage: 2,
@@ -66,7 +66,7 @@ export const classes = {
     actions: 4,
     dead: false,
     kills: 0,
-    woundsRemaining: 3
+    health: 3
   }
 }
 var teamSize = 5
