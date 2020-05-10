@@ -13,6 +13,5 @@ node_modules/
 dist/
 /npm-debug.log
 
-
-#MAP
+#Map
 *.map
