@@ -1,11 +1,6 @@
 import Phaser from 'phaser'
 import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
 
-console.log('Press "m" to see map array')
-console.log('Press "c" to flip cursor colour blue/green')
-console.log('Press "t" to change active team')
-console.log('Active team is: team1(guys on the left)')
-
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -30,14 +25,15 @@ var actors = createActors()
 var team1 = actors[0].name
 var team2 = actors[1].name
 var scene
-map = addActorsToMapArr(actors, map)
+map = addActorsToMapArr(actors, map) // set these variables in create()
 var aMode = false
 var activeTeam = team1
 var cursor
 var targets = []
 var selectedUnit
+var winner
 
-function preload() {
+function preload () {
   this.load.image('warrior', '/assets/images/warrior.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
   this.load.image('gcursor', '/assets/images/green-cursor.png')
@@ -56,7 +52,7 @@ function preload() {
   this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
-function create() {
+function create () {
   scene = this
   this.input.keyboard.on('keydown', keyDown, this)
   this.add.image(480, 480, 'testmap2')
@@ -79,23 +75,23 @@ function create() {
   // console.log(actors)
 }
 
-function update() {
+function update () {
 }
 
-function getCoordsFromIndex(idx) {
+function getCoordsFromIndex (idx) {
   var x = (idx % 20) * 48
   var y = (Math.floor(idx / 20)) * 48
   return [x, y]
 }
 
-function getIndexFromCoords(coords) {
+function getIndexFromCoords (coords) {
   let x = coords[0] / 48
   let y = (coords[1] / 48) * 20
   let idx = x + y
   return idx
 }
 
-function findDest(idx, val, axis) {
+function findDest (idx, val, axis) {
   let dest
   if (axis === 'x') {
     if (val === 48) {
@@ -115,7 +111,7 @@ function findDest(idx, val, axis) {
   return dest
 }
 
-function checkDestIsFree(dest) {
+function checkDestIsFree (dest) {
   if (map[dest].occupied) {
     return false
   } else {
@@ -123,7 +119,7 @@ function checkDestIsFree(dest) {
   }
 }
 
-function checkDestOccupant(dest) {
+function checkDestOccupant (dest) {
   if (map[dest].occupant === 'obstacle') {
     console.log('You cannot move through this obstacle')
     return false
@@ -132,7 +128,7 @@ function checkDestOccupant(dest) {
   }
 }
 
-function attack(dest) {
+function attack (dest) {
   if (selectedUnit.actions > 0) {
     if (map[dest].occupantTeam === activeTeam) {
       console.log('Probably shouldnt try to mutilate this poor chap')
@@ -145,22 +141,68 @@ function attack(dest) {
       }
       let enemy = actors[idx].units.filter(unit => unit.idx === dest)
       enemy = enemy[0]
-      enemy.woundsRemaining = enemy.woundsRemaining - selectedUnit.damage
+      enemy.health = enemy.health - selectedUnit.damage
       console.log(enemy)
       console.log(selectedUnit.name, 'attacked', enemy.name, 'and did', selectedUnit.damage, 'damage')
       selectedUnit.actions -= 2
       scene.cameras.main.shake(200)
+      checkDead(enemy)
+      checkGameOver()
     }
   }
 }
 
-function setfixedMovement(val, axis) {
+function checkGameOver () {
+  let gameOver = true
+  let idx = getIdxOfActiveTeam()
+  if (idx === 0) {
+    idx = 1
+  } else {
+    idx = 0
+  }
+  actors[idx].units.forEach(unit => {
+    if (!unit.dead) {
+      gameOver = false
+    } else {
+      winner = actors[getIdxOfActiveTeam()].name
+    }
+  })
+  if (gameOver) {
+    console.log('Game over, the winner is:', winner)
+  }
+}
+
+function checkDead (target) {
+  if (target.health < 1) {
+    target.dead = true
+    map[target.idx].occupied = false
+    map[target.idx].occupant = null
+    map[target.idx].occupantTeam = null
+    target.physObj.destroy()
+    selectedUnit.kills.push(target.name)
+  }
+}
+
+function setfixedMovement (val, axis) {
+  let inRange = true
   let unit
   let valid = true
+  let dest = findDest(cursor.getData('idx'), val, axis)
+  if (aMode) {
+    inRange = false
+    let neighbours = findNeighbours(selectedUnit.idx)
+    neighbours.forEach(n => {
+      if (n === dest) {
+        inRange = true
+      }
+    })
+  }
+  if (!inRange) {
+    return
+  }
   // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
     unit = targets[1]
-    let dest = findDest(cursor.getData('idx'), val, axis)
     valid = checkDestIsFree(dest)
     // console.log('valid is:', valid)
     if (!valid) {
@@ -201,7 +243,7 @@ function setfixedMovement(val, axis) {
   }
 }
 
-function setIndex(target) {
+function setIndex (target) {
   let x
   let y
   if (target !== cursor) {
@@ -238,7 +280,7 @@ function setIndex(target) {
   }
 }
 
-function checkTile() {
+function checkTile () {
   let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
@@ -254,14 +296,13 @@ function checkTile() {
   }
 }
 
-function selectUnit(con) {
-  console.log('Active team is:', activeTeam)
+function selectUnit (con) {
+  // console.log('Active team is:', activeTeam)
   let idx = cursor.getData('idx')
   let team = actors.filter(team => team.name === activeTeam)
   let select = team[0].units.find(unit => unit.idx === idx)
   console.log('unit has:', select.actions, 'actions left')
   if (targets.length > 1) {
-    console.log(selectedUnit.name, 'unselected')
     selectedUnit = null
     changeCursorColor(con)
     targets.splice(1, 1)
@@ -269,38 +310,42 @@ function selectUnit(con) {
     selectedUnit = select
     changeCursorColor(con)
     targets.push(select)
-    console.log('Selected unit is', select.name)
   } else {
     console.log('No unit of your team here')
   }
 }
 
-function attackMode() {
-  if (selectedUnit) {
+function attackMode () {
+  if (selectedUnit && !aMode) {
     aMode = true
     cursor.setTexture('rcursor')
     targets.splice(1, 1)
+  } else if (selectedUnit && aMode) {
+    aMode = false
+    cursor.setTexture('bcursor')
+    cursor.setPosition(selectedUnit.x, selectedUnit.y)
+    targets.push(selectedUnit)
+    setIndex(cursor)
   }
 }
 
-function findNeighbours(idx) {
+function findNeighbours (idx) {
   let neighbours = []
   let attackerCoords = getCoordsFromIndex(idx)
   for (let i = 0; i < 9; i++) {
-    if (i !== 4){
-    let itX = (Math.floor(i / 3) - 1) * 48
-    let itY = ((i % 3) - 1) * 48
-    let newX = (attackerCoords[0]+itX)
-    let newY = (attackerCoords[1]+itY)
-    let neighbourIdx = getIndexFromCoords([newX, newY])
-    if (newX >= 0 && newX <= 912 && newY >= 0 && newY <= 912)
-    neighbours.push(neighbourIdx)
+    if (i !== 4) {
+      let itX = (Math.floor(i / 3) - 1) * 48
+      let itY = ((i % 3) - 1) * 48
+      let newX = (attackerCoords[0] + itX)
+      let newY = (attackerCoords[1] + itY)
+      let neighbourIdx = getIndexFromCoords([newX, newY])
+      if (newX >= 0 && newX <= 912 && newY >= 0 && newY <= 912) { neighbours.push(neighbourIdx) }
+    }
   }
-}
   return neighbours
 }
 
-function changeCursorColor(context) {
+function changeCursorColor (context) {
   let sprite
   if (cursor.getData('sprite') === 'gcursor') {
     sprite = 'bcursor'
@@ -311,8 +356,7 @@ function changeCursorColor(context) {
   cursor.setTexture(sprite)
 }
 
-function restoreActions() {
-  let team
+function restoreActions () {
   let idx = getIdxOfActiveTeam()
   let units = actors[idx].units
   units.forEach(unit => {
@@ -322,7 +366,7 @@ function restoreActions() {
   })
 }
 
-function getIdxOfActiveTeam() {
+function getIdxOfActiveTeam () {
   let idx
   if (activeTeam === team1) {
     idx = 0
@@ -332,55 +376,59 @@ function getIdxOfActiveTeam() {
   return idx
 }
 
-function keyDown(e) {
+function keyDown (e) {
   let key = e.key
   if (!keyPressed) {
     switch (key) {
-      case 'x':
+      case 'e': // select
         selectUnit(this)
         break
-      case 'z':
+      case 'z': // check tile contents in console
         checkTile()
         break
-      case 'ArrowUp':
-        e.preventDefault()
+      case 'w': // up
+        event.preventDefault()
         setfixedMovement(-48, 'y')
         break
-      case 'ArrowDown':
-        e.preventDefault()
+      case 's': // down
+        event.preventDefault()
         setfixedMovement(48, 'y')
         break
-      case 'ArrowLeft':
-        e.preventDefault()
+      case 'a': // left
+        event.preventDefault()
         setfixedMovement(-48, 'x')
         break
-      case 'ArrowRight':
-        e.preventDefault()
+      case 'd': // right
+        event.preventDefault()
         setfixedMovement(48, 'x')
         break
-      case 't':
-        restoreActions()
-        if (activeTeam === team1) {
-          activeTeam = team2
-        } else {
-          activeTeam = team1
+      case 't': // end turn
+        if (targets.length < 2) {
+          restoreActions()
+          if (activeTeam === team1) {
+            activeTeam = team2
+          } else {
+            activeTeam = team1
+          }
+          console.log('Active team is:', activeTeam)
         }
-        console.log('Active team is:', activeTeam)
         break
       case 'c':
         changeCursorColor()
         break
-      case 'm':
+      case 'm': // look at map array in console
         console.log(map)
         break
-      case 'a':
+      case 'q': // enter attack mode
         attackMode()
         break
-      case 's':
+      case 'r': //  fire attack
         if (aMode) {
           attack(cursor.getData('idx'))
         }
         break
+      case 'o':
+        console.log('actors is:', actors)
       // default: console.log(key)
     }
   }

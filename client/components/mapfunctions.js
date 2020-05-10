@@ -1,8 +1,8 @@
 import mapData from '../../server/public/assets/maps/map.json'
-var names = ['Ulfrick','Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
+var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
 var team1Name = 'team1'
 var team2Name = 'team2'
-var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'archer']
+var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 export const classes = {
@@ -10,63 +10,43 @@ export const classes = {
     // range: checkMelee(),
     damage: 1,
     class: 'scout',
-    teamName: null,
     name: 'Scout',
     sprite: 'scout',
-    idx: null,
     actions: 6,
-    dead: false,
-    kills: 0,
-    woundsRemaining: 2
+    health: 2
   },
   archer: {
     damage: 1,
     class: 'archer',
-    teamName: null,
     name: 'Archer',
     sprite: 'archer',
-    idx: null,
     actions: 6,
-    dead: false,
-    kills: 0,
-    woundsRemaining: 1,
+    health: 1,
     ammo: 5
   },
   spearman: {
     damage: 1,
     class: 'spearman',
-    teamName: null,
     name: 'Lancer',
     sprite: 'spear',
-    idx: null,
     actions: 4,
-    dead: false,
-    kills: 0,
-    woundsRemaining: 3
+    health: 3
   },
   heavy: {
     damage: 3,
     class: 'heavy',
-    teamName: null,
     name: 'Sentinel',
     sprite: 'heavy',
-    idx: null,
     actions: 2,
-    dead: false,
-    kills: 0,
-    woundsRemaining: 5
+    health: 5
   },
   swordsman: {
     damage: 2,
     class: 'swordsman',
-    teamName: null,
     name: 'Swordsman',
     sprite: '2hand',
-    idx: null,
     actions: 4,
-    dead: false,
-    kills: 0,
-    woundsRemaining: 3
+    health: 3
   }
 }
 var teamSize = 5
@@ -130,6 +110,8 @@ export function createActors (a) {
     unit.sprite = 'r' + unit.sprite
     unit.name = `${ranName} the ${unit.name}`
     unit.idx = idx + (i * 20)
+    unit.dead = false
+    unit.kills = []
     actorArr[0].units.push(unit)
 
     current = team2Units[i]
@@ -140,6 +122,8 @@ export function createActors (a) {
     unit.name = `${ranName} the ${unit.name}`
     unit.sprite = 'l' + unit.sprite
     unit.idx = idx + (i * 20) + 19
+    unit.dead = false
+    unit.kills = []
     actorArr[1].units.push(unit)
   }
   // console.log('actors is:', actorArr)
