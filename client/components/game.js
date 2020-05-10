@@ -154,7 +154,7 @@ function update () {
 function checkTile () {
   let idx = player.getData('idx')
   let coords = getCoordsFromIndex(idx)
-  console.log('index:', idx, 'coords:', coords)
+  // console.log('index:', idx, 'coords:', coords)
   let found = false
   actors.forEach(team => {
     team.units.forEach(actor => {
