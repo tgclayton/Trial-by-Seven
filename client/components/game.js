@@ -39,6 +39,8 @@ function preload () {
   this.load.image('gcursor', '/assets/images/green-cursor.png')
   this.load.image('bcursor', '/assets/images/blue-cursor.png')
   this.load.image('rcursor', '/assets/images/red-cursor.png')
+  this.load.image('done', '/assets/images/done.png')
+  this.load.image('ready', '/assets/images/ready.png')
   this.load.image('l2hand', '/assets/images/soldiers/L2hand.png')
   this.load.image('r2hand', '/assets/images/soldiers/R2hand.png')
   this.load.image('lspear', '/assets/images/soldiers/Lspear.png')
@@ -63,6 +65,10 @@ function create () {
       actor.y = coords[1]
       actor.physObj = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
       actor.physObj.setCollideWorldBounds(true)
+      if (actor.teamName === activeTeam) {
+        console.log('actor was in active team')
+        actor.status = this.add.image(actor.x, actor.y, 'ready').setOrigin(0, 0)
+      }
     })
   })
 
@@ -154,12 +160,7 @@ function attack (dest) {
 
 function checkGameOver () {
   let gameOver = true
-  let idx = getIdxOfActiveTeam()
-  if (idx === 0) {
-    idx = 1
-  } else {
-    idx = 0
-  }
+  let idx = getIdxOfInactiveTeam()
   actors[idx].units.forEach(unit => {
     if (!unit.dead) {
       gameOver = false
@@ -213,7 +214,8 @@ function setfixedMovement (val, axis) {
       valid = false
     }
   }
-  if (unit && valid) {
+
+  if (unit !== undefined && valid) {
     unit.actions -= 1
   }
 
@@ -231,8 +233,11 @@ function setfixedMovement (val, axis) {
       } else if (axis === 'y') {
         newTarget.y += val
       }
-
+      if (unit) {
+        unit.status.setPosition(newTarget.x, newTarget.y)
+      }
       newTarget.setPosition(newTarget.x, newTarget.y)
+
       newTarget.setData('notMoving', false)
       setTimeout(() => {
         newTarget.setData('notMoving', true)
@@ -266,6 +271,9 @@ function setIndex (target) {
   if (target === cursor) {
     cursor.setData('idx', x + y)
   } else {
+    if (target.actions < 1) {
+      target.status.setTexture('done')
+    }
     map[target.idx].occupied = false
     map[target.idx].occupant = null
     map[target.idx].occupantTeam = null
@@ -310,6 +318,7 @@ function selectUnit (con) {
     selectedUnit = select
     changeCursorColor(con)
     targets.push(select)
+    console.log(targets)
   } else {
     console.log('No unit of your team here')
   }
@@ -376,6 +385,27 @@ function getIdxOfActiveTeam () {
   return idx
 }
 
+function getIdxOfInactiveTeam () {
+  let idx = getIdxOfActiveTeam()
+  if (idx === 0) {
+    idx = 1
+  } else {
+    idx = 0
+  }
+  return idx
+}
+
+function setStatus () {
+  let aIdx = getIdxOfActiveTeam()
+  let inaIdx = getIdxOfInactiveTeam()
+  actors[aIdx].units.forEach(unit => {
+    unit.status.destroy()
+  })
+  actors[inaIdx].units.forEach(unit => {
+    unit.status = scene.add.image(unit.x, unit.y, 'ready').setOrigin(0, 0)
+  })
+}
+
 function keyDown (e) {
   let key = e.key
   if (!keyPressed) {
@@ -405,6 +435,7 @@ function keyDown (e) {
       case 't': // end turn
         if (targets.length < 2) {
           restoreActions()
+          setStatus()
           if (activeTeam === team1) {
             activeTeam = team2
           } else {
