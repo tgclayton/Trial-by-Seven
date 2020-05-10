@@ -25,7 +25,7 @@ var actors = createActors()
 var team1 = actors[0].name
 var team2 = actors[1].name
 var scene
-map = addActorsToMapArr(actors, map)
+map = addActorsToMapArr(actors, map) // set these variables in create()
 var aMode = false
 var activeTeam = team1
 var cursor
