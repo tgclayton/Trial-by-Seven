@@ -69,7 +69,7 @@ body {
 .formBodyBorder{
   padding: 15px;
   background-color: rgba(76, 17, 30, 0.582);
-  height: 300px;
+  height: 230px;
 }
 
 .formBody{
@@ -112,7 +112,7 @@ padding: 10px;
   color: #FEAD01;
   font-family: alagard;
   font-weight: 100;
-  font-size: 20px;
+  font-size: 30px;
 
 }
 
@@ -151,4 +151,40 @@ padding: 10px;
   display: flex;
   flex-direction: row;
   width: 400px;
+}
+
+.formContainerDiv{
+  margin-left: 400px;
+  margin-top: 550px;
+}
+
+.formlabel{
+  font-family: alagard;
+  font-weight: 100;
+  font-size: 25px;
+  color: #FEAD01;
+  margin-right: 10px;
+}
+
+.gameBody{
+  display: flex;
+  width: 2000px;
+  justify-content: center;
+}
+
+.gamePanel{
+  height: 940px;
+  width: 390px;
+  margin: 20px;
+  background-color: rgba(76, 17, 30, 0.938);
+  border: #FEAD01;
+  border-style: solid;
+  border-width: 2px
+}
+
+.gamePanelBorder{
+  max-height: 940px;
+  max-width: 400px;
+  min-height: 940px;
+  min-width: 400px;
 }
