@@ -147,17 +147,26 @@ function attack (dest) {
 }
 
 function setfixedMovement (val, axis) {
-  let unit = targets[1]
+  let unit
   let valid = true
   // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
+    unit = targets[1]
     let dest = findDest(cursor.getData('idx'), val, axis)
     valid = checkDestIsFree(dest)
     // console.log('valid is:', valid)
     if (!valid) {
       checkDestOccupant(dest)
     }
+    if (unit.actions < 1) {
+      console.log('This unit has run out of moves')
+      valid = false
+    }
   }
+  if (unit && valid) {
+    unit.actions -= 1
+  }
+
   if (valid) {
     targets.forEach(target => {
       var newTarget
@@ -172,6 +181,7 @@ function setfixedMovement (val, axis) {
       } else if (axis === 'y') {
         newTarget.y += val
       }
+
       newTarget.setPosition(newTarget.x, newTarget.y)
       newTarget.setData('notMoving', false)
       setTimeout(() => {
@@ -239,9 +249,11 @@ function checkTile () {
 }
 
 function selectUnit (con) {
+  console.log('Active team is:', activeTeam)
   let idx = cursor.getData('idx')
   let team = actors.filter(team => team.name === activeTeam)
   let select = team[0].units.find(unit => unit.idx === idx)
+  console.log('unit has:', select.actions, 'actions left')
   if (targets.length > 1) {
     console.log(selectedUnit.name, 'unselected')
     selectedUnit = null
@@ -268,6 +280,21 @@ function changeCursorColor (context) {
   cursor.setTexture(sprite)
 }
 
+function restoreActions () {
+  let team
+  if (activeTeam === team1) {
+    team = 0
+  } else {
+    team = 1
+  }
+  let units = actors[team].units
+  units.forEach(unit => {
+    let unitType = unit.class
+    let type = classes[unitType]
+    unit.actions = type.actions
+  })
+}
+
 function keyDown (e) {
   let key = e.key
   if (!keyPressed) {
@@ -291,6 +318,7 @@ function keyDown (e) {
         setfixedMovement(48, 'x')
         break
       case 't':
+        restoreActions()
         if (activeTeam === team1) {
           activeTeam = team2
         } else {
@@ -303,6 +331,8 @@ function keyDown (e) {
         break
       case 'm':
         console.log(map)
+        break
+      case 'r':
         break
     // default: console.log(key)
     }

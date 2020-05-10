@@ -7,6 +7,7 @@ var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 export const classes = {
   scout: {
+    class: 'scout',
     teamName: null,
     name: 'Scout',
     sprite: 'scout',
@@ -17,6 +18,7 @@ export const classes = {
     woundsRemaining: 2
   },
   archer: {
+    class: 'archer',
     teamName: null,
     name: 'Archer',
     sprite: 'archer',
@@ -28,6 +30,7 @@ export const classes = {
     ammo: 5
   },
   spearman: {
+    class: 'spearman',
     teamName: null,
     name: 'Lancer',
     sprite: 'spear',
@@ -38,6 +41,7 @@ export const classes = {
     woundsRemaining: 3
   },
   heavy: {
+    class: 'heavy',
     teamName: null,
     name: 'Sentinel',
     sprite: 'heavy',
@@ -47,8 +51,8 @@ export const classes = {
     kills: 0,
     woundsRemaining: 5
   },
-  swordsman:
-  {
+  swordsman: {
+    class: 'swordsman',
     teamName: null,
     name: 'Swordsman',
     sprite: '2hand',
