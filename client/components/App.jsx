@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import Phaser from 'phaser'
 import { IonPhaser } from '@ion-phaser/react'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Home from './Home'
 import PhaserGame from './PhaserGame'
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import BattleReport from './BattleReport'
 
 export default class App extends Component {
 
@@ -13,6 +14,7 @@ export default class App extends Component {
       <Router>
         <Route exact path='/' component={Home} />
         <Route exact path='/game' component={PhaserGame} />
+        <Route exact path='/report' component={BattleReport} />
       </Router>
       )
     }
