@@ -13,6 +13,13 @@ export default class App extends Component {
       championOne: '',
       championTwo: ''
     }
+    this.updateChampionName = this.updateChampionName.bind(this);
+  }
+
+  updateChampionName() {
+    this.setState({
+      championOne: this.state.championOne,
+      championTwo: this.state.championTwo})
   }
 
     render() {
@@ -20,7 +27,7 @@ export default class App extends Component {
     return (
       <Router>
         <Route exact path='/' component={Home} />
-        <Route exact path='/game' component={PhaserGame} />
+        <Route exact path='/game' component={PhaserGame triggerParentUpdate=(this.updateChampionName)} />
       </Router>
       )
     }
