@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import UnitDisplay from './UnitDisplay';
 
 //RECEIVED DATA
@@ -54,7 +55,8 @@ class BattleReport extends Component {
                 {resultCallout.playerOne}
               </div>
               <div className='brUnitContainer'>
-                <UnitDisplay />
+                <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
+                <UnitDisplay type={'rogue'} name={'Wulf'} survived={false} hits={8} kills={3}/>
               </div>
             </div>
             <div className='brPlayerTwoBlock'>
@@ -62,11 +64,17 @@ class BattleReport extends Component {
                 {resultCallout.playerTwo}
               </div>
               <div className='brUnitContainer'>
-                <UnitDisplay name={'jon'} survived={'true'} hits={5} kills={2} />
+                <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                <UnitDisplay type={'warrior'} name={'Podrick'} survived={false} hits={3} kills={1} />
               </div>
             </div>
             <div className='brButtonBlock'>
-              'Buttons'
+              <Link to='/game' >
+                <button className='brButton'>Rematch</button>
+              </Link>
+              <Link to='/' >
+                <button className='brButton'>New Game</button>
+              </Link>
             </div>
           </div>
         </div>
