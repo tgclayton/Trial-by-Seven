@@ -194,13 +194,6 @@ padding: 10px;
   min-width: 400px;
 }
 
-.udPortrait{
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  border-style: solid 2px #FEAD01;
-}
-
 .championName{
   font-family: alagard;
   color: #FEAD01;
@@ -279,4 +272,35 @@ font-family: alagard;
   position: fixed;
   margin-left: -550px;
   margin-top: 100px;
+}
+
+.udUnitContainer{
+  width: 200px;
+  height:300px;
+  margin-bottom: 10px;
+}
+
+.udPortrait{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: solid 4px #FEAD01;
+}
+
+.udImageRondel{
+  padding-left: 21px;
+}
+
+.udTextHolder{
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.udText{
+  line-height: 18px;
+  font-family: alagard;
+  text-align: center;
+  font-size: 18px;
+  color: #FEAD01;
 }

@@ -80,8 +80,8 @@ class UnitDisplay extends Component {
            <img className = 'udPortrait'src={randomPortrait()} />
           </div>
         </div>
-        <div className='udText'>
-          <p>
+        <div className='udTextHolder'>
+          <p className='udText'>
             {nameCompiler()}
             {battleStyle()}
             {battleEffectiveness()}
