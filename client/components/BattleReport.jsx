@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UnitDisplay from './UnitDisplay';
 
 //RECEIVED DATA
 //Winner
@@ -53,7 +54,7 @@ class BattleReport extends Component {
                 {resultCallout.playerOne}
               </div>
               <div className='brUnitContainer'>
-                'Unit results components'
+                <UnitDisplay />
               </div>
             </div>
             <div className='brPlayerTwoBlock'>
@@ -61,7 +62,7 @@ class BattleReport extends Component {
                 {resultCallout.playerTwo}
               </div>
               <div className='brUnitContainer'>
-                'Unit results components'
+                <UnitDisplay name={'jon'} survive />
               </div>
             </div>
             <div className='brButtonBlock'>
