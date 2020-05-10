@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
-
+import {C1context} from './ChampionOne'
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -429,7 +429,12 @@ function keyDown (e) {
         break
       case 'o':
         console.log('actors is:', actors)
+        break
+        case 'y':
+        C1context.state.championName = 'Tom is Cool'
+        break
       // default: console.log(key)
+      
     }
   }
   keyPressed = true
