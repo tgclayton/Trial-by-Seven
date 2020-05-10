@@ -116,15 +116,6 @@ function checkDestIsFree (dest) {
   }
 }
 
-// function checkDestOccupantTeam (dest) {
-
-//   if (map[dest].occupant.teamName === activeTeam) {
-//     return false
-//   } else {
-//     return true
-//   }
-// }
-
 function checkDestOccupant (dest) {
   if (map[dest].occupant === 'obstacle') {
     console.log('You cannot move through this obstacle')
@@ -135,14 +126,18 @@ function checkDestOccupant (dest) {
 }
 
 function attack (dest) {
-  // console.log('dest is:', dest)
-  // console.log('active tema is:', activeTeam, 'target team is:', map[dest].occupant.teamName)
-  // console.log('')
-  if (map[dest].occupantTeam === activeTeam) {
-    console.log('Probably shouldnt try to mutilate this poor chap')
-  } else {
-    console.log('This is a villainous cur, destroy him!')
-    scene.cameras.main.shake(200)
+  if (targets[1].actions > 0) {
+    if (map[dest].occupantTeam === activeTeam) {
+      console.log('Probably shouldnt try to mutilate this poor chap')
+    } else {
+      let enemy = actors[getIdxOfActiveTeam() - 1].units.filter(unit => unit.idx === dest)
+      enemy = enemy[0]
+      enemy.woundsRemaining = enemy.woundsRemaining - targets[1].damage
+      console.log(enemy)
+      console.log(targets[1].name, 'attacked', enemy.name, 'and did', targets[1].damage, 'damage')
+      targets[1].actions -= 2
+      scene.cameras.main.shake(200)
+    }
   }
 }
 
@@ -224,7 +219,7 @@ function setIndex (target) {
     // target.y = y
     map[target.idx].occupied = true
     map[target.idx].occupant = target.name
-    map[target.idx].occupantTeam = activeTeam
+    map[target.idx].occupantTeam = target.teamName
   }
 }
 
@@ -232,15 +227,10 @@ function checkTile () {
   let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
-  let team
-  if (activeTeam === team1) {
-    team = 0
-  } else {
-    team = 1
-  }
+  let teamIdx = getIdxOfActiveTeam()
   console.log('index:', idx, 'coords:', coords)
   if (tile.occupied) {
-    let occupant = actors[team].units.filter(unit => unit.name === tile.occupant)
+    let occupant = actors[teamIdx].units.filter(unit => unit.name === tile.occupant)
     console.log('Tile contains:', tile.occupant)
     console.log('His info is:', occupant)
   } else {
@@ -282,17 +272,23 @@ function changeCursorColor (context) {
 
 function restoreActions () {
   let team
-  if (activeTeam === team1) {
-    team = 0
-  } else {
-    team = 1
-  }
-  let units = actors[team].units
+  let idx = getIdxOfActiveTeam()
+  let units = actors[idx].units
   units.forEach(unit => {
     let unitType = unit.class
     let type = classes[unitType]
     unit.actions = type.actions
   })
+}
+
+function getIdxOfActiveTeam () {
+  let idx
+  if (activeTeam === team1) {
+    idx = 0
+  } else {
+    idx = 1
+  }
+  return idx
 }
 
 function keyDown (e) {
