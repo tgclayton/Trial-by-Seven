@@ -23,12 +23,13 @@ class TitleForm extends React.Component {
 
   render() {
     return(
+      <div className="formContainerDiv">
       <div className="formBodyBorder">
       <div className="formBody">
         <Form>
             <h3 className="formTitleText">What should the heralds call you?</h3>
             <div className="formFlex">
-              <h2>Champion one</h2>
+              <h2 className="formlabel">Champion one</h2>
           <Form.Group className="formGroup">
             <Form.Input
               placeholder='championOne'
@@ -38,7 +39,7 @@ class TitleForm extends React.Component {
           </Form.Group>
           </div>
             <div className="formFlex">
-              <h2>Champion Two</h2>
+                <h2 className="formlabel">Champion Two</h2>
           <Form.Group>
             <Form.Input
               placeholder='championTwo'
@@ -47,12 +48,13 @@ class TitleForm extends React.Component {
                 />
           </Form.Group>
             </div>
-          <Form.Button onClick={this.submitHandler}>Submit</Form.Button>
+          <Form.Button onClick={this.submitHandler}>Fight</Form.Button>
           <Link to='/game'>Temporary Link to PhaserGame</Link>
           <div>
             <Link to='/report'>Temporary Link to Report</Link>
           </div>
         </Form>
+      </div>
       </div>
       </div>
     )
