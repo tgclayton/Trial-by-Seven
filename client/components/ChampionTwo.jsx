@@ -13,7 +13,7 @@ class ChampionTwo extends React.Component {
         <h1 className="championAction">Actions:</h1>
         <div className="panelHorizontal"></div>
         {/* <h1 className="championAction">Ammo</h1> */}
-        <h1 className="endTurn">End Turn</h1>
+        {/* <h1 className="endTurn">End Turn</h1> */}
     </div>
     )
   }
