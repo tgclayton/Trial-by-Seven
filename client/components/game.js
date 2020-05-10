@@ -1,14 +1,6 @@
 import Phaser from 'phaser'
 import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
 
-// document.addEventListener('keydown', e => keyPress())
-// function keyPress () {
-//   let key = event.keyCode
-//   if (key === 37 || key === 38 || key === 39 || key === 40) {
-//     event.preventDefault()
-//   }
-// }
-
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -192,12 +184,27 @@ function checkDead (target) {
 }
 
 function setfixedMovement (val, axis) {
+  let inRange = true
   let unit
   let valid = true
+  let dest = findDest(cursor.getData('idx'), val, axis)
+  console.log('dest is:', dest)
+  if (aMode) {
+    inRange = false
+    let neighbours = findNeighbours(selectedUnit.idx)
+    neighbours.forEach(n => {
+      if (n === dest) {
+        inRange = true
+      }
+    })
+  }
+  if (!inRange) {
+    console.log('inRange was false')
+    return
+  }
   // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
     unit = targets[1]
-    let dest = findDest(cursor.getData('idx'), val, axis)
     valid = checkDestIsFree(dest)
     // console.log('valid is:', valid)
     if (!valid) {

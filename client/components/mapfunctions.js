@@ -2,7 +2,7 @@ import mapData from '../../server/public/assets/maps/map.json'
 var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
 var team1Name = 'team1'
 var team2Name = 'team2'
-var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'archer']
+var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 export const classes = {
