@@ -130,7 +130,13 @@ function attack (dest) {
     if (map[dest].occupantTeam === activeTeam) {
       console.log('Probably shouldnt try to mutilate this poor chap')
     } else {
-      let enemy = actors[getIdxOfActiveTeam() - 1].units.filter(unit => unit.idx === dest)
+      let idx = getIdxOfActiveTeam()
+      if (idx === 0){
+        idx = 1
+      } else {
+        idx = 0
+      }
+      let enemy = actors[idx].units.filter(unit => unit.idx === dest)
       enemy = enemy[0]
       enemy.woundsRemaining = enemy.woundsRemaining - targets[1].damage
       console.log(enemy)
