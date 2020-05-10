@@ -62,7 +62,7 @@ class BattleReport extends Component {
                 {resultCallout.playerTwo}
               </div>
               <div className='brUnitContainer'>
-                <UnitDisplay name={'jon'} survive />
+                <UnitDisplay name={'jon'} survived={'true'} hits={5} kills={2} />
               </div>
             </div>
             <div className='brButtonBlock'>
