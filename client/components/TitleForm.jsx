@@ -50,6 +50,9 @@ class TitleForm extends React.Component {
             </div>
           <Form.Button onClick={this.submitHandler}>Fight</Form.Button>
           <Link to='/game'>Temporary Link to PhaserGame</Link>
+          <div>
+            <Link to='/report'>Temporary Link to Report</Link>
+          </div>
         </Form>
       </div>
       </div>

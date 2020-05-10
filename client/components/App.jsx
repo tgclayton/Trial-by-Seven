@@ -6,6 +6,14 @@ import PhaserGame from './PhaserGame'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      championOne: '',
+      championTwo: ''
+    }
+  }
 
     render() {
     // const { initialize, game } = this.state
