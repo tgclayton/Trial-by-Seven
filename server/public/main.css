@@ -188,3 +188,10 @@ padding: 10px;
   min-height: 940px;
   min-width: 400px;
 }
+
+.udPortrait{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border-style: solid 2px #FEAD01;
+}

@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 
-//RANDOM PORTRAIT
-
-
-
-
-
 class UnitDisplay extends Component {
   render() {
     
@@ -24,16 +18,24 @@ class UnitDisplay extends Component {
       ' He lives to tell the tale.',
       ' He is also still drunk.',
       ' Will have nightmares for years.',
-      ' Sadly he bled out soon after.',
-      ' Sadly he has stepped through the black gate.',
-      ' He left the world alone and screaming.',
-      ' Healers have no hope left for him.',
-      ' He will recover but is a broken man.',
+      ' Sadly he took a wound and bled out soon after.',
+      ' He was struck and has stepped through the black gate.',
+      ' He was mortally wounded and left the world alone and screaming.',
+      ' He took a cruel cut and healers have no hope left for him.',
+      ' He cracked under the strain and is now a broken man.',
     ]
+
+    function nameCompiler(){
+      let compiledName = name + ' the ' + unitType
+      return compiledName
+    }
         
     function randomPortrait(){
-      let randomNumber = Math.floor(Math.random() * Math.floor(3))
-      let portraitSrc = 'images/portraits/' + unitType + randomNumber + '.png'
+      // let randomNumber = Math.floor(Math.random() * Math.floor(3))
+      let randomFloat = Math.random() * (3 - 1) + 1
+      let randomInt = Math.round(randomFloat)
+
+      let portraitSrc = 'images/portraits/' + unitType + randomInt + '.png'
       return portraitSrc
     }
 
@@ -46,10 +48,10 @@ class UnitDisplay extends Component {
           style = ' struck terror ';
           return style
         case hits >= 1:
-          style = 'fought bravely '
+          style = ' fought bravely '
           return style
         case hits == 0:
-          style = 'also tried to contribute '
+          style = ' also tried to contribute '
           return style
       }
     }
@@ -74,14 +76,14 @@ class UnitDisplay extends Component {
     return (
       <div className='udUnitContainer'>
         <div className='udImageContainer'>
-          <div className='idImageRondel'>
-           {/* <img src={randomPortrait(unitType)} /> */}
-           {randomPortrait()}
+          <div className='udImageRondel'>
+           <img className = 'udPortrait'src={randomPortrait()} />
           </div>
         </div>
         <div className='udText'>
           <p>
-            {name} {battleStyle()}
+            {nameCompiler()}
+            {battleStyle()}
             {battleEffectiveness()}
             {currentStateGenerator()}
           </p>
@@ -92,6 +94,3 @@ class UnitDisplay extends Component {
 }
 
 export default UnitDisplay;
-
-
-<img src="images/portraits/"/>

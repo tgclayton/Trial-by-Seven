@@ -48,24 +48,24 @@ class BattleReport extends Component {
         <div className='brPanel'>
           <div className='brPanelStroke'>
             <div className='brTitle'>
-              {titleText}
+              <h1>{titleText}</h1>
             </div>
             <div className='brPlayerOneBlock'>
               <div className='brBlockPlayerName'>
-                {resultCallout.playerOne}
+                <h2>{resultCallout.playerOne}</h2>
               </div>
               <div className='brUnitContainer'>
                 <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
-                <UnitDisplay type={'rogue'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
               </div>
             </div>
             <div className='brPlayerTwoBlock'>
               <div className='brBlockPlayerName'>
-                {resultCallout.playerTwo}
+                <h2>{resultCallout.playerTwo}</h2>
               </div>
               <div className='brUnitContainer'>
                 <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                <UnitDisplay type={'warrior'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
               </div>
             </div>
             <div className='brButtonBlock'>
