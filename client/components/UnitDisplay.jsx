@@ -51,13 +51,13 @@ class UnitDisplay extends Component {
           style = ' fought bravely '
           return style
         case hits == 0:
-          style = ' also tried to contribute '
+          style = ' also tried to contribute. '
           return style
       }
     }
     
     function battleEffectiveness(){
-      killTotal = (kills > 0) ? 'and slew ' + kills + ' foes. ': '. '
+      killTotal = (kills > 0) ? 'and slew ' + kills + ' foes. ': ' '
       return killTotal
     }
 
