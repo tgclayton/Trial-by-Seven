@@ -7,6 +7,21 @@ import PhaserGame from './PhaserGame'
 import BattleReport from './BattleReport'
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      championOne: '',
+      championTwo: ''
+    }
+    this.updateChampionName = this.updateChampionName.bind(this);
+  }
+
+  updateChampionName() {
+    this.setState({
+      championOne: this.state.championOne,
+      championTwo: this.state.championTwo})
+  }
 
     render() {
     // const { initialize, game } = this.state
