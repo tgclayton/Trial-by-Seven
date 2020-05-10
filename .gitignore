@@ -14,4 +14,7 @@ dist/
 /npm-debug.log
 
 #Map
-*.map
+*bundle.js
+
+#Database
+*.sqlite3
