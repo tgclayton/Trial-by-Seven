@@ -7,6 +7,7 @@ var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 export const classes = {
   scout: {
+    // range: checkMelee(),
     damage: 1,
     class: 'scout',
     teamName: null,

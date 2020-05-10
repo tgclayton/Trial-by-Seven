@@ -31,13 +31,13 @@ var team1 = actors[0].name
 var team2 = actors[1].name
 var scene
 map = addActorsToMapArr(actors, map)
-
+var aMode = false
 var activeTeam = team1
 var cursor
 var targets = []
 var selectedUnit
 
-function preload () {
+function preload() {
   this.load.image('warrior', '/assets/images/warrior.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
   this.load.image('gcursor', '/assets/images/green-cursor.png')
@@ -56,7 +56,7 @@ function preload () {
   this.load.image('testmap2', '/assets/images/testmap2.png')
 }
 
-function create () {
+function create() {
   scene = this
   this.input.keyboard.on('keydown', keyDown, this)
   this.add.image(480, 480, 'testmap2')
@@ -79,16 +79,23 @@ function create () {
   // console.log(actors)
 }
 
-function update () {
+function update() {
 }
 
-function getCoordsFromIndex (idx) {
+function getCoordsFromIndex(idx) {
   var x = (idx % 20) * 48
   var y = (Math.floor(idx / 20)) * 48
   return [x, y]
 }
 
-function findDest (idx, val, axis) {
+function getIndexFromCoords(coords) {
+  let x = coords[0] / 48
+  let y = (coords[1] / 48) * 20
+  let idx = x + y
+  return idx
+}
+
+function findDest(idx, val, axis) {
   let dest
   if (axis === 'x') {
     if (val === 48) {
@@ -108,7 +115,7 @@ function findDest (idx, val, axis) {
   return dest
 }
 
-function checkDestIsFree (dest) {
+function checkDestIsFree(dest) {
   if (map[dest].occupied) {
     return false
   } else {
@@ -116,7 +123,7 @@ function checkDestIsFree (dest) {
   }
 }
 
-function checkDestOccupant (dest) {
+function checkDestOccupant(dest) {
   if (map[dest].occupant === 'obstacle') {
     console.log('You cannot move through this obstacle')
     return false
@@ -125,29 +132,29 @@ function checkDestOccupant (dest) {
   }
 }
 
-function attack (dest) {
-  if (targets[1].actions > 0) {
+function attack(dest) {
+  if (selectedUnit.actions > 0) {
     if (map[dest].occupantTeam === activeTeam) {
       console.log('Probably shouldnt try to mutilate this poor chap')
     } else {
       let idx = getIdxOfActiveTeam()
-      if (idx === 0){
+      if (idx === 0) {
         idx = 1
       } else {
         idx = 0
       }
       let enemy = actors[idx].units.filter(unit => unit.idx === dest)
       enemy = enemy[0]
-      enemy.woundsRemaining = enemy.woundsRemaining - targets[1].damage
+      enemy.woundsRemaining = enemy.woundsRemaining - selectedUnit.damage
       console.log(enemy)
-      console.log(targets[1].name, 'attacked', enemy.name, 'and did', targets[1].damage, 'damage')
-      targets[1].actions -= 2
+      console.log(selectedUnit.name, 'attacked', enemy.name, 'and did', selectedUnit.damage, 'damage')
+      selectedUnit.actions -= 2
       scene.cameras.main.shake(200)
     }
   }
 }
 
-function setfixedMovement (val, axis) {
+function setfixedMovement(val, axis) {
   let unit
   let valid = true
   // console.log('targets for movement is:', targets)
@@ -194,7 +201,7 @@ function setfixedMovement (val, axis) {
   }
 }
 
-function setIndex (target) {
+function setIndex(target) {
   let x
   let y
   if (target !== cursor) {
@@ -221,20 +228,23 @@ function setIndex (target) {
     map[target.idx].occupant = null
     map[target.idx].occupantTeam = null
     target.idx = x + y
-    // target.x = x
-    // target.y = y
+    x = x * 48
+    y = (y / 20) * 48
+    target.x = x
+    target.y = y
     map[target.idx].occupied = true
     map[target.idx].occupant = target.name
     map[target.idx].occupantTeam = target.teamName
   }
 }
 
-function checkTile () {
+function checkTile() {
   let idx = cursor.getData('idx')
   let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
   let teamIdx = getIdxOfActiveTeam()
   console.log('index:', idx, 'coords:', coords)
+  console.log('this tiles neighbours:', findNeighbours(idx))
   if (tile.occupied) {
     let occupant = actors[teamIdx].units.filter(unit => unit.name === tile.occupant)
     console.log('Tile contains:', tile.occupant)
@@ -244,7 +254,7 @@ function checkTile () {
   }
 }
 
-function selectUnit (con) {
+function selectUnit(con) {
   console.log('Active team is:', activeTeam)
   let idx = cursor.getData('idx')
   let team = actors.filter(team => team.name === activeTeam)
@@ -265,7 +275,32 @@ function selectUnit (con) {
   }
 }
 
-function changeCursorColor (context) {
+function attackMode() {
+  if (selectedUnit) {
+    aMode = true
+    cursor.setTexture('rcursor')
+    targets.splice(1, 1)
+  }
+}
+
+function findNeighbours(idx) {
+  let neighbours = []
+  let attackerCoords = getCoordsFromIndex(idx)
+  for (let i = 0; i < 9; i++) {
+    if (i !== 4){
+    let itX = (Math.floor(i / 3) - 1) * 48
+    let itY = ((i % 3) - 1) * 48
+    let newX = (attackerCoords[0]+itX)
+    let newY = (attackerCoords[1]+itY)
+    let neighbourIdx = getIndexFromCoords([newX, newY])
+    if (newX >= 0 && newX <= 912 && newY >= 0 && newY <= 912)
+    neighbours.push(neighbourIdx)
+  }
+}
+  return neighbours
+}
+
+function changeCursorColor(context) {
   let sprite
   if (cursor.getData('sprite') === 'gcursor') {
     sprite = 'bcursor'
@@ -276,7 +311,7 @@ function changeCursorColor (context) {
   cursor.setTexture(sprite)
 }
 
-function restoreActions () {
+function restoreActions() {
   let team
   let idx = getIdxOfActiveTeam()
   let units = actors[idx].units
@@ -287,7 +322,7 @@ function restoreActions () {
   })
 }
 
-function getIdxOfActiveTeam () {
+function getIdxOfActiveTeam() {
   let idx
   if (activeTeam === team1) {
     idx = 0
@@ -297,7 +332,7 @@ function getIdxOfActiveTeam () {
   return idx
 }
 
-function keyDown (e) {
+function keyDown(e) {
   let key = e.key
   if (!keyPressed) {
     switch (key) {
@@ -308,15 +343,19 @@ function keyDown (e) {
         checkTile()
         break
       case 'ArrowUp':
+        e.preventDefault()
         setfixedMovement(-48, 'y')
         break
       case 'ArrowDown':
+        e.preventDefault()
         setfixedMovement(48, 'y')
         break
       case 'ArrowLeft':
+        e.preventDefault()
         setfixedMovement(-48, 'x')
         break
       case 'ArrowRight':
+        e.preventDefault()
         setfixedMovement(48, 'x')
         break
       case 't':
@@ -334,9 +373,15 @@ function keyDown (e) {
       case 'm':
         console.log(map)
         break
-      case 'r':
+      case 'a':
+        attackMode()
         break
-    // default: console.log(key)
+      case 's':
+        if (aMode) {
+          attack(cursor.getData('idx'))
+        }
+        break
+      // default: console.log(key)
     }
   }
   keyPressed = true
