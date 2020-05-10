@@ -44,29 +44,41 @@ class BattleReport extends Component {
 
   render() {
     return (
-      <div className='brMainContainer'>
+      <div className='home brMainContainer'>
         <div className='brPanel'>
           <div className='brPanelStroke'>
             <div className='brTitle'>
-              <h1>{titleText}</h1>
+              {titleText}
             </div>
-            <div className='brPlayerOneBlock'>
-              <div className='brBlockPlayerName'>
-                <h2>{resultCallout.playerOne}</h2>
-              </div>
-              <div className='brUnitContainer'>
-                <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
-                <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-              </div>
-            </div>
-            <div className='brPlayerTwoBlock'>
-              <div className='brBlockPlayerName'>
-                <h2>{resultCallout.playerTwo}</h2>
-              </div>
-              <div className='brUnitContainer'>
-                <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
-              </div>
+              <div className='brContentContainer'>
+                <div className='brPlayerBlock'>
+                  <div className='brBlockPlayerName'>
+                    {resultCallout.playerOne}
+                  </div>
+                  <div className='brUnitContainer'>
+                    <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                  </div>
+                </div>
+                <div className='brPlayerBlock borderBox'>
+                  <div className='brBlockPlayerName'>
+                    {resultCallout.playerTwo}
+                  </div>
+                  <div className='brUnitContainer'>
+                    <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                  </div>
+              </div>    
             </div>
             <div className='brButtonBlock'>
               <Link to='/game' >
