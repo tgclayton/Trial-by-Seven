@@ -188,7 +188,6 @@ function setfixedMovement (val, axis) {
   let unit
   let valid = true
   let dest = findDest(cursor.getData('idx'), val, axis)
-  console.log('dest is:', dest)
   if (aMode) {
     inRange = false
     let neighbours = findNeighbours(selectedUnit.idx)
@@ -199,7 +198,6 @@ function setfixedMovement (val, axis) {
     })
   }
   if (!inRange) {
-    console.log('inRange was false')
     return
   }
   // console.log('targets for movement is:', targets)
@@ -305,7 +303,6 @@ function selectUnit (con) {
   let select = team[0].units.find(unit => unit.idx === idx)
   console.log('unit has:', select.actions, 'actions left')
   if (targets.length > 1) {
-    console.log(selectedUnit.name, 'unselected')
     selectedUnit = null
     changeCursorColor(con)
     targets.splice(1, 1)
@@ -313,7 +310,6 @@ function selectUnit (con) {
     selectedUnit = select
     changeCursorColor(con)
     targets.push(select)
-    console.log('Selected unit is', select.name)
   } else {
     console.log('No unit of your team here')
   }
