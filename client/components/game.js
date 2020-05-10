@@ -39,6 +39,7 @@ var activeTeam = team1
 var cursor
 var targets = []
 var selectedUnit
+var winner
 
 function preload () {
   this.load.image('warrior', '/assets/images/warrior.png')
@@ -154,7 +155,28 @@ function attack (dest) {
       selectedUnit.actions -= 2
       scene.cameras.main.shake(200)
       checkDead(enemy)
+      checkGameOver()
     }
+  }
+}
+
+function checkGameOver () {
+  let gameOver = true
+  let idx = getIdxOfActiveTeam()
+  if (idx === 0) {
+    idx = 1
+  } else {
+    idx = 0
+  }
+  actors[idx].units.forEach(unit => {
+    if (!unit.dead) {
+      gameOver = false
+    } else {
+      winner = actors[getIdxOfActiveTeam()].name
+    }
+  })
+  if (gameOver) {
+    console.log('Game over, the winner is:', winner)
   }
 }
 
@@ -165,6 +187,7 @@ function checkDead (target) {
     map[target.idx].occupant = null
     map[target.idx].occupantTeam = null
     target.physObj.destroy()
+    selectedUnit.kills.push(target.name)
   }
 }
 
@@ -299,6 +322,7 @@ function attackMode () {
     cursor.setTexture('bcursor')
     cursor.setPosition(selectedUnit.x, selectedUnit.y)
     targets.push(selectedUnit)
+    setIndex(cursor)
   }
 }
 
@@ -376,13 +400,15 @@ function keyDown (e) {
         setfixedMovement(48, 'x')
         break
       case 't': // end turn
-        restoreActions()
-        if (activeTeam === team1) {
-          activeTeam = team2
-        } else {
-          activeTeam = team1
+        if (targets.length < 2) {
+          restoreActions()
+          if (activeTeam === team1) {
+            activeTeam = team2
+          } else {
+            activeTeam = team1
+          }
+          console.log('Active team is:', activeTeam)
         }
-        console.log('Active team is:', activeTeam)
         break
       case 'c':
         changeCursorColor()
