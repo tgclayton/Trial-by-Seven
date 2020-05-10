@@ -14,6 +14,18 @@ class TitleForm extends React.Component {
     this.submitHandler = this.submitHandler.bind(this)
   }
 
+  championOneHandler = event => {
+    this.setState({
+      championOne: event.target.value
+    })
+  }
+
+  championTwoHandler = event => {
+    this.setState({
+      championTwo: event.target.value
+    })
+  }
+
   submitHandler = event => {
     event.preventDefault()
     addPlayers(this.state)
@@ -34,7 +46,7 @@ class TitleForm extends React.Component {
             <Form.Input
               placeholder='championOne'
               name='championOne'
-              onChange={event => this.setState({championOne: event.target.value })}
+              onChange={this.championOneHandler}
              />
           </Form.Group>
           </div>
@@ -44,12 +56,13 @@ class TitleForm extends React.Component {
             <Form.Input
               placeholder='championTwo'
               name='championTwo'
-              onChange={event => this.setState({championTwo: event.target.value })}
+              onChange={this.championTwoHandler}
                 />
           </Form.Group>
             </div>
-          <Form.Button onClick={this.submitHandler}>Fight</Form.Button>
-          <Link to='/game'>Temporary Link to PhaserGame</Link>
+          <Form.Button onClick={this.submitHandler}>
+            <Link to='/game'>Fight!</Link>
+          </Form.Button>
           <div>
             <Link to='/report'>Temporary Link to Report</Link>
           </div>
