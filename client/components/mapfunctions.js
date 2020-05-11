@@ -1,10 +1,32 @@
 import mapData from '../../server/public/assets/maps/map.json'
+import request from 'superagent'
+
 var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
-var team1Name = 'The Green Meanies'
-var team2Name = 'The Big Whack'
-var team1Units = ['scout', 'heavy', 'scout', 'swordsman', 'spearman']
+
+var team1Name = 'hardOne' // equal the name of champion
+var team2Name = 'hardTwo' // equal the name of 2nd champion
+// var team1Name = 'team1' // equal the name of champion
+// var team2Name = 'team2' // equal the name of 2nd champion
+var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
-const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
+const actors = [{ units: [] }, { units: [] }]
+
+export function nameFinder1(){
+  // request.get('/api/v1/players')
+  // .then(res => {
+  //  return team1Name = res.body.player[0].playerOne
+  // })
+  return 'hello'
+}
+
+export function nameFinder2(){
+  request.get('/api/v1/players')
+  .then(res => {
+    team2Name = res.body.player[0].playerTwo
+    return team2Name
+  })
+}
+
 export const classes = {
   scout: {
     // range: checkMelee(),
@@ -81,11 +103,11 @@ export function addActorsToMapArr (actors, mapArr) {
   return map
 }
 
-export function createActors (a) {
+export function createActors (team1, team2) {
   var actorArr = actors
   let idx = 140
-  let team1 = actorArr[0].name
-  let team2 = actorArr[1].name
+  actorArr[0].name = team1
+  actorArr[1].name = team2
   let unit = []
   let current
   let ranName
