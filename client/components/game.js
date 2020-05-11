@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
+import { createMapArray, addActorsToMapArr, createActors, classes, nameFinder1, nameFinder2 } from './mapfunctions'
 
 export default {
   type: Phaser.AUTO,
@@ -37,6 +37,7 @@ var champAttack
 var champHealth
 var champAction
 var info
+
 
 function preload () {
   map = createMapArray()
