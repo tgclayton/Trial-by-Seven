@@ -40,7 +40,7 @@ class TitleForm extends React.Component {
         <Form>
             <h3 className="formTitleText">What should the heralds call you?</h3>
             <div className="formFlex">
-              <h2 className="formlabel">Champion one</h2>
+              <h2 className="formlabel">Champion One</h2>
           <Form.Group className="formGroup">
             <Form.Input
               placeholder='championOne'

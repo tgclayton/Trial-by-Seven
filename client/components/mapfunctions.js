@@ -69,17 +69,6 @@ export const classes = {
 }
 var teamSize = 5
 
-// function findObstacles (mapArr) {
-//   var newArr = mapData.layers[0].data.map((tile, idx) => {
-//     if (tile === 10) {
-//       mapArr[idx].occupied = true
-//       mapArr[idx].occupant = 'obstacle'
-//     }
-//     return tile
-//   })
-//   return newArr
-// }
-
 export function createMapArray () {
   var mapArr = mapData.layers[0].data.map(tile => {
     if (tile === 10) {
@@ -121,7 +110,6 @@ export function createActors (a) {
   for (let i = 0; i < teamSize; i++) {
     current = team1Units[i]
     unit = JSON.parse(JSON.stringify(classes[current]))
-    // console.log('unit is:', unit)
     ranName = names[Math.floor(Math.random() * names.length)]
     names = names.filter(name => name !== ranName)
     unit.teamName = team1
@@ -144,23 +132,5 @@ export function createActors (a) {
     unit.kills = []
     actorArr[1].units.push(unit)
   }
-  // console.log('actors is:', actorArr)
   return actorArr
 }
-
-// var friend = 'warrior'
-// var foe = 'enemy'
-
-// function createActors () {
-
-//   actors.forEach(team => {
-//     for (let i=0; i < teamSize; i++) {
-//       let it = i + 1
-//       team.units.push({
-//         name: team.team+it,
-//         sprite: team.team,
-//         idx:
-//       })
-//     }
-//   })
-// }

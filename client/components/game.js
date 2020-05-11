@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
-import {C1context} from './ChampionOne'
+
 export default {
   type: Phaser.AUTO,
   width: 960,
@@ -19,27 +19,38 @@ export default {
   }
 }
 
-var map = createMapArray()
-var keyPressed = false
-var actors = createActors()
-var team1 = actors[0].name
-var team2 = actors[1].name
+var map
+var keyPressed
+var actors
+var team1
+var team2
 var scene
-map = addActorsToMapArr(actors, map) // set these variables in create()
 var aMode = false
-var activeTeam = team1
+var activeTeam
 var cursor
 var targets = []
 var selectedUnit
 var winner
+var champName
+var champUnit
+var champAttack
+var champHealth
+var champAction
+var info
 
 function preload () {
+  map = createMapArray()
+  actors = createActors()
+  team1 = actors[0].name
+  team2 = actors[1].name
+  map = addActorsToMapArr(actors, map)
+  activeTeam = team1
   this.load.image('warrior', '/assets/images/warrior.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
   this.load.image('gcursor', '/assets/images/green-cursor.png')
   this.load.image('bcursor', '/assets/images/blue-cursor.png')
   this.load.image('rcursor', '/assets/images/red-cursor.png')
-  this.load.image('done', '/assets/images/done.png')
+  this.load.image('done', '/assets/images/done2.png')
   this.load.image('ready', '/assets/images/ready.png')
   this.load.image('l2hand', '/assets/images/soldiers/L2hand.png')
   this.load.image('r2hand', '/assets/images/soldiers/R2hand.png')
@@ -55,9 +66,26 @@ function preload () {
 }
 
 function create () {
+  champName = document.getElementById('champName')
+  champUnit = document.getElementById('champUnit')
+  champAttack = document.getElementById('champAttack')
+  champHealth = document.getElementById('champHealth')
+  champAction = document.getElementById('champAction')
+  info = document.getElementById('infoWindow')
+
+  champName.innerText = team1
+
   scene = this
   this.input.keyboard.on('keydown', keyDown, this)
   this.add.image(480, 480, 'testmap2')
+
+  cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
+  cursor.setCollideWorldBounds(true)
+  cursor.setData('notMoving', true)
+  cursor.setData('idx', 0)
+  cursor.setData('sprite', 'gcursor')
+  targets.push(cursor)
+
   actors.forEach(team => {
     team.units.forEach(actor => {
       let coords = getCoordsFromIndex(actor.idx)
@@ -66,18 +94,11 @@ function create () {
       actor.physObj = this.physics.add.image(actor.x, actor.y, actor.sprite).setOrigin(0, 0)
       actor.physObj.setCollideWorldBounds(true)
       if (actor.teamName === activeTeam) {
-        console.log('actor was in active team')
         actor.status = this.add.image(actor.x, actor.y, 'ready').setOrigin(0, 0)
       }
     })
   })
 
-  cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
-  cursor.setCollideWorldBounds(true)
-  cursor.setData('notMoving', true)
-  cursor.setData('idx', 0)
-  cursor.setData('sprite', 'gcursor')
-  targets.push(cursor)
   // console.log(actors)
 }
 
@@ -127,7 +148,7 @@ function checkDestIsFree (dest) {
 
 function checkDestOccupant (dest) {
   if (map[dest].occupant === 'obstacle') {
-    console.log('You cannot move through this obstacle')
+    info.innerText = 'You cannot move through this obstacle'
     return false
   } else {
     attack(dest)
@@ -137,7 +158,7 @@ function checkDestOccupant (dest) {
 function attack (dest) {
   if (selectedUnit.actions > 0) {
     if (map[dest].occupantTeam === activeTeam) {
-      console.log('Probably shouldnt try to mutilate this poor chap')
+      info.innerText = 'Probably shouldnt try to mutilate this poor chap'
     } else {
       let idx = getIdxOfActiveTeam()
       if (idx === 0) {
@@ -148,8 +169,7 @@ function attack (dest) {
       let enemy = actors[idx].units.filter(unit => unit.idx === dest)
       enemy = enemy[0]
       enemy.health = enemy.health - selectedUnit.damage
-      console.log(enemy)
-      console.log(selectedUnit.name, 'attacked', enemy.name, 'and did', selectedUnit.damage, 'damage')
+      info.innerText = `${selectedUnit.name} attacked ${enemy.name} and did ${selectedUnit.damage} damage`
       selectedUnit.actions -= 2
       scene.cameras.main.shake(200)
       checkDead(enemy)
@@ -169,7 +189,7 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    console.log('Game over, the winner is:', winner)
+    info.innerText = `Game over, the winner is: ${winner}`
   }
 }
 
@@ -199,24 +219,24 @@ function setfixedMovement (val, axis) {
     })
   }
   if (!inRange) {
+    info.innerText = 'You cannot move cursor out of range'
     return
   }
-  // console.log('targets for movement is:', targets)
   if (targets.length > 1) {
     unit = targets[1]
     valid = checkDestIsFree(dest)
-    // console.log('valid is:', valid)
     if (!valid) {
       checkDestOccupant(dest)
     }
     if (unit.actions < 1) {
-      console.log('This unit has run out of moves')
+      info.innerText = 'This unit has run out of moves'
       valid = false
     }
   }
 
   if (unit !== undefined && valid) {
     unit.actions -= 1
+    champAction.innerText = `Actions: ${selectedUnit.actions}`
   }
 
   if (valid) {
@@ -290,17 +310,18 @@ function setIndex (target) {
 
 function checkTile () {
   let idx = cursor.getData('idx')
-  let coords = getCoordsFromIndex(idx)
   let tile = map[idx]
-  let teamIdx = getIdxOfActiveTeam()
-  console.log('index:', idx, 'coords:', coords)
-  console.log('this tiles neighbours:', findNeighbours(idx))
   if (tile.occupied) {
+    let teamIdx
+    if (tile.occupantTeam === team1) {
+      teamIdx = 0
+    } else {
+      teamIdx = 1
+    }
     let occupant = actors[teamIdx].units.filter(unit => unit.name === tile.occupant)
-    console.log('Tile contains:', tile.occupant)
-    console.log('His info is:', occupant)
+    setDataWindow(occupant[0])
   } else {
-    console.log('Tile is empty')
+    info.innerText = 'Tile is empty'
   }
 }
 
@@ -309,18 +330,21 @@ function selectUnit (con) {
   let idx = cursor.getData('idx')
   let team = actors.filter(team => team.name === activeTeam)
   let select = team[0].units.find(unit => unit.idx === idx)
-  console.log('unit has:', select.actions, 'actions left')
-  if (targets.length > 1) {
+  if (aMode) {
+    if (selectedUnit !== select) { return }
+  }
+  if (targets.length > 1) { // unit already selected
     selectedUnit = null
+    setDataWindow(selectedUnit)
     changeCursorColor(con)
     targets.splice(1, 1)
-  } else if (select) {
+  } else if (select) { // no unit selected
     selectedUnit = select
+    setDataWindow(selectedUnit)
     changeCursorColor(con)
     targets.push(select)
-    console.log(targets)
   } else {
-    console.log('No unit of your team here')
+    info.innerText = 'No unit of your team here'
   }
 }
 
@@ -402,11 +426,31 @@ function setStatus () {
     unit.status.destroy()
   })
   actors[inaIdx].units.forEach(unit => {
-    unit.status = scene.add.image(unit.x, unit.y, 'ready').setOrigin(0, 0)
+    if (unit.dead === false) {
+      unit.status = scene.add.image(unit.x, unit.y, 'ready').setOrigin(0, 0)
+    }
   })
 }
 
+function setDataWindow (target) {
+  if (target) {
+    champUnit.innerText = `${target.name}`
+    champAttack.innerText = `Attack: ${target.damage}`
+    champHealth.innerText = `Health: ${target.health}`
+    champAction.innerText = `Actions: ${target.actions}`
+  } else {
+    champUnit.innerText = 'None Selected'
+    champAttack.innerText = 'Attack: ...'
+    champHealth.innerText = 'Health: ...'
+    champAction.innerText = 'Actions: ...'
+  }
+}
+
 function keyDown (e) {
+  info.innerText = ''
+  if (winner) {
+    return
+  }
   let key = e.key
   if (!keyPressed) {
     switch (key) {
@@ -441,7 +485,7 @@ function keyDown (e) {
           } else {
             activeTeam = team1
           }
-          console.log('Active team is:', activeTeam)
+          champName.innerText = activeTeam
         }
         break
       case 'c':
@@ -461,20 +505,6 @@ function keyDown (e) {
       case 'o':
         console.log('actors is:', actors)
         break
-        case 'y':
-          let data = document.getElementById('champName')
-          data.innerText = "test"
-        let dataUnit = document.getElementById('champUnit')
-        dataUnit.innerText = "Sam The Sword User"
-        let dataAttack = document.getElementById('champAttack')
-        dataAttack.innerText = counter
-        let dataHealth = document.getElementById('champHealth')
-        dataHealth.innerText = "Health: 2"
-        let dataActions = document.getElementById('champAction')
-        dataActions.innerText = "Actions: 2"
-        break
-      // default: console.log(key)
-      
     }
   }
   keyPressed = true
