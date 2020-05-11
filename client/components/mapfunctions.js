@@ -1,10 +1,28 @@
 import mapData from '../../server/public/assets/maps/map.json'
+import request from 'superagent'
+
 var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
-var team1Name = 'team1'
-var team2Name = 'team2'
+
+var team1Name = 'playerOne' // equal the name of champion
+var team2Name = 'playerTwo' // equal the name of 2nd champion
+// var team1Name = 'team1' // equal the name of champion
+// var team2Name = 'team2' // equal the name of 2nd champion
 var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
+
+function nameFinder(){
+  request.get('/api/v1/players')
+  .then(res => {
+    team1Name = res.body.player[0].playerOne
+    team2Name = res.body.player[0].playerTwo
+    console.log('Player 1 is:', team1Name)
+    console.log('Player 2 is:', team2Name)
+  })
+}
+
+nameFinder()
+
 export const classes = {
   scout: {
     // range: checkMelee(),

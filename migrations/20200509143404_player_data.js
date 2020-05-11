@@ -3,6 +3,7 @@ exports.up = (knex) => {
     table.increments('game_id').primary()
     table.string('player_one')
     table.string('player_two')
+    table.string('winner')
 })
 }
 

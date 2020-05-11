@@ -63,7 +63,7 @@ class TitleForm extends React.Component {
             <Link to='/game'>Fight!</Link>
           </Form.Button>
           <div>
-            <Link to='/report'>Temporary Link to Report</Link>
+            <Link to='/game'>Temporary Link to Report</Link>
           </div>
         </Form>
       </div>

@@ -463,7 +463,7 @@ function keyDown (e) {
         break
         case 'y':
           let data = document.getElementById('champName')
-          data.innerText = "test""
+          data.innerText = "test"
         let dataUnit = document.getElementById('champUnit')
         dataUnit.innerText = "Sam The Sword User"
         let dataAttack = document.getElementById('champAttack')

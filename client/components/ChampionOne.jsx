@@ -1,7 +1,9 @@
 import React from 'react'
+import request from 'superagent'
 
 
 export default class ChampionOne extends React.Component {
+
   state = {
     championName: 'champName',
     championUnit: 'Active Unit',
@@ -11,6 +13,7 @@ export default class ChampionOne extends React.Component {
 
   }
   
+
 champName = React.createRef()
 champUnit = React.createRef()
 champAttack = React.createRef()
