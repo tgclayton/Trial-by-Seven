@@ -1,9 +1,8 @@
 import React from 'react'
 
 class ChampionTwo extends React.Component {
-
-  render() {
-    return(
+  render () {
+    return (
       <div className="gamePanel2">
         <div className="panelHorizontal"></div>
         <h1 className="championUnit">How to play:</h1>

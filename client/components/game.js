@@ -339,7 +339,6 @@ function selectUnit (con) {
   let select = team[0].units.find(unit => unit.idx === idx)
   if (aMode) {
     if (selectedUnit !== select) {
-      console.log('broke out of select unit')
       return
     }
   }
@@ -456,6 +455,20 @@ function setDataWindow (target) {
   }
 }
 
+function endTurn () {
+  let enemy = actors[getIdxOfInactiveTeam()].units.find(unit => unit.dead === false)
+  cursor.setPosition(enemy.x, enemy.y)
+  setIndex(cursor)
+  restoreActions()
+  setStatus()
+  if (activeTeam === team1) {
+    activeTeam = team2
+  } else {
+    activeTeam = team1
+  }
+  champName.innerText = activeTeam
+}
+
 function keyDown (e) {
   info.innerText = ''
   if (winner) {
@@ -488,14 +501,7 @@ function keyDown (e) {
         break
       case 't': // end turn
         if (targets.length < 2) {
-          restoreActions()
-          setStatus()
-          if (activeTeam === team1) {
-            activeTeam = team2
-          } else {
-            activeTeam = team1
-          }
-          champName.innerText = activeTeam
+          endTurn()
         }
         break
       case 'c':
