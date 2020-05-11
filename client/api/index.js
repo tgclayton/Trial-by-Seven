@@ -1,5 +1,8 @@
 import request from 'superagent'
 
+export function getPlayers()
+  return request.get('/api/v1/players')
+    
 
 export function addPlayers (player) {
   console.log(player)
