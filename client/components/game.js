@@ -37,6 +37,7 @@ var champAttack
 var champHealth
 var champAction
 var info
+var winReport
 
 
 function preload () {
@@ -73,6 +74,7 @@ function create () {
   champHealth = document.getElementById('champHealth')
   champAction = document.getElementById('champAction')
   info = document.getElementById('infoWindow')
+  winReport = document.getElementById('win')
 
   champName.innerText = team1
 
@@ -190,7 +192,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    info.innerText = `Game over, the winner is: ${winner}`
+    winReport.innerText = winner
+    // info.innerText = `Game over, the winner is: ${winner}`
   }
 }
 
