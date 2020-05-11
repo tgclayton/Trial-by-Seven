@@ -16,12 +16,11 @@ class ChampionTwo extends React.Component {
           <li>D - move right</li>
           <li>E - select</li>
           <li>T - change team</li>
-          <li>Q - attack</li>
-          <li>z - view enemy</li>
+          <li>Q - attack mode</li>
+          <li>R - attack this tile in attack mode</li>
+          <li>Z - view unit info</li>
         </ul>
         <div className="panelHorizontal"></div>
-    
-
       </div>
     )
   }
