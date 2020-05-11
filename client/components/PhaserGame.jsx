@@ -14,15 +14,17 @@ class PhaserGame extends Component {
     // const { initialize, game } = this.state
     return (
       <div className="home">
+        <div className="gameWhole">
         <div className="gameBody">
          <ChampionOne />
         <div className="gameDiv">
           <IonPhaser game={gameFile} initialize={true} />    
-          <div className="endGameDiv">
-            <Link to='/report'><div className="endGameButton"><h1 className="endGameText">End Game</h1></div></Link>
-          </div>
         </div>
         <ChampionTwo />
+        </div>
+        <div className="endGameDiv">
+          <Link to='/report'><div className="endGameButton"><h1 className="endGameText">End Game</h1></div></Link>
+        </div>
         </div>
         </div>
     )
