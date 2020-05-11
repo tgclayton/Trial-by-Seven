@@ -9,22 +9,23 @@ var team2Name = 'hardTwo' // equal the name of 2nd champion
 // var team2Name = 'team2' // equal the name of 2nd champion
 var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
-const actors = [{ units: [] }, { units: [] }]
+const actors = [{name: team1Name,units: [] }, {name: team2Name, units: [] }]
 
 export function nameFinder1(){
   // request.get('/api/v1/players')
   // .then(res => {
   //  return team1Name = res.body.player[0].playerOne
   // })
-  return 'hello'
+  return 'team2'
 }
 
 export function nameFinder2(){
-  request.get('/api/v1/players')
-  .then(res => {
-    team2Name = res.body.player[0].playerTwo
-    return team2Name
-  })
+  // request.get('/api/v1/players')
+  // .then(res => {
+  //   team2Name = res.body.player[0].playerTwo
+  //   return team2Name
+  // })
+  return 'team1'
 }
 
 export const classes = {
@@ -103,11 +104,11 @@ export function addActorsToMapArr (actors, mapArr) {
   return map
 }
 
-export function createActors (team1, team2) {
+export function createActors () {
   var actorArr = actors
   let idx = 140
-  actorArr[0].name = team1
-  actorArr[1].name = team2
+  let team1 = actorArr[0].name 
+  let team2 = actorArr[1].name
   let unit = []
   let current
   let ranName

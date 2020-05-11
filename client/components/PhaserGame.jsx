@@ -19,6 +19,14 @@ class PhaserGame extends Component {
     }
   }
 
+componentDidUpdate(){
+  if (!this.state.winner){
+    this.setState({
+     winner: this.winner.current
+    })
+  }
+}
+
  winner = React.createRef()
 
   render() {
@@ -30,12 +38,12 @@ class PhaserGame extends Component {
          <ChampionOne />
         <div className="gameDiv">
           <IonPhaser game={gameFile} initialize={true} />  
-          {/* <div className='hide-show' style ={"display: none; position: absolute;"} ></div>   */}
-          <div id = 'win' className='endgame-display' ref ={this.winner}>
+          <div id = 'win' className='hide-show' style = {{display: 'none', position: 'absolute'}} ref = {this.winner} >{this.winner.current}</div>  
+          <div  className='endgame-display' ref ={this.winner}>
             {
               this.state.winner
               ?
-              <EndGame winner={this.winner.current}/> 
+              <EndGame winner={this.props.winner}/> 
               :
               ''
             }
