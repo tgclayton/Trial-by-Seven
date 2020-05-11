@@ -98,7 +98,7 @@ function create () {
       }
     })
   })
-  cursor.setPosition(actors[0].units[2].x, actors[0].units[2].y)
+  cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
   setIndex(cursor)
   // console.log(actors)
 }
@@ -169,16 +169,20 @@ function attack (dest) {
       }
       let enemy = actors[idx].units.filter(unit => unit.idx === dest)
       enemy = enemy[0]
-      enemy.health = enemy.health - selectedUnit.damage
-      info.innerText = `${selectedUnit.name} attacked ${enemy.name} and did ${selectedUnit.damage} damage`
-      selectedUnit.actions -= 2
-      if (selectedUnit.actions < 1) {
-        selectedUnit.status.setTexture('done')
+      if (!enemy.dead) {
+        enemy.health = enemy.health - selectedUnit.damage
+        info.innerText = `${selectedUnit.name} attacked ${enemy.name} and did ${selectedUnit.damage} damage`
+        selectedUnit.actions -= 2
+        champAction.innerText = `Actions: ${selectedUnit.actions}`
+        scene.cameras.main.shake(200)
+        checkDead(enemy)
+        checkGameOver()
+        if (selectedUnit.actions < 1) {
+          selectedUnit.status.setTexture('done')
+          attackMode()
+          selectUnit()
+        }
       }
-      champAction.innerText = `Actions: ${selectedUnit.actions}`
-      scene.cameras.main.shake(200)
-      checkDead(enemy)
-      checkGameOver()
     }
   }
 }
@@ -192,8 +196,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    info.innerText = `Game over, the winner is: ${winner}`
     winner = actors[getIdxOfActiveTeam()].name
+    info.innerText = `Game over, the winner is: ${winner}`
   }
 }
 
@@ -235,6 +239,8 @@ function setfixedMovement (val, axis) {
     }
     if (unit.actions < 1) {
       info.innerText = 'This unit has run out of actions'
+
+      selectUnit()
       valid = false
     }
   }
@@ -300,6 +306,7 @@ function setIndex (target) {
     if (target.actions < 1) {
       target.status.setTexture('done')
       info.innerText = 'Unit has run out of actions'
+      selectUnit()
     }
     map[target.idx].occupied = false
     map[target.idx].occupant = null
@@ -338,9 +345,7 @@ function selectUnit (con) {
   let team = actors.filter(team => team.name === activeTeam)
   let select = team[0].units.find(unit => unit.idx === idx)
   if (aMode) {
-    if (selectedUnit !== select) {
-      return
-    }
+    attackMode()
   }
   if (targets.length > 1) { // unit already selected
     selectedUnit = null
@@ -348,6 +353,10 @@ function selectUnit (con) {
     changeCursorColor(con)
     targets.splice(1, 1)
   } else if (select) { // no unit selected
+    if (select.actions < 1) {
+      info.innerText = 'This unit has no actions remaining'
+      return
+    }
     selectedUnit = select
     setDataWindow(selectedUnit)
     changeCursorColor(con)
@@ -466,7 +475,10 @@ function endTurn () {
   } else {
     activeTeam = team1
   }
+  info.innerText = `It is now ${activeTeam}'s turn`
   champName.innerText = activeTeam
+  let gameDiv = document.getElementById('gameDiv')
+  gameDiv.classList.toggle('red-border')
 }
 
 function keyDown (e) {
@@ -502,6 +514,8 @@ function keyDown (e) {
       case 't': // end turn
         if (targets.length < 2) {
           endTurn()
+        } else {
+          info.innerText = 'Cannot end turn with unit selected'
         }
         break
       case 'c':

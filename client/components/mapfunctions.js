@@ -12,7 +12,7 @@ export const classes = {
     class: 'scout',
     name: 'Scout',
     sprite: 'scout',
-    actions: 6,
+    actions: 5,
     health: 2
   },
   archer: {
@@ -20,7 +20,7 @@ export const classes = {
     class: 'archer',
     name: 'Archer',
     sprite: 'archer',
-    actions: 6,
+    actions: 5,
     health: 1,
     ammo: 5
   },

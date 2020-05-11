@@ -234,9 +234,14 @@ padding: 10px;
 }
 
 .gameDiv{
+  border: 10px solid rgb(5, 5, 153);
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   -moz-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
+}
+
+.red-border {
+  border: 10px solid rgb(138, 3, 3);
 }
 
 .endTurn{
