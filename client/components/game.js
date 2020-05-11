@@ -45,21 +45,21 @@ function preload () {
   team2 = actors[1].name
   map = addActorsToMapArr(actors, map)
   activeTeam = team1
-  this.load.image('warrior', '/assets/images/warrior.png')
+  this.load.image('warrior', '/assets/images/soldiers/Lwarrior2.png')
   this.load.image('enemywarrior', '/assets/images/enemywarrior.png')
   this.load.image('gcursor', '/assets/images/green-cursor.png')
   this.load.image('bcursor', '/assets/images/blue-cursor.png')
   this.load.image('rcursor', '/assets/images/red-cursor.png')
   this.load.image('done', '/assets/images/done2.png')
   this.load.image('ready', '/assets/images/ready.png')
-  this.load.image('l2hand', '/assets/images/soldiers/L2hand.png')
-  this.load.image('r2hand', '/assets/images/soldiers/R2hand.png')
-  this.load.image('lspear', '/assets/images/soldiers/Lspear.png')
+  this.load.image('l2hand', '/assets/images/soldiers/L2hand2.png')
+  this.load.image('r2hand', '/assets/images/soldiers/R2hand2.png')
+  this.load.image('lspear', '/assets/images/soldiers/Lspear2.png')
   this.load.image('rspear', '/assets/images/soldiers/Rspear.png')
   this.load.image('lscout', '/assets/images/soldiers/Lscout.png')
   this.load.image('rscout', '/assets/images/soldiers/Rscout.png')
-  this.load.image('lheavy', '/assets/images/soldiers/Lheavy.png')
-  this.load.image('rheavy', '/assets/images/soldiers/Rheavy.png')
+  this.load.image('lheavy', '/assets/images/soldiers/Rheavy2.png')
+  this.load.image('rheavy', '/assets/images/soldiers/Lheavy2.png')
   this.load.image('larcher', '/assets/images/soldiers/Larcher.png')
   this.load.image('rarcher', '/assets/images/soldiers/Rarcher.png')
   this.load.image('testmap2', '/assets/images/testmap2.png')
@@ -98,7 +98,8 @@ function create () {
       }
     })
   })
-
+  cursor.setPosition(actors[0].units[2].x, actors[0].units[2].y)
+  setIndex(cursor)
   // console.log(actors)
 }
 
@@ -171,6 +172,10 @@ function attack (dest) {
       enemy.health = enemy.health - selectedUnit.damage
       info.innerText = `${selectedUnit.name} attacked ${enemy.name} and did ${selectedUnit.damage} damage`
       selectedUnit.actions -= 2
+      if (selectedUnit.actions < 1) {
+        selectedUnit.status.setTexture('done')
+      }
+      champAction.innerText = `Actions: ${selectedUnit.actions}`
       scene.cameras.main.shake(200)
       checkDead(enemy)
       checkGameOver()
@@ -184,12 +189,11 @@ function checkGameOver () {
   actors[idx].units.forEach(unit => {
     if (!unit.dead) {
       gameOver = false
-    } else {
-      winner = actors[getIdxOfActiveTeam()].name
     }
   })
   if (gameOver) {
     info.innerText = `Game over, the winner is: ${winner}`
+    winner = actors[getIdxOfActiveTeam()].name
   }
 }
 
@@ -201,6 +205,7 @@ function checkDead (target) {
     map[target.idx].occupantTeam = null
     target.physObj.destroy()
     selectedUnit.kills.push(target.name)
+    info.innerText = `${target.name} was brutally murdered`
   }
 }
 
@@ -229,7 +234,7 @@ function setfixedMovement (val, axis) {
       checkDestOccupant(dest)
     }
     if (unit.actions < 1) {
-      info.innerText = 'This unit has run out of moves'
+      info.innerText = 'This unit has run out of actions'
       valid = false
     }
   }
@@ -291,8 +296,10 @@ function setIndex (target) {
   if (target === cursor) {
     cursor.setData('idx', x + y)
   } else {
+    champAction.innerText = `Actions: ${target.actions}`
     if (target.actions < 1) {
       target.status.setTexture('done')
+      info.innerText = 'Unit has run out of actions'
     }
     map[target.idx].occupied = false
     map[target.idx].occupant = null
@@ -331,7 +338,10 @@ function selectUnit (con) {
   let team = actors.filter(team => team.name === activeTeam)
   let select = team[0].units.find(unit => unit.idx === idx)
   if (aMode) {
-    if (selectedUnit !== select) { return }
+    if (selectedUnit !== select) {
+      console.log('broke out of select unit')
+      return
+    }
   }
   if (targets.length > 1) { // unit already selected
     selectedUnit = null

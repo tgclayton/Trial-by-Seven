@@ -2,7 +2,7 @@ import mapData from '../../server/public/assets/maps/map.json'
 var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
 var team1Name = 'The Green Meanies'
 var team2Name = 'The Big Whack'
-var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
+var team1Units = ['scout', 'heavy', 'scout', 'swordsman', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 export const classes = {
@@ -97,7 +97,7 @@ export function createActors (a) {
     unit.teamName = team1
     unit.sprite = 'r' + unit.sprite
     unit.name = `${ranName} the ${unit.name}`
-    unit.idx = idx + (i * 20)
+    unit.idx = (idx +1) + (i * 20)
     unit.dead = false
     unit.kills = []
     actorArr[0].units.push(unit)
@@ -109,7 +109,7 @@ export function createActors (a) {
     unit.teamName = team2
     unit.name = `${ranName} the ${unit.name}`
     unit.sprite = 'l' + unit.sprite
-    unit.idx = idx + (i * 20) + 19
+    unit.idx = (idx + 1) + (i * 20) + 17
     unit.dead = false
     unit.kills = []
     actorArr[1].units.push(unit)

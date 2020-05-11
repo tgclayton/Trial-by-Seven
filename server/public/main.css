@@ -187,6 +187,16 @@ padding: 10px;
   border-width: 2px
 }
 
+.gamePanel2{
+  height: 960px;
+  width: 390px;
+  margin: 20px;
+  background-color: rgba(39, 9, 15, 0.938);
+  border: #FEAD01;
+  border-style: solid;
+  border-width: 2px
+}
+
 .gamePanelBorder{
   max-height: 940px;
   max-width: 400px;
@@ -224,7 +234,6 @@ padding: 10px;
 }
 
 .gameDiv{
-  margin-top: 20px;
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   -moz-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
@@ -238,6 +247,13 @@ padding: 10px;
   position: sticky;
 }
 
+.instructionsList{
+  font-family: alagard;
+  color: #FEAD01;
+  font-size: 40px;
+  line-height: 50px;
+  margin-left: 20px;
+}
 .button{
 font-family: alagard;
 
