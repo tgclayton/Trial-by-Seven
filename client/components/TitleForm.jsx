@@ -13,13 +13,14 @@ class TitleForm extends React.Component {
      playerNumber: 0,
      playerName: ''
     }
-    
+
     this.submitHandler = this.submitHandler.bind(this)
   }
 
   championOneHandler = event => {
     this.setState({
-      playerName: event.target.value
+      playerName: event.target.value,
+      playerNumber: 1
     })
   }
 
