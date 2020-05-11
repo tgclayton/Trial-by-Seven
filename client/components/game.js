@@ -402,7 +402,9 @@ function setStatus () {
     unit.status.destroy()
   })
   actors[inaIdx].units.forEach(unit => {
-    unit.status = scene.add.image(unit.x, unit.y, 'ready').setOrigin(0, 0)
+    if (unit.dead === false) {
+      unit.status = scene.add.image(unit.x, unit.y, 'ready').setOrigin(0, 0)
+    }
   })
 }
 
