@@ -5,7 +5,7 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('player_data').insert([
-        {game_id: 1, player_one: 'Rosaline', player_two: 'Kenrith'},
+        {game_id: 1, player_one: 'Rosaline', player_two: 'Kenrith', winner:'none'},
       ]);
     });
 };
