@@ -273,3 +273,14 @@ font-family: alagard;
   margin-left: -550px;
   margin-top: 100px;
 }
+
+.instructionsBox{
+  height: 300px;
+  width: 300px;
+  background-color: rgba(76, 17, 30, 0.938);
+  border-color: #FEAD01;
+  border-style: solid;
+  border-width: 3px;
+  margin: 0 auto;
+  margin-top: 20px;
+}

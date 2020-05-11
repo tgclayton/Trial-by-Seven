@@ -462,7 +462,16 @@ function keyDown (e) {
         console.log('actors is:', actors)
         break
         case 'y':
-        C1context.state.championName = 'Tom is Cool'
+          let data = document.getElementById('champName')
+          data.innerText = "test""
+        let dataUnit = document.getElementById('champUnit')
+        dataUnit.innerText = "Sam The Sword User"
+        let dataAttack = document.getElementById('champAttack')
+        dataAttack.innerText = counter
+        let dataHealth = document.getElementById('champHealth')
+        dataHealth.innerText = "Health: 2"
+        let dataActions = document.getElementById('champAction')
+        dataActions.innerText = "Actions: 2"
         break
       // default: console.log(key)
       

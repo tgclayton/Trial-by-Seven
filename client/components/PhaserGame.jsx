@@ -5,7 +5,7 @@ import gameFile from '../components/game'
 import Home from './Home'
 import { Link } from 'react-router-dom'
 
-import {ChampionOne} from './ChampionOne'
+import ChampionOne from './ChampionOne'
 import ChampionTwo from './ChampionTwo'
 
 class PhaserGame extends Component {
