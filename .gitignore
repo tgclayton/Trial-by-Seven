@@ -12,3 +12,7 @@ node_modules/
 # Build
 dist/
 /npm-debug.log
+
+# Bundles 
+*.bundle.js
+*.sqlite3

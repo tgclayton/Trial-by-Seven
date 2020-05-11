@@ -8,10 +8,8 @@ class TitleForm extends React.Component {
     super(props)
 
     this.state = {
-     playerId: null,
-     gameId: 0,
-     playerNumber: 0,
-     playerName: ''
+     playerOne: '',
+     playerTwo: ''
     }
 
     this.submitHandler = this.submitHandler.bind(this)
@@ -19,22 +17,19 @@ class TitleForm extends React.Component {
 
   championOneHandler = event => {
     this.setState({
-      playerName: event.target.value,
-      playerNumber: 1
+      playerOne: event.target.value,
     })
   }
 
-  // championTwoHandler = event => {
-  //   this.setState({
-  //     championTwo: event.target.value
-  //   })
-  // }
+  championTwoHandler = event => {
+    this.setState({
+      playerTwo: event.target.value
+    })
+  }
 
   submitHandler = event => {
     event.preventDefault()
     addPlayers(this.state)
-    // addPlayers(this.state.championOne)
-    // addPlayers(this.state.championTwo)
   }
 
   render() {
@@ -54,8 +49,8 @@ class TitleForm extends React.Component {
              />
           </Form.Group>
         </div>
-            {/* <div className="formFlex">
-                <h2 className="formlabel">Champion Two</h2>
+            <div className="formFlex">
+              <h2 className="formlabel">Champion Two</h2>
           <Form.Group>
             <Form.Input
               placeholder='championTwo'
@@ -63,7 +58,7 @@ class TitleForm extends React.Component {
               onChange={this.championTwoHandler}
                 />
           </Form.Group>
-            </div>  */}
+            </div> 
           <Form.Button onClick={this.submitHandler}>
             <Link to='/game'>Fight!</Link>
           </Form.Button>
