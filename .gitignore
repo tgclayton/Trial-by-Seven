@@ -13,6 +13,8 @@ node_modules/
 dist/
 /npm-debug.log
 
-# Bundles 
-*.bundle.js
+#Map
+*bundle.js
+
+#Database
 *.sqlite3
