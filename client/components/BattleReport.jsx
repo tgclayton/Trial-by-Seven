@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import UnitDisplay from './UnitDisplay';
 
 //RECEIVED DATA
@@ -43,30 +44,49 @@ class BattleReport extends Component {
 
   render() {
     return (
-      <div className='brMainContainer'>
+      <div className='home brMainContainer'>
         <div className='brPanel'>
           <div className='brPanelStroke'>
             <div className='brTitle'>
               {titleText}
             </div>
-            <div className='brPlayerOneBlock'>
-              <div className='brBlockPlayerName'>
-                {resultCallout.playerOne}
-              </div>
-              <div className='brUnitContainer'>
-                <UnitDisplay />
-              </div>
-            </div>
-            <div className='brPlayerTwoBlock'>
-              <div className='brBlockPlayerName'>
-                {resultCallout.playerTwo}
-              </div>
-              <div className='brUnitContainer'>
-                <UnitDisplay name={'jon'} survived={'true'} hits={5} kills={2} />
-              </div>
+              <div className='brContentContainer'>
+                <div className='brPlayerBlock'>
+                  <div className='brBlockPlayerName'>
+                    {resultCallout.playerOne}
+                  </div>
+                  <div className='brUnitContainer'>
+                    <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                  </div>
+                </div>
+                <div className='brPlayerBlock borderBox'>
+                  <div className='brBlockPlayerName'>
+                    {resultCallout.playerTwo}
+                  </div>
+                  <div className='brUnitContainer'>
+                    <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
+                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
+                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                  </div>
+              </div>    
             </div>
             <div className='brButtonBlock'>
-              'Buttons'
+              <Link to='/game' >
+                <button className='brButton'>Rematch</button>
+              </Link>
+              <Link to='/' >
+                <button className='brButton'>New Game</button>
+              </Link>
             </div>
           </div>
         </div>

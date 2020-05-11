@@ -77,6 +77,3 @@ class TitleForm extends React.Component {
 export default TitleForm
 
 
-{/* <Link to='/Session' >
-<button className='mainButton' >PROCEED</button>
-</Link> */}
