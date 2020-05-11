@@ -13,7 +13,7 @@ function getPlayers (db = connection) {
     return (results)
     })
 }
-
+//where winner = none
 
 function addPlayer (player, db = connection) {
   return db('player_data')
