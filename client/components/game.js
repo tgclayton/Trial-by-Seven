@@ -39,7 +39,7 @@ function preload () {
   this.load.image('gcursor', '/assets/images/green-cursor.png')
   this.load.image('bcursor', '/assets/images/blue-cursor.png')
   this.load.image('rcursor', '/assets/images/red-cursor.png')
-  this.load.image('done', '/assets/images/done.png')
+  this.load.image('done', '/assets/images/done2.png')
   this.load.image('ready', '/assets/images/ready.png')
   this.load.image('l2hand', '/assets/images/soldiers/L2hand.png')
   this.load.image('r2hand', '/assets/images/soldiers/R2hand.png')
@@ -58,6 +58,14 @@ function create () {
   scene = this
   this.input.keyboard.on('keydown', keyDown, this)
   this.add.image(480, 480, 'testmap2')
+
+  cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
+  cursor.setCollideWorldBounds(true)
+  cursor.setData('notMoving', true)
+  cursor.setData('idx', 0)
+  cursor.setData('sprite', 'gcursor')
+  targets.push(cursor)
+
   actors.forEach(team => {
     team.units.forEach(actor => {
       let coords = getCoordsFromIndex(actor.idx)
@@ -72,12 +80,6 @@ function create () {
     })
   })
 
-  cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
-  cursor.setCollideWorldBounds(true)
-  cursor.setData('notMoving', true)
-  cursor.setData('idx', 0)
-  cursor.setData('sprite', 'gcursor')
-  targets.push(cursor)
   // console.log(actors)
 }
 
