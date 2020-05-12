@@ -5,8 +5,6 @@ import UnitDisplay from './UnitDisplay'
 // RECEIVED DATA
 // Winner
 const winner = 1
-const propWinner = this.props.winners
-console.log(propWinner);
 
 
 // Player names (ex database)
@@ -79,20 +77,46 @@ const units = [{
 // DYNAMIC TEXT
 var resultsFlavour = ''
 
-function winnerAssignment (playerNumber) {
-  resultsFlavour = (playerNumber === winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
-  return resultsFlavour
-}
+// function winnerAssignment (playerNumber) {
+//   resultsFlavour = (playerNumber === winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
+//   return resultsFlavour
+// }
 
 // FLAVOUR TEXT COMPILERS
 const titleText = 'Silence descends upon the blood soaked field, the gods have spoken.'
-const resultCallout = {
-  playerOne: playerOneName + winnerAssignment(1),
-  playerTwo: playerTwoName + winnerAssignment(2)
-}
+// const resultCallout = {
+//   playerOne: playerOneName + winnerAssignment(1),
+//   playerTwo: playerTwoName + winnerAssignment(2)
+// }
 
 class BattleReport extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      winner: this.props.winners,
+      units: this.props.units,
+      teamOne: this.props.team1,
+      teamTwo: this.props.team2
+    }
+
+    this.winnerAssignment = this.winnerAssignment.bind(this)
+  }
+
+
+  winnerAssignment (playerNumber) {
+    resultsFlavour = (playerNumber === this.winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
+    return resultsFlavour
+  }
+  
+  
   render () {
+    
+    let resultCallout = {
+        playerOne: this.teamOne + this.winnerAssignment(1),
+        playerTwo: this.teamTwo + this.winnerAssignment(2)
+    }
+
     return (
       <div className='home brMainContainer'>
         <div className='brPanel'>
