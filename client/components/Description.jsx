@@ -11,7 +11,7 @@ class Description extends React.Component {
             <img src="images/sword.png"/>
 
             <div>
-              <h1 className="titleText">Trail by</h1>
+              <h1 className="titleText">Trial by</h1>
               <h1 className="titleText2">Seven</h1>
 
             </div>
