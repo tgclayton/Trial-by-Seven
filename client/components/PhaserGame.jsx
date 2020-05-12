@@ -4,7 +4,7 @@ import { IonPhaser } from '@ion-phaser/react'
 import gameFile from '../components/game'
 import Home from './Home'
 import { Link } from 'react-router-dom'
-
+import winner from './game'
 import ChampionOne from './ChampionOne'
 import ChampionTwo from './ChampionTwo'
 import EndGame from './EndGame'
@@ -35,8 +35,8 @@ class PhaserGame extends Component {
      <div className="home">
        <div className="gameWhole">
          <div className="gameBody">
-           <ChampionOne />
-           <div className="gameDiv">
+           <ChampionOne team1 = {this.props.team1} team2 = {this.props.team2}/>
+           <div className="gameDiv" id = "gameDiv">
              <IonPhaser game={gameFile} initialize={true} />
              <div id = 'win' className='hide-show' style = {{ display: 'none', position: 'absolute' }} ref = {this.winner} >{this.winner.current}</div>
              <div className='endgame-display' ref ={this.winner}>

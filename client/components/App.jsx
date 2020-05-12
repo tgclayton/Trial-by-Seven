@@ -23,12 +23,10 @@ setTeams (team1, team2) {
 // team1 = {this.state.team1} team2 = {this.state.team2}
 render () {
   // const { initialize, game } = this.state
-  let home = <Home />
   return (
     <Router>
-      {console.log(this.setTeams)}
-      <Route exact path='/' render={(props) => <Home setTeams = {this.setTeams} />} />
-      <Route exact path='/game' component={<PhaserGame/>} />
+      <Route exact path='/' render={() => <Home setTeams = {this.setTeams} />} />
+      <Route exact path='/game' component={() => <PhaserGame team1 = {this.state.team1} team2 = {this.state.team2}/>} />
       <Route exact path='/report' component={BattleReport} />
     </Router>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { addPlayers } from '../api'
 
@@ -44,9 +44,10 @@ class TitleForm extends React.Component {
               <h3 className="formTitleText">What should the heralds call you?</h3>
               <div className="formFlex">
                 <h2 className="formlabel">Champion One</h2>
+
                 <Form.Group className="formGroup">
                   <Form.Input
-                    placeholder='championOne'
+                    placeholder='Champion One'
                     name='championOne'
                     onChange={this.championOneHandler}
                   />
@@ -56,20 +57,21 @@ class TitleForm extends React.Component {
                 <h2 className="formlabel">Champion Two</h2>
                 <Form.Group>
                   <Form.Input
-                    placeholder='championTwo'
+                    placeholder='Champion Two'
                     name='championTwo'
                     onChange={this.championTwoHandler}
                   />
                 </Form.Group>
               </div>
-              <Form.Button onClick={this.submitHandler}>
-                <Link to='/game'>Fight!</Link>
-              </Form.Button>
-              <div>
-                <Link to='/game'>Temporary Link to Report</Link>
+              <div onClick={this.submitHandler}>
+                <Link to='/game'>
+                  <Form.Button>Fight!</Form.Button>
+                </ Link>
               </div>
+              <Link to='/game'>Temporary Link to Report</Link>
             </Form>
           </div>
+
         </div>
       </div>
     )
