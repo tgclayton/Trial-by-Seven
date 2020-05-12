@@ -37,16 +37,24 @@ var champAttack
 var champHealth
 var champAction
 var info
-var winInfo
+var restart = false
 // function getTeamNames(){
 
 // }
 
 function preload () {
+  if (restart) {
+    team1 = null
+    team2 = null
+    activeTeam = null
+    actors = null
+    map = null
+    restart = false
+  }
   // setTimeout()
   team1 = document.getElementById('stupid-info-box1').innerText
   team2 = document.getElementById('stupid-info-box2').innerText
-  winInfo = document.getElementById('stupid-info-box3')
+  // winInfo = document.getElementById('stupid-info-box3')
   map = createMapArray()
   actors = createActors(team1, team2)
   map = addActorsToMapArr(actors, map)
@@ -72,6 +80,13 @@ function preload () {
 }
 
 function create () {
+  // console.log('create ran')
+  // if (restart) {
+  //   preload()
+  //   this.registry.destroy()
+  //   this.events.off()
+  //   this.scene.restart()
+  // }
   champName = document.getElementById('champName')
   champUnit = document.getElementById('champUnit')
   champAttack = document.getElementById('champAttack')
@@ -108,6 +123,9 @@ function create () {
   cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
   setIndex(cursor)
   // console.log(actors)
+  if (restart) {
+    console.log(actors)
+  }
 }
 
 function update () {
@@ -194,6 +212,19 @@ function attack (dest) {
   }
 }
 
+function endGame () {
+  winner = true
+  document.getElementById('battleInfo').innerText = JSON.stringify(actors)
+  info.innerText = `Game over, winner is ${activeTeam}`
+  let winBox = document.getElementById('winBox')
+  winBox.classList.toggle('hidden')
+  let endRes = document.getElementById('endRes')
+  endRes.innerText = `Game over, winner is ${activeTeam}`
+  let game = document.getElementById('gameDiv')
+  game.classList.toggle('invis')
+  restart = true
+}
+
 function checkGameOver () {
   let gameOver = true
   let idx = getIdxOfInactiveTeam()
@@ -203,16 +234,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    winner = true
-    document.getElementById('battleInfo').innerText = JSON.stringify(actors)
-    info.innerText = `Game over, winner is ${activeTeam}`
-    let winBox = document.getElementById('winBox')
-    winBox.classList.toggle('hidden')
-    let endRes = document.getElementById('endRes')
-    endRes.innerText = `Game over, winner is ${activeTeam}`
-    let game = document.getElementById('gameDiv')
-    game.classList.toggle('invis')
-    scene.sys.game.destroy(true)
+    endGame()
+  // scene.sys.game.destroy(true)
   }
 }
 
@@ -548,7 +571,11 @@ function keyDown (e) {
         }
         break
       case 'o':
-        scene.sys.game.destroy(true)
+        endGame()
+        // preload()
+        // this.registry.destroy()
+        // this.events.off()
+        // this.scene.restart()
         break
     }
   }
