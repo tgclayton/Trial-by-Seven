@@ -74,12 +74,12 @@ body {
 .formBodyBorder{
   padding: 15px;
   background-color: rgba(76, 17, 30, 0.582);
-  height: 230px;
+  height: 255px;
 }
 
 .formBody{
 width: 500px;
-height: 200px;
+height: 225px;
 background-color: rgb(76, 17, 30);
 border-color: #FEAD01;
 border-width: 2px;
@@ -168,7 +168,8 @@ padding: 10px;
   font-weight: 100;
   font-size: 25px;
   color: #FEAD01;
-  margin-right: 10px;
+  margin-right: 20px;
+
 }
 
 .gameBody{
@@ -317,7 +318,12 @@ font-family: alagard;
   margin: 0 auto;
   margin-top: 20px;
 }
+<<<<<<< HEAD
 
+||||||| e9184ba
+}
+=======
+>>>>>>> f73e80d5d8d738afc0a999c4842322dafa0cec02
 
 
 .brMainContainer{
@@ -385,7 +391,7 @@ font-family: alagard;
   flex-wrap: wrap;
   padding-top: 30px;
   padding-left: 50px;
- }
+  }
 
 .brButtonBlock{
   display: flex;
@@ -409,7 +415,7 @@ font-family: alagard;
 .udUnitContainer{
   width: 200px;
   height:300px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   margin-right: 15px;
   margin-top: 10px;
 }
@@ -480,3 +486,14 @@ font-family: alagard;
 .invis {
   visibility: hidden;
 }
+
+.skullyContainer{
+  height: 20px;
+  width: 20px;
+  }
+
+.skully{
+  position: absolute;
+  height: 50px;
+  width:50px;
+ }

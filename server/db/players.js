@@ -23,4 +23,4 @@ function addPlayer (player, db = connection) {
     })
 }
 
-//CHANGE
+

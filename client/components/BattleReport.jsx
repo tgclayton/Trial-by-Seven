@@ -10,15 +10,64 @@ const winner = 1
 const playerOneName = 'playerOne'
 const playerTwoName = 'playerTwo'
 
-// Unit array drilled to object
-const unit = {
-  class: 'warrior',
-  name: 'Ulfrick',
-  survived: true,
-  woundsTaken: 2,
-  woundsGiven: 6,
-  kills: 2
-}
+//Unit array drilled to object
+const units = [{
+      class: 'warrior',
+      name: 'Uno',
+      survived: false,
+      woundsTaken: 3,
+      woundsGiven: 2,
+      kills: 1
+      },
+      {
+      class: 'warrior',
+      name: 'Secundus',
+      survived: true,
+      woundsTaken: 0,
+      woundsGiven: 5,
+      kills: 1
+      },
+      {
+      class: 'rogue',
+      name: 'Tertius',
+      survived: true,
+      woundsTaken: 1,
+      woundsGiven: 3,
+      kills: 1
+      },
+      {
+      class: 'rogue',
+      name: 'Quartus',
+      survived: false,
+      woundsTaken: 2,
+      woundsGiven: 6,
+      kills: 2
+      },
+      {
+      class: 'archer',
+      name: 'Quintus',
+      survived: true,
+      woundsTaken: 2,
+      woundsGiven: 8,
+      kills: 2
+      },
+      {
+      class: 'spear',
+      name: 'Sextus',
+      survived: false,
+      woundsTaken: 4,
+      woundsGiven: 3,
+      kills: 1
+      },
+      {
+      class: 'sentinel',
+      name: 'Septimus',
+      survived: true,
+      woundsTaken: 0,
+      woundsGiven: 0,
+      kills: 0
+      },
+]
 
 // DYNAMIC TEXT
 var resultsFlavour = ''
@@ -44,47 +93,38 @@ class BattleReport extends Component {
             <div className='brTitle'>
               {titleText}
             </div>
-            <div className='brContentContainer'>
-              <div className='brPlayerBlock'>
-                <div className='brBlockPlayerName'>
-                  {resultCallout.playerOne}
-                </div>
-                <div className='brUnitContainer'>
-                  <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
-                  <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-                  <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                  <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
-                  <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-                  <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                  <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
-                </div>
-              </div>
-              <div className='brPlayerBlock borderBox'>
-                <div className='brBlockPlayerName'>
-                  {resultCallout.playerTwo}
-                </div>
-                <div className='brUnitContainer'>
-                  <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
-                  <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-                  <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                  <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
-                  <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-                  <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                  <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+              <div className='brContentContainer'>
+                <div className='brPlayerBlock'>
+                  <div className='brBlockPlayerName'>
+                    {resultCallout.playerOne}
+                  </div>
+                  <div className='brUnitContainer'>
+                   
+                  {
+                    units.map((unit, index) => {
+                      return (
+                        <div key={index}>
+                          <UnitDisplay type={unit.class} name={unit.name} survived={unit.survived} hits={unit.woundsGiven} kills={unit.kills}/>
+                        </div>
+                      )
+                    })
+                  }
+
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='brButtonBlock'>
-              <Link to='/game' >
-                <button className='brButton'>Rematch</button>
-              </Link>
-              <Link to='/' >
-                <button className='brButton'>New Game</button>
-              </Link>
+                <div className='brButtonBlock'>
+                  <Link to='/game' >
+                    <button className='brButton'>Rematch</button>
+                  </Link>
+                  <Link to='/' >
+                    <button className='brButton'>New Game</button>
+                  </Link>
+                </div>
             </div>
           </div>
         </div>
-      </div>
+      
     )
   }
 }

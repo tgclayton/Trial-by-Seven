@@ -17,7 +17,7 @@ class UnitDisplay extends Component {
       ' He will see another sunrise.',
       ' He lives to tell the tale.',
       ' He is also still drunk.',
-      ' Will have nightmares for years.',
+      ' He will have nightmares for years.',
       ' Sadly he took a wound and bled out soon after.',
       ' He was struck and has stepped through the black gate.',
       ' He was mortally wounded and left the world alone and screaming.',
@@ -39,13 +39,19 @@ class UnitDisplay extends Component {
       return portraitSrc
     }
 
+
+    function skullySummon(){
+      let skullyState = (!survived) ? 'visible' : 'hidden'
+      return skullyState
+    }
+
     function battleStyle(){
       switch (true) {
         case hits >= 8:
           style = ' bathed in blood ';
           return style
         case hits >= 4:
-          style = ' struck terror ';
+          style = ' was a terror ';
           return style
         case hits >= 1:
           style = ' fought bravely '
@@ -57,7 +63,7 @@ class UnitDisplay extends Component {
     }
     
     function battleEffectiveness(){
-      killTotal = (kills > 0) ? 'and slew ' + kills + ' foes. ': ' '
+      killTotal = (kills > 0) ? 'and slew ' + kills + '. ': ' '
       return killTotal
     }
 
@@ -77,12 +83,15 @@ class UnitDisplay extends Component {
       <div className='udUnitContainer'>
         <div className='udImageContainer'>
           <div className='udImageRondel'>
+            <div className='skullyBox'>
+              <img className='skully' style={{visibility:skullySummon()}} src='images/portraits/deadFace.png' />
+            </div>
            <img className = 'udPortrait'src={randomPortrait()} />
           </div>
         </div>
         <div className='udTextHolder'>
           <p className='udText'>
-            {nameCompiler()}
+            {name}
             {battleStyle()}
             {battleEffectiveness()}
             {currentStateGenerator()}
