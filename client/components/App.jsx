@@ -13,7 +13,8 @@ export default class App extends Component {
 state = {
   team1: null,
   team2: null,
-  actors: null
+  actors: null,
+  winner: null
 }
 setTeams (team1, team2) {
   this.setState({
@@ -24,9 +25,11 @@ setTeams (team1, team2) {
 
 getBattleInfo () {
   let actors = document.getElementById('battleInfo').innerText
+  let winner = document.getElementById('champName').innerText
   actors = JSON.parse(actors)
   this.setState({
-    actors: actors
+    actors: actors,
+    winner: winner
   })
 }
 

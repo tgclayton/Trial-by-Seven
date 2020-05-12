@@ -212,7 +212,7 @@ function checkGameOver () {
     endRes.innerText = `Game over, winner is ${activeTeam}`
     let game = document.getElementById('gameDiv')
     game.classList.toggle('invis')
-    // scene.sys.game.destroy(true)
+    scene.sys.game.destroy(true)
   }
 }
 
