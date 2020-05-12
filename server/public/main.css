@@ -236,6 +236,7 @@ padding: 10px;
 .gameDiv{
   margin-top: 20px;
   height: 980px;
+  width: 980px;
   border: 10px solid rgb(5, 5, 153);
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   -moz-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
@@ -439,9 +440,28 @@ font-family: alagard;
   color: #FEAD01;
   text-align: center;
   line-height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .gameWhole{
   display: flex;
   flex-direction: column;
+}
+
+.endgame-container {
+  height: 250px;
+  width: 250px;
+  position: absolute;
+  left: 50%;
+  background-color: red;
+  top: 20%;
+}
+
+.hidden {
+  display: none;
+}
+
+.invis {
+  visibility: hidden;
 }

@@ -1,17 +1,17 @@
 import React from 'react'
 
 class EndGame extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
       winner: this.props.winner
     }
   }
-  render() {
-    return(
-      <div className='endgame-conatiner'>
-        <h1>{this.state.winner} wins</h1>
+  render () {
+    return (
+      <div id = 'winBox'className='endgame-container hidden'>
+        <h1 id = 'endRes'>{this.state.winner} wins</h1>
       </div>
     )
   }

@@ -18,6 +18,7 @@ champAttack = React.createRef()
 champHealth = React.createRef()
 champAction = React.createRef()
 info = React.createRef()
+
 // style = {{ display: 'none' }}
 render () {
   return (
@@ -26,7 +27,7 @@ render () {
       <div id = 'stupid-info-box2' style = {{ display: 'none' }}>{this.props.team2}</div>
       <h1 className="championName" id="champName" ref={this.champName}>{this.champName.current}</h1>
       <div className="panelHorizontal"></div>
-      <h1 className="championUnit" id="champUnit" ref={this.champUnit}>None Selected{this.champUnit.current}</h1>
+      <h1 className="championUnit" id="champUnit" >None Selected</h1>
       <div className="panelHorizontal"></div>
       <h1 className="championAction" id="champAttack" ref={this.champAttack}>Attack: ...{this.champAttack.current}</h1>
       <h1 className="championAction" id="champHealth" ref={this.champHealth}>Health: ...{this.champHealth.current}</h1>

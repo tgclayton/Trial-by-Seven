@@ -30,15 +30,14 @@ var activeTeam
 var cursor
 var targets = []
 var selectedUnit
-export var winner
+var winner
 var champName
 var champUnit
 var champAttack
 var champHealth
 var champAction
 var info
-var winReport
-
+var winInfo
 // function getTeamNames(){
 
 // }
@@ -47,7 +46,7 @@ function preload () {
   // setTimeout()
   team1 = document.getElementById('stupid-info-box1').innerText
   team2 = document.getElementById('stupid-info-box2').innerText
-  console.log('teams are:', team1, team2)
+  winInfo = document.getElementById('stupid-info-box3')
   map = createMapArray()
   actors = createActors(team1, team2)
   map = addActorsToMapArr(actors, map)
@@ -79,7 +78,7 @@ function create () {
   champHealth = document.getElementById('champHealth')
   champAction = document.getElementById('champAction')
   info = document.getElementById('infoWindow')
-  winReport = document.getElementById('win')
+  // winReport = document.getElementById('win')
 
   champName.innerText = team1
 
@@ -204,8 +203,15 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    winReport.innerText = winner
-    // info.innerText = `Game over, the winner is: ${winner}`
+    winner = true
+    info.innerText = `Game over, winner is ${activeTeam}`
+    let winBox = document.getElementById('winBox')
+    winBox.classList.toggle('hidden')
+    let endRes = document.getElementById('endRes')
+    endRes.innerText = `Game over, winner is ${activeTeam}`
+    let game = document.getElementById('gameDiv')
+    game.classList.toggle('invis')
+    // scene.sys.game.destroy(true)
   }
 }
 
@@ -541,7 +547,7 @@ function keyDown (e) {
         }
         break
       case 'o':
-        console.log('actors is:', actors)
+        scene.sys.game.destroy(true)
         break
     }
   }
@@ -550,3 +556,5 @@ function keyDown (e) {
     keyPressed = false
   }, 20)
 }
+
+export { scene }
