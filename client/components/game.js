@@ -239,8 +239,8 @@ function endGame () {
   winBox.classList.toggle('hidden')
   let endRes = document.getElementById('endRes')
   endRes.innerText = `Game over, winner is ${activeTeam}`
-  let game = document.getElementById('gameDiv')
-  game.classList.toggle('invis')
+  // let game = document.getElementById('gameDiv')
+  // game.classList.toggle('invis')
   restart = true
 }
 
@@ -253,7 +253,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    endGame()
+    setTimeout(endGame, 3000)
+    scene.cameras.main.fade(2000)
   // scene.sys.game.destroy(true)
   }
 }
@@ -590,7 +591,8 @@ function keyDown (e) {
         }
         break
       case 'o':
-        endGame()
+        setTimeout(endGame, 3000)
+        scene.cameras.main.fade(2000)
         // preload()
         // this.registry.destroy()
         // this.events.off()

@@ -256,6 +256,16 @@ padding: 10px;
   position: sticky;
 }
 
+#endRes{
+  font-family: alagard;
+  color: #FEAD01;
+  font-size: 80px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+  text-shadow: 5px,5px,5px,5px,black;
+  text-align: center;
+}
+
 .instructionsList{
   font-family: alagard;
   color: #FEAD01;
@@ -308,7 +318,6 @@ font-family: alagard;
   margin: 0 auto;
   margin-top: 20px;
 }
-
 
 .brMainContainer{
   padding-left: 50px;
@@ -447,7 +456,6 @@ font-family: alagard;
 .gameWhole{
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
 }
 
 .skullyContainer{
@@ -460,18 +468,31 @@ font-family: alagard;
   height: 50px;
   width:50px;
  }
-||||||| merged common ancestors
-}
-=======
-}
+
+.skullyContainer{
+  height: 20px;
+  width: 20px;
+  }
+
+.skully{
+  position: absolute;
+  height: 50px;
+  width:50px;
+ }
+
 
 .endgame-container {
-  height: 250px;
-  width: 250px;
+  height: 980px;
+  width: 980px;
   position: absolute;
-  left: 50%;
-  background-color: red;
-  top: 20%;
+  margin-top: 20px;
+  background-color: rgba(76, 17, 30, 0.678);
+  border-style: solid;
+  border-width: 4px;
+  border-color: #FEAD01;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hidden {
@@ -481,4 +502,15 @@ font-family: alagard;
 .invis {
   visibility: hidden;
 }
->>>>>>> 01d2acca0ab135368e044af89ec66e5fb1514493
+
+.skullyContainer{
+  height: 20px;
+  width: 20px;
+  }
+
+.skully{
+  position: absolute;
+  height: 50px;
+  width:50px;
+ }
+
