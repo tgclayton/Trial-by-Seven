@@ -12,8 +12,8 @@ class PhaserGame extends Component {
     super(props)
 
     this.state = {
-      winner: null
-
+      winner: null,
+      gameFile: gameFile
     }
   }
   info2 = React.createRef()
@@ -31,7 +31,6 @@ class PhaserGame extends Component {
     //   console.log('set endgame to be component')
     //   endGame = <EndGame/>
     // }
-    console.log(IonPhaser)
     return (
       <div className="home">
 
@@ -42,7 +41,7 @@ class PhaserGame extends Component {
             <div>
               <EndGame getBattleInfo = {this.props.getBattleInfo} />
               <div className="gameDiv" id = "gameDiv">
-                <IonPhaser game={gameFile} initialize={true}/>
+                <IonPhaser game={this.state.gameFile} initialize={true}/>
                 {/* <div id = 'win' className='hide-show' style = {{ display: 'none', position: 'absolute' }} ref = {this.winner} >{this.winner.current}</div> */}
                 <div className='endgame-display' ref ={this.winner}>
                   {
