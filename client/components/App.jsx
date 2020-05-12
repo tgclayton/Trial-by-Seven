@@ -27,7 +27,8 @@ render () {
     <Router>
       <Route exact path='/' render={() => <Home setTeams = {this.setTeams} />} />
       <Route exact path='/game' component={() => <PhaserGame team1 = {this.state.team1} team2 = {this.state.team2}/>} />
-      <Route exact path='/report' component={BattleReport} />
+      {/* <Route exact path='/report' component={BattleReport} /> */}
+      <Route exact path='/report' component={() => <BattleReport actor = {this.state.actors} winner = {this.state.winners}/>}  />
     </Router>
   )
 }

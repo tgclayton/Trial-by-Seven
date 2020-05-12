@@ -5,6 +5,9 @@ import UnitDisplay from './UnitDisplay'
 // RECEIVED DATA
 // Winner
 const winner = 1
+const propWinner = this.props.winners
+console.log(propWinner);
+
 
 // Player names (ex database)
 const playerOneName = 'playerOne'
@@ -68,6 +71,10 @@ const units = [{
       kills: 0
       },
 ]
+
+
+
+
 
 // DYNAMIC TEXT
 var resultsFlavour = ''
