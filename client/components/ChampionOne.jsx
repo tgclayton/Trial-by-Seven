@@ -1,8 +1,8 @@
 import React from 'react'
 import request from 'superagent'
+import { NONE } from 'phaser'
 
 export default class ChampionOne extends React.Component {
-
   state = {
     championName: 'champName',
     championUnit: 'Active Unit',
@@ -11,7 +11,7 @@ export default class ChampionOne extends React.Component {
     championActions: '2',
     info: ''
   }
-  
+
 champName = React.createRef()
 champUnit = React.createRef()
 champAttack = React.createRef()
@@ -22,6 +22,8 @@ info = React.createRef()
 render () {
   return (
     <div className="gamePanel">
+      <div id = 'stupid-info-box1' style = {{ display: 'none' }} >{this.props.team1}</div>
+      <div id = 'stupid-info-box2' style = {{ display: 'none' }} >{this.props.team2}</div>
       <h1 className="championName" id="champName" ref={this.champName}>{this.champName.current}</h1>
       <div className="panelHorizontal"></div>
       <h1 className="championUnit" id="champUnit" ref={this.champUnit}>None Selected{this.champUnit.current}</h1>

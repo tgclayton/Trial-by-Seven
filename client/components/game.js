@@ -39,12 +39,11 @@ var champAction
 var info
 var winReport
 
-
 function preload () {
+  let team1 = document.getElementById('stupid-info-box1').innerText
+  let team2 = document.getElementById('stupid-info-box2').innerText
   map = createMapArray()
-  actors = createActors()
-  team1 = actors[0].name
-  team2 = actors[1].name
+  actors = createActors(team1, team2)
   map = addActorsToMapArr(actors, map)
   activeTeam = team1
   this.load.image('warrior', '/assets/images/soldiers/Lwarrior2.png')
