@@ -10,7 +10,6 @@ const winner = 1
 const playerOneName = 'playerOne'
 const playerTwoName = 'playerTwo'
 
-<<<<<<< HEAD
 //Unit array drilled to object
 const units = [{
       class: 'warrior',
@@ -53,7 +52,7 @@ const units = [{
       kills: 2
       },
       {
-      class: 'spearman',
+      class: 'spear',
       name: 'Sextus',
       survived: false,
       woundsTaken: 4,
@@ -69,27 +68,6 @@ const units = [{
       kills: 0
       },
 ]
-||||||| merged common ancestors
-//Unit array drilled to object
-const unit = {
-      class: 'warrior',
-      name: 'Ulfrick',
-      survived: true,
-      woundsTaken: 2,
-      woundsGiven: 6,
-      kills: 2
-}
-=======
-// Unit array drilled to object
-const unit = {
-  class: 'warrior',
-  name: 'Ulfrick',
-  survived: true,
-  woundsTaken: 2,
-  woundsGiven: 6,
-  kills: 2
-}
->>>>>>> e9184baa6a982109efdaa021e2d3388bc67ff03b
 
 // DYNAMIC TEXT
 var resultsFlavour = ''
