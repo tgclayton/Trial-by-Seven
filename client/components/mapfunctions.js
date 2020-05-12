@@ -68,7 +68,7 @@ export const classes = {
     class: 'swordsman',
     name: 'Swordsman',
     sprite: '2hand',
-    actions: 4000,
+    actions: 4,
     health: 3
   }
 }
