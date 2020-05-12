@@ -280,13 +280,11 @@ font-family: alagard;
 
 
 .endGameButton{
+  padding: 1em;
   display: flex;
-  height: 60px;
-  width: 250px;
   background-color: rgba(76, 17, 30, 0.938);
   justify-content: center;
-  padding-top: 5px;
-  border-style: solid;
+  border-style: double;
   border-width: 2px;
   border-color: #FEAD01;
 }

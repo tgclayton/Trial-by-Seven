@@ -253,8 +253,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    setTimeout(endGame, 3000)
-    scene.cameras.main.fade(2000)
+    setTimeout(endGame, 2400)
+    scene.cameras.main.fade(2500, 76, 17, 30)
   // scene.sys.game.destroy(true)
   }
 }
