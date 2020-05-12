@@ -6,8 +6,7 @@ class UnitDisplay extends Component {
     const unitType = this.props.type
     const name = this.props.name
     const survived = this.props.survived
-    const hits = this.props.hits
-    const kills = this.props.kills
+    const kills = (this.props.kills).length
 
     var style = ''
     var killTotal = ''
@@ -25,13 +24,8 @@ class UnitDisplay extends Component {
       ' He cracked under the strain and is now a broken man.',
     ]
 
-    function nameCompiler(){
-      let compiledName = name + ' the ' + unitType
-      return compiledName
-    }
         
     function randomPortrait(){
-      // let randomNumber = Math.floor(Math.random() * Math.floor(3))
       let randomFloat = Math.random() * (3 - 1) + 1
       let randomInt = Math.round(randomFloat)
 
@@ -41,36 +35,43 @@ class UnitDisplay extends Component {
 
 
     function skullySummon(){
-      let skullyState = (!survived) ? 'visible' : 'hidden'
+      let skullyState = (survived) ? 'visible' : 'hidden'
       return skullyState
     }
 
+    //UNUSED
     function battleStyle(){
       switch (true) {
-        case hits >= 8:
-          style = ' bathed in blood ';
+        case kills === 5:
+          style = ' became the God of Death and slew ' + kills + ' foes.';
           return style
-        case hits >= 4:
-          style = ' was a terror ';
+        case kills === 4:
+          style = ' bathed in blood and slew ' + kills + ' foes.';
           return style
-        case hits >= 1:
-          style = ' fought bravely '
+        case kills === 3:
+          style = " earned his Warrior's name by killing " + kills + ' foes.';
           return style
-        case hits == 0:
-          style = ' also tried to contribute. '
+        case kills === 2:
+          style = ' fought valliantly and put ' + kills + ' foes into the mud.';
+          return style
+        case kills === 1:
+          style = ' held his own and killed' + kills + ' enemy warrior.'
+          return style
+        case kills === 0:
+          style = ' also tried to contribute but failed to slay anyone.'
           return style
       }
     }
     
-    function battleEffectiveness(){
-      killTotal = (kills > 0) ? 'and slew ' + kills + '. ': ' '
-      return killTotal
-    }
+    // function battleEffectiveness(){
+    //   killTotal = (kills > 0) ? 'and slew ' + kills + '. ': ' '
+    //   return killTotal
+    // }
 
     function currentStateGenerator(){
       //assign random array key based on result
       let min = (survived) ? 0 : 5
-      let max = (survived) ? 4 : 9
+      let max = (!survived) ? 4 : 9
 
       let stateIndexFloat = Math.random() * (max - min) + min
       let stateIndexInt = Math.round(stateIndexFloat)
@@ -93,7 +94,6 @@ class UnitDisplay extends Component {
           <p className='udText'>
             {name}
             {battleStyle()}
-            {battleEffectiveness()}
             {currentStateGenerator()}
           </p>
         </div>

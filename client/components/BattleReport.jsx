@@ -2,15 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import UnitDisplay from './UnitDisplay'
 
-// RECEIVED DATA
-// Winner
-const winner = 1
-
-
-// Player names (ex database)
-const playerOneName = 'playerOne'
-const playerTwoName = 'playerTwo'
-
 //Unit array drilled to object
 const units = [{
       class: 'warrior',
@@ -70,24 +61,11 @@ const units = [{
       },
 ]
 
-
-
-
-
 // DYNAMIC TEXT
 var resultsFlavour = ''
 
-// function winnerAssignment (playerNumber) {
-//   resultsFlavour = (playerNumber === winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
-//   return resultsFlavour
-// }
-
 // FLAVOUR TEXT COMPILERS
 const titleText = 'Silence descends upon the blood soaked field, the gods have spoken.'
-// const resultCallout = {
-//   playerOne: playerOneName + winnerAssignment(1),
-//   playerTwo: playerTwoName + winnerAssignment(2)
-// }
 
 class BattleReport extends Component {
   constructor (props) {
@@ -95,28 +73,32 @@ class BattleReport extends Component {
 
     this.state = {
       winner: this.props.winners,
-      units: this.props.units,
       teamOne: this.props.team1,
-      teamTwo: this.props.team2
+      teamTwo: this.props.team2,
+      unitsVictorious: this.props.actors[0].units,
+      unitsDefeated: this.props.actors[1].units,
     }
 
     this.winnerAssignment = this.winnerAssignment.bind(this)
   }
-
 
   winnerAssignment (playerNumber) {
     resultsFlavour = (playerNumber === this.winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
     return resultsFlavour
   }
   
-  
   render () {
+   
+    console.log(this.state.unitsVictorious);
+    console.log(this.state.unitsDefeated);
     
+
     let resultCallout = {
-        playerOne: this.teamOne + this.winnerAssignment(1),
-        playerTwo: this.teamTwo + this.winnerAssignment(2)
+        playerOne: this.state.teamOne + this.winnerAssignment(1),
+        playerTwo: this.state.teamTwo + this.winnerAssignment(2)
     }
 
+    
     return (
       <div className='home brMainContainer'>
         <div className='brPanel'>
@@ -131,15 +113,13 @@ class BattleReport extends Component {
                   </div>
                   <div className='brUnitContainer'>
                    
-                  {
-                    units.map((unit, index) => {
+                  {this.state.unitsVictorious.map((unit, index) => {
                       return (
                         <div key={index}>
-                          <UnitDisplay type={unit.class} name={unit.name} survived={unit.survived} hits={unit.woundsGiven} kills={unit.kills}/>
+                          <UnitDisplay type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
                         </div>
                       )
-                    })
-                  }
+                    })}
 
                   </div>
                 </div>
