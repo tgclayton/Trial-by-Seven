@@ -204,6 +204,7 @@ function checkGameOver () {
   })
   if (gameOver) {
     winner = true
+    document.getElementById('battleInfo').innerText = JSON.stringify(actors)
     info.innerText = `Game over, winner is ${activeTeam}`
     let winBox = document.getElementById('winBox')
     winBox.classList.toggle('hidden')
