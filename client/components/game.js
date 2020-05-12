@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { createMapArray, addActorsToMapArr, createActors, classes, nameFinder1, nameFinder2 } from './mapfunctions'
+import { createMapArray, addActorsToMapArr, createActors, classes } from './mapfunctions'
 
 export default {
   type: Phaser.AUTO,
@@ -30,7 +30,7 @@ var activeTeam
 var cursor
 var targets = []
 var selectedUnit
-var winner
+export var winner
 var champName
 var champUnit
 var champAttack
@@ -39,12 +39,17 @@ var champAction
 var info
 var winReport
 
+// function getTeamNames(){
+
+// }
 
 function preload () {
+  // setTimeout()
+  team1 = document.getElementById('stupid-info-box1').innerText
+  team2 = document.getElementById('stupid-info-box2').innerText
+  console.log('teams are:', team1, team2)
   map = createMapArray()
-  actors = createActors()
-  team1 = actors[0].name
-  team2 = actors[1].name
+  actors = createActors(team1, team2)
   map = addActorsToMapArr(actors, map)
   activeTeam = team1
   this.load.image('warrior', '/assets/images/soldiers/Lwarrior2.png')

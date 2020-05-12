@@ -19,7 +19,6 @@ class ChampionTwo extends React.Component {
           <li>R - attack this tile in attack mode</li>
           <li>Z - view unit info</li>
         </ul>
-        <div className="panelHorizontal"></div>
       </div>
     )
   }

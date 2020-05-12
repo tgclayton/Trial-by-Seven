@@ -22,3 +22,5 @@ function addPlayer (player, db = connection) {
       player_two: player.playerTwo
     })
 }
+
+
