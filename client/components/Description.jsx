@@ -23,11 +23,11 @@ class Description extends React.Component {
           <div>
             <p className="descriptionBodyText">
               Tales grow tall and tempers short when ale flows freely. After the
-              dust clears only two things remain - a noble corpse and the first
+              dust clears only two things remain - a noble corpse and the thirst
               for justice.
             </p>
             <p className="descriptionBodyText">
-              Duty dictated that you and your companion stand as part of Seven
+              Duty dictated that you and your companion stand as part of Five
               Champions sworn to defend the honour of their lord...
             </p>
             <p className="descriptionBodyText">

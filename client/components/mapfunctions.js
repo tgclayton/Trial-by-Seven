@@ -7,7 +7,7 @@ var team1Name = 'hardOne' // equal the name of champion
 var team2Name = 'hardTwo' // equal the name of 2nd champion
 // var team1Name = 'team1' // equal the name of champion
 // var team2Name = 'team2' // equal the name of 2nd champion
-var team1Units = ['scout', 'heavy', 'swordsman', 'scout', 'spearman']
+var team1Units = ['swordsman', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 
