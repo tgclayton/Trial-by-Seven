@@ -11,14 +11,63 @@ const playerOneName = 'playerOne'
 const playerTwoName = 'playerTwo'
 
 //Unit array drilled to object
-const unit = {
+const units = [{
       class: 'warrior',
-      name: 'Ulfrick',
+      name: 'Uno',
+      survived: false,
+      woundsTaken: 3,
+      woundsGiven: 2,
+      kills: 1
+      },
+      {
+      class: 'warrior',
+      name: 'Secundus',
       survived: true,
+      woundsTaken: 0,
+      woundsGiven: 5,
+      kills: 1
+      },
+      {
+      class: 'rogue',
+      name: 'Tertius',
+      survived: true,
+      woundsTaken: 1,
+      woundsGiven: 3,
+      kills: 1
+      },
+      {
+      class: 'rogue',
+      name: 'Quartus',
+      survived: false,
       woundsTaken: 2,
       woundsGiven: 6,
       kills: 2
-}
+      },
+      {
+      class: 'archer',
+      name: 'Quintus',
+      survived: true,
+      woundsTaken: 2,
+      woundsGiven: 8,
+      kills: 2
+      },
+      {
+      class: 'spearman',
+      name: 'Sextus',
+      survived: false,
+      woundsTaken: 4,
+      woundsGiven: 3,
+      kills: 1
+      },
+      {
+      class: 'sentinel',
+      name: 'Septimus',
+      survived: true,
+      woundsTaken: 0,
+      woundsGiven: 0,
+      kills: 0
+      },
+]
 
 
 //DYNAMIC TEXT
@@ -56,13 +105,17 @@ class BattleReport extends Component {
                     {resultCallout.playerOne}
                   </div>
                   <div className='brUnitContainer'>
-                    <UnitDisplay type={'rogue'} name={'Hap'} survived={true} hits={0} kills={0}/>
-                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
-                    <UnitDisplay type={'archer'} name={'Wulf'} survived={false} hits={8} kills={3}/>
-                    <UnitDisplay type={'warrior'} name={'Ulfrick'} survived={true} hits={5} kills={2} />
-                    <UnitDisplay type={'sentinel'} name={'Podrick'} survived={false} hits={3} kills={1} />
+                   
+                  {
+                    units.map((unit, index) => {
+                      return (
+                        <div key={index}>
+                          <UnitDisplay type={unit.class} name={unit.name} survived={unit.survived} hits={unit.woundsGiven} kills={unit.kills}/>
+                        </div>
+                      )
+                    })
+                  }
+
                   </div>
                 </div>
                 <div className='brPlayerBlock borderBox'>
