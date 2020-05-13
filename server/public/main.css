@@ -336,14 +336,8 @@ font-family: alagard;
 .brMainContainer{
   background-image: url('endTitle.png');
   margin: 0 auto;
-<<<<<<< HEAD
-||||||| merged common ancestors
-  height: 90%;
-  width: 90%
-=======
   height: 90vh;
   width: 100vw
->>>>>>> 079253f27ab9559aca95bf40400ecaed4e33dc22
 }
 
 .brPanel{
