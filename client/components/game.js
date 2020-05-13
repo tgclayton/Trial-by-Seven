@@ -253,8 +253,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
-    setTimeout(endGame, 3000)
-    scene.cameras.main.fade(2000)
+    setTimeout(endGame, 2400)
+    scene.cameras.main.fade(2500, 76, 17, 30)
   // scene.sys.game.destroy(true)
   }
 }
@@ -591,8 +591,9 @@ function keyDown (e) {
         }
         break
       case 'o':
-        setTimeout(endGame, 3000)
-        scene.cameras.main.fade(2000)
+        setTimeout(endGame, 2000)
+        scene.cameras.main.fade(2000, 76, 17, 30)
+        // rgba(76, 17, 30, 0.70)
         // preload()
         // this.registry.destroy()
         // this.events.off()

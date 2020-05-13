@@ -14,7 +14,7 @@ class EndGame extends React.Component {
       <div id = 'winBox'className='endgame-container hidden'>
         <h1 id = 'endRes'>{this.state.winner} wins</h1>
         <div className="endGameDiv">
-          <Link to='/report'><div className="endGameButton"><h1 className="endGameText" onClick = {this.props.getBattleInfo}>End Game</h1></div></Link>
+          <Link to='/report'><div className="endGameButton"><h1 className="endGameText" onClick = {this.props.getBattleInfo}>Show Results</h1></div></Link>
         </div>
       </div>
     )
