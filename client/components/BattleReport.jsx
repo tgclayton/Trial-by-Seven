@@ -112,15 +112,27 @@ class BattleReport extends Component {
                     {resultCallout.playerOne}
                   </div>
                   <div className='brUnitContainer'>
-                   
-                  {this.state.unitsVictorious.map((unit, index) => {
-                      return (
-                        <div key={index}>
-                          <UnitDisplay type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
-                        </div>
-                      )
-                    })}
-
+                    {this.state.unitsVictorious.map((unit, index) => {
+                        return (
+                          <div key={index}>
+                            <UnitDisplay type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
+                          </div>
+                        )
+                      })}
+                  </div>
+                </div>
+                <div className='brPlayerBlock'>
+                  <div className='brBlockPlayerName'>
+                    {resultCallout.playerTwo}
+                  </div>
+                  <div className='brUnitContainer'>
+                    {this.state.unitsDefeated.map((unit, index) => {
+                        return (
+                          <div key={index}>
+                            <UnitDisplay type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
+                          </div>
+                        )
+                      })}
                   </div>
                 </div>
               </div>

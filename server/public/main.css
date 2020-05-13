@@ -13,6 +13,7 @@ body {
   src: url(assets/font/alagard.ttf);
   font-style: normal;
   font-weight: 100;
+  text-shadow: 3px 3px 3px black
 }
 
 .home {
@@ -406,8 +407,8 @@ font-family: alagard;
 }
 
 .udUnitContainer{
-  width: 200px;
-  height:300px;
+  width: 250px;
+  height:320px;
   margin-bottom: 0;
   margin-right: 15px;
   margin-top: 10px;
@@ -422,7 +423,7 @@ font-family: alagard;
 }
 
 .udImageRondel{
-  padding-left: 21px;
+  padding-left: 40px;
   
 }
 

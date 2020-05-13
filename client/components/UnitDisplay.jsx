@@ -39,7 +39,6 @@ class UnitDisplay extends Component {
       return skullyState
     }
 
-    //UNUSED
     function battleStyle(){
       switch (true) {
         case kills === 5:
@@ -55,27 +54,21 @@ class UnitDisplay extends Component {
           style = ' fought valliantly and put ' + kills + ' foes into the mud.';
           return style
         case kills === 1:
-          style = ' held his own and killed' + kills + ' enemy warrior.'
+          style = ' held his own and killed ' + kills + ' enemy warrior.'
           return style
         case kills === 0:
           style = ' also tried to contribute but failed to slay anyone.'
           return style
       }
     }
-    
-    // function battleEffectiveness(){
-    //   killTotal = (kills > 0) ? 'and slew ' + kills + '. ': ' '
-    //   return killTotal
-    // }
-
+     
     function currentStateGenerator(){
       //assign random array key based on result
-      let min = (survived) ? 0 : 5
-      let max = (!survived) ? 4 : 9
-
+      let min = (!survived) ? 0 : 4
+      let max = (!survived) ? 5 : 9
+      
       let stateIndexFloat = Math.random() * (max - min) + min
-      let stateIndexInt = Math.round(stateIndexFloat)
-
+      var stateIndexInt = Math.round(stateIndexFloat)
       let currentStateText = currentState[stateIndexInt]
       return currentStateText
     }
@@ -95,7 +88,7 @@ class UnitDisplay extends Component {
             {name}
             {battleStyle()}
             {currentStateGenerator()}
-          </p>
+           </p>
         </div>
       </div>
     );
