@@ -361,7 +361,7 @@ function setIndex (target) {
     map[target.idx].occupantTeam = null
     target.idx = x + y
     x = x * 48
-    y = (y / 48)
+    y = (y / 19) * 48
     target.x = x
     target.y = y
     map[target.idx].occupied = true
