@@ -153,7 +153,7 @@ export function createActors (team1, team2) {
     unit.teamName = team2
     unit.name = `${ranName} the ${unit.name}`
     unit.sprite = 'l' + unit.sprite
-    unit.idx = idx + 17
+    unit.idx = idx + 18
     unit.portrait = getPortrait(unit.class)
     unit.dead = false
     unit.kills = []

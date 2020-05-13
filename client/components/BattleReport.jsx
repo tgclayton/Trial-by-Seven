@@ -72,7 +72,7 @@ class BattleReport extends Component {
     super(props)
 
     this.state = {
-      winner: this.props.winners,
+      winner: this.props.winner,
       teamOne: this.props.team1,
       teamTwo: this.props.team2,
       unitsVictorious: this.props.actors[0].units,
@@ -82,8 +82,9 @@ class BattleReport extends Component {
     this.winnerAssignment = this.winnerAssignment.bind(this)
   }
 
-  winnerAssignment (playerNumber) {
-    resultsFlavour = (playerNumber === this.winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
+  winnerAssignment (teamName) {
+    console.log('win assignment vars:', teamName, this.state.winner)
+    resultsFlavour = (teamName === this.state.winner) ? ' emerged victorious.' : ' tastes bitter defeat.'
     return resultsFlavour
   }
 
@@ -92,8 +93,8 @@ class BattleReport extends Component {
     console.log(this.state.unitsDefeated)
 
     let resultCallout = {
-      playerOne: this.state.teamOne + this.winnerAssignment(1),
-      playerTwo: this.state.teamTwo + this.winnerAssignment(2)
+      playerOne: this.state.teamOne + this.winnerAssignment(this.state.teamOne),
+      playerTwo: this.state.teamTwo + this.winnerAssignment(this.state.teamTwo)
     }
 
     return (

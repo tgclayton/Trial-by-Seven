@@ -184,7 +184,7 @@ padding: 10px;
 
 .gamePanel{
   max-height: 800px;
-  width: 390px; 
+  width: 370px; 
   margin: 20px;
   background-color: rgba(76, 17, 30, 0.938);
   border: #FEAD01;
@@ -196,7 +196,7 @@ padding: 10px;
 
 .gamePanel2{
   max-height: 800px;
-  width: 390px;
+  width: 370px;
   margin: 20px;
   background-color: rgba(39, 9, 15, 0.938);
   border: #FEAD01;
