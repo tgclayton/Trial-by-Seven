@@ -13,6 +13,7 @@ body {
   src: url(assets/font/alagard.ttf);
   font-style: normal;
   font-weight: 100;
+  text-shadow: 3px 3px 3px black
 }
 
 .home {
@@ -330,7 +331,6 @@ font-family: alagard;
   margin-top: 20px;
 }
 
-
 .brMainContainer{
   padding-left: 50px;
   padding-right: 50px;
@@ -418,8 +418,8 @@ font-family: alagard;
 }
 
 .udUnitContainer{
-  width: 200px;
-  height:300px;
+  width: 250px;
+  height:320px;
   margin-bottom: 0;
   margin-right: 15px;
   margin-top: 10px;
@@ -434,7 +434,7 @@ font-family: alagard;
 }
 
 .udImageRondel{
-  padding-left: 21px;
+  padding-left: 40px;
   
 }
 
@@ -470,6 +470,29 @@ font-family: alagard;
   flex-direction: column;
 }
 
+.skullyContainer{
+  height: 20px;
+  width: 20px;
+  }
+
+.skully{
+  position: absolute;
+  height: 50px;
+  width:50px;
+ }
+
+.skullyContainer{
+  height: 20px;
+  width: 20px;
+  }
+
+.skully{
+  position: absolute;
+  height: 50px;
+  width:50px;
+ }
+
+
 .endgame-container {
   height: 788px;
   width: 980px;
@@ -504,6 +527,7 @@ font-family: alagard;
   height: 50px;
   width:50px;
  }
+
 
  #app {
    height: 100vh;
