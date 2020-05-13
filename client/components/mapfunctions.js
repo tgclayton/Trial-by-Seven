@@ -106,7 +106,7 @@ export function addActorsToMapArr (actors, mapArr) {
 
 export function createActors (team1, team2) {
   var actorArr = actors
-  let idx = 140
+  let idx = 32
   // let team1 = actorArr[0].name
   // let team2 = actorArr[1].name
   actorArr[0].name = team1
@@ -122,7 +122,8 @@ export function createActors (team1, team2) {
     unit.teamName = team1
     unit.sprite = 'r' + unit.sprite
     unit.name = `${ranName} the ${unit.name}`
-    unit.idx = (idx + 1) + (i * 20)
+    idx = idx + 32
+    unit.idx = idx
     unit.dead = false
     unit.kills = []
     actorArr[0].units.push(unit)
@@ -134,7 +135,7 @@ export function createActors (team1, team2) {
     unit.teamName = team2
     unit.name = `${ranName} the ${unit.name}`
     unit.sprite = 'l' + unit.sprite
-    unit.idx = (idx + 1) + (i * 20) + 17
+    unit.idx = idx + 17
     unit.dead = false
     unit.kills = []
     actorArr[1].units.push(unit)

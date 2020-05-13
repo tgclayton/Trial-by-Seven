@@ -232,9 +232,9 @@ padding: 10px;
 }
 
 .gameDiv{
-  margin-top: 20px;
-  height: 788px;
-  width: 980px;
+  /* margin-top: 20px; */
+  /* height: 788px;
+  width: 980px; */
   border: 10px solid rgb(5, 5, 153);
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   -moz-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
@@ -313,13 +313,6 @@ font-family: alagard;
   margin: 0 auto;
   margin-top: 20px;
 }
-<<<<<<< HEAD
-
-||||||| e9184ba
-}
-=======
->>>>>>> f73e80d5d8d738afc0a999c4842322dafa0cec02
-
 
 .brMainContainer{
   padding-left: 50px;

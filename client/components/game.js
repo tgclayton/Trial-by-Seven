@@ -3,7 +3,7 @@ import { createMapArray, addActorsToMapArr, createActors, classes } from './mapf
 
 export default {
   type: Phaser.AUTO,
-  width: 960,
+  width: 912,
   height: 768,
   physics: {
     default: 'arcade',
@@ -19,23 +19,23 @@ export default {
   }
 }
 
-const config = {
-  type: Phaser.AUTO,
-  width: 960,
-  height: 720,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
-      debug: false
-    }
-  },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
-  }
-}
+// const config = {
+//   type: Phaser.AUTO,
+//   width: 960,
+//   height: 720,
+//   physics: {
+//     default: 'arcade',
+//     arcade: {
+//       gravity: { y: 0 },
+//       debug: false
+//     }
+//   },
+//   scene: {
+//     preload: preload,
+//     create: create,
+//     update: update
+//   }
+// }
 
 var game
 var map
@@ -95,7 +95,7 @@ function preload () {
   this.load.image('rheavy', '/assets/images/soldiers/Lheavy2.png')
   this.load.image('larcher', '/assets/images/soldiers/Larcher.png')
   this.load.image('rarcher', '/assets/images/soldiers/Rarcher.png')
-  this.load.image('testmap2', '/assets/images/testmap2.png')
+  this.load.image('map', '/assets/maps/finalmap.png')
 }
 
 function create () {
@@ -118,7 +118,7 @@ function create () {
 
   scene = this
   this.input.keyboard.on('keydown', keyDown, this)
-  this.add.image(480, 480, 'testmap2')
+  this.add.image(456, 384, 'map')
 
   cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
   cursor.setCollideWorldBounds(true)
@@ -139,7 +139,8 @@ function create () {
       }
     })
   })
-  cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
+  // cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
+  cursor.setPosition(0, 0)
   setIndex(cursor)
   // console.log(actors)
   if (restart) {
@@ -151,14 +152,14 @@ function update () {
 }
 
 function getCoordsFromIndex (idx) {
-  var x = (idx % 20) * 48
-  var y = (Math.floor(idx / 20)) * 48
+  var x = (idx % 19) * 48
+  var y = (Math.floor(idx / 19)) * 48
   return [x, y]
 }
 
 function getIndexFromCoords (coords) {
   let x = coords[0] / 48
-  let y = (coords[1] / 48) * 20
+  let y = (coords[1] / 48) * 16
   let idx = x + y
   return idx
 }
@@ -174,9 +175,9 @@ function findDest (idx, val, axis) {
   }
   if (axis === 'y') {
     if (val === 48) {
-      dest = idx + 20
+      dest = idx + 15
     } else {
-      dest = idx - 20
+      dest = idx - 15
     }
   }
   // console.log('dest is:', dest)
@@ -338,22 +339,23 @@ function setfixedMovement (val, axis) {
 }
 
 function setIndex (target) {
+  // console.log(target.x, target.y)
   let x
   let y
   if (target !== cursor) {
     x = target.physObj.x / 48
-    y = (target.physObj.y / 48) * 20
+    y = (target.physObj.y / 48) * 19
   } else {
     x = cursor.x / 48
-    y = (cursor.y / 48) * 20
+    y = (cursor.y / 48) * 19
   }
-  if (x > 19) {
-    x = 19
+  if (x > 18) {
+    x = 18
   } else if (x < 0) {
     x = 0
   }
-  if (y > 380) {
-    y = 380
+  if (y > 304) {
+    y = 304
   } else if (y < 0) {
     y = 0
   }
@@ -371,7 +373,7 @@ function setIndex (target) {
     map[target.idx].occupantTeam = null
     target.idx = x + y
     x = x * 48
-    y = (y / 20) * 48
+    y = (y / 48)
     target.x = x
     target.y = y
     map[target.idx].occupied = true
@@ -382,6 +384,12 @@ function setIndex (target) {
 
 function checkTile () {
   let idx = cursor.getData('idx')
+  let derCoords = getCoordsFromIndex(idx)
+  // console.log('cursor coords are', cursor.x, cursor.y)
+  console.log('idx =', idx)
+  console.log('derCoords:', derCoords)
+  // console.log('index of derCoords:', getIndexFromCoords(derCoords))
+  // console.log(' ')
   let tile = map[idx]
   if (tile.occupied) {
     let teamIdx
@@ -448,7 +456,7 @@ function findNeighbours (idx) {
       let newX = (attackerCoords[0] + itX)
       let newY = (attackerCoords[1] + itY)
       let neighbourIdx = getIndexFromCoords([newX, newY])
-      if (newX >= 0 && newX <= 912 && newY >= 0 && newY <= 912) { neighbours.push(neighbourIdx) }
+      if (newX >= 0 && newX <= 864 && newY >= 0 && newY < 864) { neighbours.push(neighbourIdx) }
     }
   }
   return neighbours
@@ -600,9 +608,7 @@ function keyDown (e) {
         // this.scene.restart()
         break
       case 'n':
-        restart = true
-        // this.sys.game.destroy(true)
-        game = new Phaser.Game(config)
+        console.log(actors)
         break
     }
   }
