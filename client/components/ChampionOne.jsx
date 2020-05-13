@@ -36,7 +36,7 @@ render () {
       <div className="panelHorizontal"></div>
       {/* <h1 className="championAction">Ammo</h1> */}
       <div className="infoBox" id = "infoWindow" ref = {this.info}>{this.info.current}</div>
-      <h1 className="endTurn">End Turn</h1>
+      {/* <h1 className="endTurn">End Turn</h1> */}
     </div>
   )
 }

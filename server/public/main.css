@@ -198,7 +198,8 @@ padding: 10px;
   background-color: rgba(39, 9, 15, 0.938);
   border: #FEAD01;
   border-style: solid;
-  border-width: 2px
+  border-width: 2px;
+  padding-top: 20px
 }
 
 .gamePanelBorder{
@@ -211,7 +212,7 @@ padding: 10px;
 .championName{
   font-family: alagard;
   color: #FEAD01;
-  /* font-size: 50px; */
+  font-size: 50px;
   margin-left: 25px;
   padding-top: 30px;
   text-shadow: 3px 3px 3px black
