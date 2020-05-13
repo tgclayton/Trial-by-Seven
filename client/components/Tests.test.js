@@ -1,6 +1,3 @@
-// import Phaser from 'phaser'
-// import { getCoordsFromIndex } from './game'
-
 test('Everything is fine', () => {
   expect(true).toBeTruthy()
 })
