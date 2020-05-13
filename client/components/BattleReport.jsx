@@ -112,7 +112,7 @@ class BattleReport extends Component {
                   {this.state.unitsVictorious.map((unit, index) => {
                     return (
                       <div key={index}>
-                        <UnitDisplay type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
+                        <UnitDisplay portrait = {unit.portrait} type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
                       </div>
                     )
                   })}
@@ -126,7 +126,7 @@ class BattleReport extends Component {
                   {this.state.unitsDefeated.map((unit, index) => {
                     return (
                       <div key={index}>
-                        <UnitDisplay type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
+                        <UnitDisplay portrait = {unit.portrait} type={unit.class} name={unit.name} survived={unit.dead} hits={unit.woundsGiven} kills={unit.kills}/>
                       </div>
                     )
                   })}

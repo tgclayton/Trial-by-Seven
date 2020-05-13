@@ -6,7 +6,7 @@ class UnitDisplay extends Component {
     const name = this.props.name
     const survived = this.props.survived
     const kills = (this.props.kills).length
-
+    const portrait = this.props.portrait
     var style = ''
     var killTotal = ''
 
@@ -77,7 +77,7 @@ class UnitDisplay extends Component {
             <div className='skullyBox'>
               <img className='skully' style={{ visibility: skullySummon() }} src='images/portraits/deadFace.png' />
             </div>
-            <img className = 'udPortrait'src={randomPortrait()} />
+            <img className = 'udPortrait'src={portrait} />
           </div>
         </div>
         <div className='udTextHolder'>

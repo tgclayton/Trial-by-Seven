@@ -1,7 +1,13 @@
 import mapData from '../../server/public/assets/maps/finalmap.json'
-import request from 'superagent'
 
-var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
+var names = ['Euvrouin', 'Simond', 'Parsival', 'Leofrick', 'Garret', 'Uthbert', 'Ulfrik', 'Gauward', 'Grim', 'Thorvald', 'Roland', 'Nieles', 'Berrick', 'Harlaw', 'Ralf', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
+
+var portraitSelect = {
+  swordsman: [1, 2, 3],
+  scout: [1, 2, 3],
+  spearman: [1, 2, 3],
+  heavy: [1, 2, 3]
+}
 
 var team1Name = 'hardOne' // equal the name of champion
 var team2Name = 'hardTwo' // equal the name of 2nd champion
@@ -105,6 +111,16 @@ export function addActorsToMapArr (actors, mapArr) {
   return map
 }
 
+function getPortrait (type) {
+  let workingArr = portraitSelect[type]
+  let randomFloat = Math.random() * workingArr.length
+  let randomInt = Math.floor(randomFloat)
+  let numSelect = workingArr[randomInt]
+  portraitSelect[type] = portraitSelect[type].filter(num => num !== numSelect)
+  let portraitSrc = 'images/portraits/' + type + numSelect + '.png'
+  return portraitSrc
+}
+
 export function createActors (team1, team2) {
   var actorArr = actors
   let idx = 19
@@ -127,6 +143,7 @@ export function createActors (team1, team2) {
     unit.idx = idx
     unit.dead = false
     unit.kills = []
+    unit.portrait = getPortrait(unit.class)
     actorArr[0].units.push(unit)
 
     current = team2Units[i]
@@ -137,6 +154,7 @@ export function createActors (team1, team2) {
     unit.name = `${ranName} the ${unit.name}`
     unit.sprite = 'l' + unit.sprite
     unit.idx = idx + 17
+    unit.portrait = getPortrait(unit.class)
     unit.dead = false
     unit.kills = []
     actorArr[1].units.push(unit)
