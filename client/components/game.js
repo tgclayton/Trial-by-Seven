@@ -4,7 +4,7 @@ import { createMapArray, addActorsToMapArr, createActors, classes } from './mapf
 export default {
   type: Phaser.AUTO,
   width: 960,
-  height: 960,
+  height: 768,
   physics: {
     default: 'arcade',
     arcade: {
@@ -22,7 +22,7 @@ export default {
 const config = {
   type: Phaser.AUTO,
   width: 960,
-  height: 960,
+  height: 720,
   physics: {
     default: 'arcade',
     arcade: {

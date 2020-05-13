@@ -176,8 +176,8 @@ padding: 10px;
 }
 
 .gamePanel{
-  height: 960px;
-  width: 390px;
+  max-height: 800px;
+  width: 390px; 
   margin: 20px;
   background-color: rgba(76, 17, 30, 0.938);
   border: #FEAD01;
@@ -186,7 +186,7 @@ padding: 10px;
 }
 
 .gamePanel2{
-  height: 960px;
+  max-height: 800px;
   width: 390px;
   margin: 20px;
   background-color: rgba(39, 9, 15, 0.938);
@@ -205,7 +205,7 @@ padding: 10px;
 .championName{
   font-family: alagard;
   color: #FEAD01;
-  font-size: 50px;
+  /* font-size: 50px; */
   margin-left: 25px;
   padding-top: 30px;
 }
@@ -213,14 +213,14 @@ padding: 10px;
 .championUnit{
   font-family: alagard;
   color: #FEAD01;
-  font-size: 40px;
+  /* font-size: 40px; */
   margin-left: 25px;
 }
 
 .championAction{
   font-family: alagard;
   color: #FEAD01;
-  font-size: 30px;
+  /* font-size: 30px; */
   margin-left: 25px;
 }
 
@@ -233,7 +233,7 @@ padding: 10px;
 
 .gameDiv{
   margin-top: 20px;
-  height: 980px;
+  height: 788px;
   width: 980px;
   border: 10px solid rgb(5, 5, 153);
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
