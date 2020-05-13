@@ -336,6 +336,12 @@ font-family: alagard;
 .brMainContainer{
   background-image: url('endTitle.png');
   margin: 0 auto;
+  height: 90%;
+  width: 90%;
+  height: 90vh;
+  width: 100vw;
+  height: 90vh;
+  width: 100vw
 }
 
 .brPanel{
@@ -404,7 +410,7 @@ font-family: alagard;
   }
 
 .brButtonBlock{
-  height: 10vh;
+  height: 10;
   display: flex;
   align-items: center;
   justify-content: center;
