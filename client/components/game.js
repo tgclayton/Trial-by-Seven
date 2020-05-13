@@ -149,7 +149,7 @@ function getCoordsFromIndex (idx) {
 
 function getIndexFromCoords (coords) {
   let x = coords[0] / 48
-  let y = (coords[1] / 48) * 16
+  let y = (coords[1] / 48) * 19
   let idx = x + y
   return idx
 }
@@ -270,6 +270,7 @@ function setfixedMovement (val, axis) {
   if (aMode) {
     inRange = false
     let neighbours = findNeighbours(selectedUnit.idx)
+    console.log(neighbours)
     neighbours.forEach(n => {
       if (n === dest) {
         inRange = true
@@ -376,7 +377,7 @@ function checkTile () {
   let idx = cursor.getData('idx')
   // let derCoords = getCoordsFromIndex(idx)
   // console.log('cursor coords are', cursor.x, cursor.y)
-  // console.log('idx =', idx)
+  console.log('idx =', idx)
   // console.log('derCoords:', derCoords)
   // console.log('index of derCoords:', getIndexFromCoords(derCoords))
   // console.log(' ')
@@ -439,6 +440,7 @@ function attackMode () {
 function findNeighbours (idx) {
   let neighbours = []
   let attackerCoords = getCoordsFromIndex(idx)
+  console.log(attackerCoords)
   for (let i = 0; i < 9; i++) {
     if (i !== 4) {
       let itX = (Math.floor(i / 3) - 1) * 48
