@@ -590,37 +590,18 @@ function keyDown (e) {
         }
         break
       case 'o':
-<<<<<<< HEAD
         setTimeout(endGame, 2000)
-||||||| merged common ancestors
-<<<<<<<<< Temporary merge branch 1
-        endGame()
-        // preload()
-        // this.registry.destroy()
-        // this.events.off()
-        // this.scene.restart()
-||||||||| merged common ancestors
-        scene.sys.game.destroy(true)
-=========
         setTimeout(endGame, 2000)
-=======
         setTimeout(endGame(), 2000)
->>>>>>> d626052d799b0a80f17ce62ff936211b80ae0ecb
         scene.cameras.main.fade(2000, 76, 17, 30)
-
         break
       case 'n':
-<<<<<<< HEAD
         restart = true
         // this.sys.game.destroy(true)
         game = new Phaser.Game(config)
-||||||| merged common ancestors
         restart = true
         // this.sys.game.destroy(true)
         game = new Phaser.Game(config)
->>>>>>>>> Temporary merge branch 2
-=======
->>>>>>> d626052d799b0a80f17ce62ff936211b80ae0ecb
         break
     }
   }

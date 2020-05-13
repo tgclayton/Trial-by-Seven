@@ -332,20 +332,22 @@ font-family: alagard;
 }
 
 .brMainContainer{
-  padding-left: 50px;
-  padding-right: 50px;
   background-image: url('endTitle.png');
+  margin: 0 auto;
+  height: 90%;
+  width: 90%
 }
 
 .brPanel{
-  height: 1045px;
-  width: 1900px;
+  height: inherit;
+  width: inherit;
   background-color: rgba(76, 17, 30, 0.938);
+  margin: 0 auto;
 }
 
 .brPanelStroke {
-  width: 1880px;
-  height:1035px;
+  width: inherit;
+  height:inherit;
   margin-left: 10px;
   border-left: solid 2px #FEAD01;
   border-right: solid 2px #FEAD01;
@@ -468,6 +470,7 @@ font-family: alagard;
 .gameWhole{
   display: flex;
   flex-direction: column;
+  margin: 0 auto
 }
 
 .skullyContainer{

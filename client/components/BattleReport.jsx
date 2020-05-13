@@ -137,9 +137,6 @@ class BattleReport extends Component {
                 </div>
               </div>
                 <div className='brButtonBlock'>
-                  {/* <Link to='/game' >
-                    <button className='brButton'>Rematch</button>
-                  </Link> */}
                   <Link to='/' >
                     <button className='brButton'>New Game</button>
                   </Link>
