@@ -57,6 +57,7 @@ var champHealth
 var champAction
 var info
 var restart = false
+var champPortrait
 // function getTeamNames(){
 
 // }
@@ -104,6 +105,7 @@ function create () {
   champAttack = document.getElementById('champAttack')
   champHealth = document.getElementById('champHealth')
   champAction = document.getElementById('champAction')
+  champPortrait = document.getElementById('battlePortrait')
   info = document.getElementById('infoWindow')
   champName.innerText = team1
 
@@ -510,11 +512,13 @@ function setDataWindow (target) {
     champAttack.innerText = `Attack: ${target.damage}`
     champHealth.innerText = `Health: ${target.health}`
     champAction.innerText = `Actions: ${target.actions}`
+    champPortrait.src = target.portrait
   } else {
     champUnit.innerText = 'None Selected'
     champAttack.innerText = 'Attack: ...'
     champHealth.innerText = 'Health: ...'
     champAction.innerText = 'Actions: ...'
+    champPortrait.src = ''
   }
 }
 
