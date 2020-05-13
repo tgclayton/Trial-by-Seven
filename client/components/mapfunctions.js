@@ -31,45 +31,45 @@ export function nameFinder2 () {
 export const classes = {
   scout: {
     // range: checkMelee(),
-    damage: 1,
+    damage: 10,
     class: 'scout',
     name: 'Scout',
     sprite: 'scout',
-    actions: 5,
-    health: 2
+    actions: 8,
+    health: 20
   },
   archer: {
-    damage: 1,
+    damage: 10,
     class: 'archer',
     name: 'Archer',
     sprite: 'archer',
     actions: 5,
-    health: 1,
+    health: 10,
     ammo: 5
   },
   spearman: {
-    damage: 1,
+    damage: 10,
     class: 'spearman',
     name: 'Lancer',
     sprite: 'spear',
-    actions: 4,
-    health: 3
+    actions: 6,
+    health: 30
   },
   heavy: {
-    damage: 3,
+    damage: 30,
     class: 'heavy',
     name: 'Sentinel',
     sprite: 'heavy',
-    actions: 3,
-    health: 5
+    actions: 5,
+    health: 50
   },
   swordsman: {
-    damage: 2,
+    damage: 25,
     class: 'swordsman',
     name: 'Swordsman',
     sprite: '2hand',
-    actions: 4000,
-    health: 3
+    actions: 6,
+    health: 40
   }
 }
 var teamSize = 5
