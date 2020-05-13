@@ -33,6 +33,7 @@ render () {
       <h1 className="championAction" id="champAttack" ref={this.champAttack}>Attack: ...{this.champAttack.current}</h1>
       <h1 className="championAction" id="champHealth" ref={this.champHealth}>Health: ...{this.champHealth.current}</h1>
       <h1 className="championAction" id="champAction" ref={this.champAction}>Actions: ... {this.champAction.current}</h1>
+      <img src="" alt="" id = 'battlePortrait'/>
       <div className="panelHorizontal"></div>
       {/* <h1 className="championAction">Ammo</h1> */}
       <div className="infoBox" id = "infoWindow" ref = {this.info}>{this.info.current}</div>

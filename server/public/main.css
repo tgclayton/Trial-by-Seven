@@ -184,17 +184,19 @@ padding: 10px;
 
 .gamePanel{
   max-height: 800px;
-  width: 390px; 
+  width: 370px; 
   margin: 20px;
   background-color: rgba(76, 17, 30, 0.938);
   border: #FEAD01;
   border-style: solid;
-  border-width: 2px
+  border-width: 2px;
+  position: relative;
+
 }
 
 .gamePanel2{
   max-height: 800px;
-  width: 390px;
+  width: 370px;
   margin: 20px;
   background-color: rgba(39, 9, 15, 0.938);
   border: #FEAD01;
@@ -246,7 +248,7 @@ padding: 10px;
 .gameDiv{
   margin-top: 20px;
   height: 788px;
-  width: 980px;
+  /* width: 980px; */
   border: 10px solid rgb(5, 5, 153);
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   -moz-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
@@ -334,6 +336,14 @@ font-family: alagard;
 .brMainContainer{
   background-image: url('endTitle.png');
   margin: 0 auto;
+<<<<<<< HEAD
+||||||| merged common ancestors
+  height: 90%;
+  width: 90%
+=======
+  height: 90vh;
+  width: 100vw
+>>>>>>> 079253f27ab9559aca95bf40400ecaed4e33dc22
 }
 
 .brPanel{
@@ -400,10 +410,11 @@ font-family: alagard;
   }
 
 .brButtonBlock{
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: .5%;
+  /* padding-top: .5%; */
   }
 
 .brButton{
@@ -481,7 +492,7 @@ font-family: alagard;
 
 .endgame-container {
   height: 788px;
-  width: 980px;
+  width: 932px;
   position: absolute;
   margin-top: 20px;
   background-color: rgba(0, 0, 0, 0);
@@ -506,4 +517,14 @@ font-family: alagard;
  #app {
    height: 100vh;
    /* width: 100vw; */
+ }
+
+ #battlePortrait {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: solid 3px #FEAD01;
+  position: absolute;
+  right: 3em;
+  bottom: 55%;
  }

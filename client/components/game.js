@@ -3,7 +3,7 @@ import { createMapArray, addActorsToMapArr, createActors, classes } from './mapf
 
 export default {
   type: Phaser.AUTO,
-  width: 960,
+  width: 912,
   height: 768,
   physics: {
     default: 'arcade',
@@ -19,23 +19,23 @@ export default {
   }
 }
 
-const config = {
-  type: Phaser.AUTO,
-  width: 960,
-  height: 720,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
-      debug: false
-    }
-  },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
-  }
-}
+// const config = {
+//   type: Phaser.AUTO,
+//   width: 960,
+//   height: 720,
+//   physics: {
+//     default: 'arcade',
+//     arcade: {
+//       gravity: { y: 0 },
+//       debug: false
+//     }
+//   },
+//   scene: {
+//     preload: preload,
+//     create: create,
+//     update: update
+//   }
+// }
 
 var game
 var map
@@ -57,6 +57,7 @@ var champHealth
 var champAction
 var info
 var restart = false
+var champPortrait
 // function getTeamNames(){
 
 // }
@@ -95,30 +96,22 @@ function preload () {
   this.load.image('rheavy', '/assets/images/soldiers/Lheavy2.png')
   this.load.image('larcher', '/assets/images/soldiers/Larcher.png')
   this.load.image('rarcher', '/assets/images/soldiers/Rarcher.png')
-  this.load.image('testmap2', '/assets/images/testmap2.png')
+  this.load.image('map', '/assets/maps/finalmap.png')
 }
 
 function create () {
-  // console.log('create ran')
-  // if (restart) {
-  //   preload()
-  //   this.registry.destroy()
-  //   this.events.off()
-  //   this.scene.restart()
-  // }
   champName = document.getElementById('champName')
   champUnit = document.getElementById('champUnit')
   champAttack = document.getElementById('champAttack')
   champHealth = document.getElementById('champHealth')
   champAction = document.getElementById('champAction')
+  champPortrait = document.getElementById('battlePortrait')
   info = document.getElementById('infoWindow')
-  // winReport = document.getElementById('win')
-
   champName.innerText = team1
 
   scene = this
   this.input.keyboard.on('keydown', keyDown, this)
-  this.add.image(480, 480, 'testmap2')
+  this.add.image(456, 384, 'map')
 
   cursor = this.physics.add.image(0, 0, 'gcursor').setOrigin(0, 0)
   cursor.setCollideWorldBounds(true)
@@ -140,25 +133,23 @@ function create () {
     })
   })
   cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
+  // cursor.setPosition(0, 0)
   setIndex(cursor)
   // console.log(actors)
-  if (restart) {
-    console.log(actors)
-  }
 }
 
 function update () {
 }
 
 function getCoordsFromIndex (idx) {
-  var x = (idx % 20) * 48
-  var y = (Math.floor(idx / 20)) * 48
+  var x = (idx % 19) * 48
+  var y = (Math.floor(idx / 19)) * 48
   return [x, y]
 }
 
 function getIndexFromCoords (coords) {
   let x = coords[0] / 48
-  let y = (coords[1] / 48) * 20
+  let y = (coords[1] / 48) * 16
   let idx = x + y
   return idx
 }
@@ -174,9 +165,9 @@ function findDest (idx, val, axis) {
   }
   if (axis === 'y') {
     if (val === 48) {
-      dest = idx + 20
+      dest = idx + 19
     } else {
-      dest = idx - 20
+      dest = idx - 19
     }
   }
   // console.log('dest is:', dest)
@@ -232,7 +223,6 @@ function attack (dest) {
 }
 
 function endGame () {
-  winner = true
   document.getElementById('battleInfo').innerText = JSON.stringify(actors)
   info.innerText = `Game over, winner is ${activeTeam}`
   let winBox = document.getElementById('winBox')
@@ -253,6 +243,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
+    cursor.destroy()
+    winner = true
     setTimeout(endGame, 2400)
     scene.cameras.main.fade(2500, 76, 17, 30)
   }
@@ -337,22 +329,23 @@ function setfixedMovement (val, axis) {
 }
 
 function setIndex (target) {
+  // console.log(target.x, target.y)
   let x
   let y
   if (target !== cursor) {
     x = target.physObj.x / 48
-    y = (target.physObj.y / 48) * 20
+    y = (target.physObj.y / 48) * 19
   } else {
     x = cursor.x / 48
-    y = (cursor.y / 48) * 20
+    y = (cursor.y / 48) * 19
   }
-  if (x > 19) {
-    x = 19
+  if (x > 18) {
+    x = 18
   } else if (x < 0) {
     x = 0
   }
-  if (y > 380) {
-    y = 380
+  if (y > 304) {
+    y = 304
   } else if (y < 0) {
     y = 0
   }
@@ -370,7 +363,7 @@ function setIndex (target) {
     map[target.idx].occupantTeam = null
     target.idx = x + y
     x = x * 48
-    y = (y / 20) * 48
+    y = (y / 19) * 48
     target.x = x
     target.y = y
     map[target.idx].occupied = true
@@ -381,6 +374,12 @@ function setIndex (target) {
 
 function checkTile () {
   let idx = cursor.getData('idx')
+  // let derCoords = getCoordsFromIndex(idx)
+  // console.log('cursor coords are', cursor.x, cursor.y)
+  // console.log('idx =', idx)
+  // console.log('derCoords:', derCoords)
+  // console.log('index of derCoords:', getIndexFromCoords(derCoords))
+  // console.log(' ')
   let tile = map[idx]
   if (tile.occupied) {
     let teamIdx
@@ -447,7 +446,7 @@ function findNeighbours (idx) {
       let newX = (attackerCoords[0] + itX)
       let newY = (attackerCoords[1] + itY)
       let neighbourIdx = getIndexFromCoords([newX, newY])
-      if (newX >= 0 && newX <= 912 && newY >= 0 && newY <= 912) { neighbours.push(neighbourIdx) }
+      if (newX >= 0 && newX <= 864 && newY >= 0 && newY < 720) { neighbours.push(neighbourIdx) }
     }
   }
   return neighbours
@@ -513,11 +512,13 @@ function setDataWindow (target) {
     champAttack.innerText = `Attack: ${target.damage}`
     champHealth.innerText = `Health: ${target.health}`
     champAction.innerText = `Actions: ${target.actions}`
+    champPortrait.src = target.portrait
   } else {
     champUnit.innerText = 'None Selected'
     champAttack.innerText = 'Attack: ...'
     champHealth.innerText = 'Health: ...'
     champAction.innerText = 'Actions: ...'
+    champPortrait.src = ''
   }
 }
 
@@ -596,12 +597,7 @@ function keyDown (e) {
         scene.cameras.main.fade(2000, 76, 17, 30)
         break
       case 'n':
-        restart = true
-        // this.sys.game.destroy(true)
-        game = new Phaser.Game(config)
-        restart = true
-        // this.sys.game.destroy(true)
-        game = new Phaser.Game(config)
+        console.log(actors)
         break
     }
   }

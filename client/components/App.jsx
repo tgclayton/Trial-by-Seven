@@ -27,6 +27,7 @@ getBattleInfo () {
   let actors = document.getElementById('battleInfo').innerText
   let winner = document.getElementById('champName').innerText
   actors = JSON.parse(actors)
+  console.log(actors)
   this.setState({
     actors: actors,
     winner: winner
@@ -42,7 +43,7 @@ render () {
       <Route exact path='/game' component={() =>
         <PhaserGame team1 = {this.state.team1} team2 = {this.state.team2} getBattleInfo= {this.getBattleInfo} />} />
       <Route exact path='/report' component={() =>
-        <BattleReport actors = {this.state.actors} winners = {this.state.winners} team1 = {this.state.team1} team2 = {this.state.team2} />} />
+        <BattleReport actors = {this.state.actors} winner = {this.state.winner} team1 = {this.state.team1} team2 = {this.state.team2} />} />
     </Router>
   )
 }
