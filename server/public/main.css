@@ -245,8 +245,8 @@ padding: 10px;
 
 .gameDiv{
   /* margin-top: 20px; */
-  /* height: 788px;
-  width: 980px; */
+  height: 788px;
+  /* width: 980px; */
   border: 10px solid rgb(5, 5, 153);
   -webkit-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
   -moz-box-shadow: 0px 0px 21px 14px rgba(0,0,0,0.62);
