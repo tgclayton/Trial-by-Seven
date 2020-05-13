@@ -38,10 +38,12 @@ render () {
   // const { initialize, game } = this.state
   return (
     <Router>
-      <Route exact path='/' render={() => <Home setTeams = {this.setTeams} />} />
-      <Route exact path='/game' component={() =>
-        <PhaserGame team1 = {this.state.team1} team2 = {this.state.team2} getBattleInfo= {this.getBattleInfo} />} />
-      <Route exact path='/report' component={BattleReport} />
+      <div id = 'windowContainer'>
+        <Route exact path='/' render={() => <Home setTeams = {this.setTeams} />} />
+        <Route exact path='/game' component={() =>
+          <PhaserGame team1 = {this.state.team1} team2 = {this.state.team2} getBattleInfo= {this.getBattleInfo} />} />
+        <Route exact path='/report' component={BattleReport} />
+      </div>
     </Router>
   )
 }

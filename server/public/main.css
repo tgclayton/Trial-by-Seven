@@ -21,8 +21,8 @@ body {
   background-size: cover;
   display: flex;
   flex-direction: center;
-  width: 2000px;
-  height: 1100px;
+  width: 100vw;
+  height: 100vh;
   margin: 0 auto;
 }
 
@@ -32,12 +32,10 @@ body {
   justify-content: center;
   width: 400px;
   height: 800px;
-  margin: 10px;
+  margin: 5vh 2em 2em;
   background-color: rgba(76, 17, 30, 0.938);
   padding: 14px;
-  margin-bottom: 20px;
-  margin-top: -5px;
-  margin-left: 100px;
+
 
 }
 
@@ -159,8 +157,8 @@ padding: 10px;
 }
 
 .formContainerDiv{
-  margin-left: 960px;
-  margin-top: 700px;
+  margin: 5vh;
+  
 }
 
 .formlabel{
@@ -174,7 +172,6 @@ padding: 10px;
 
 .gameBody{
   display: flex;
-  width: 2000px;
   justify-content: center;
 }
 
@@ -494,4 +491,9 @@ font-family: alagard;
   position: absolute;
   height: 50px;
   width:50px;
+ }
+
+ #app {
+   height: 100vh;
+   /* width: 100vw; */
  }
