@@ -1,4 +1,4 @@
-import mapData from '../../server/public/assets/maps/map.json'
+import mapData from '../../server/public/assets/maps/finalmap.json'
 import request from 'superagent'
 
 var names = ['Ulfrick', 'Gauward', 'Roland', 'Nieles', 'Harlaw', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
@@ -79,7 +79,8 @@ export function createMapArray () {
     if (tile === 10) {
       return {
         occupied: true,
-        occupant: 'obstacle'
+        occupant: 'obstacle',
+        occupantTeam: null
       }
     } else {
       return {
@@ -106,7 +107,7 @@ export function addActorsToMapArr (actors, mapArr) {
 
 export function createActors (team1, team2) {
   var actorArr = actors
-  let idx = 32
+  let idx = 19
   // let team1 = actorArr[0].name
   // let team2 = actorArr[1].name
   actorArr[0].name = team1
@@ -122,7 +123,7 @@ export function createActors (team1, team2) {
     unit.teamName = team1
     unit.sprite = 'r' + unit.sprite
     unit.name = `${ranName} the ${unit.name}`
-    idx = idx + 32
+    idx = idx + 38
     unit.idx = idx
     unit.dead = false
     unit.kills = []

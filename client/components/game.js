@@ -99,21 +99,12 @@ function preload () {
 }
 
 function create () {
-  // console.log('create ran')
-  // if (restart) {
-  //   preload()
-  //   this.registry.destroy()
-  //   this.events.off()
-  //   this.scene.restart()
-  // }
   champName = document.getElementById('champName')
   champUnit = document.getElementById('champUnit')
   champAttack = document.getElementById('champAttack')
   champHealth = document.getElementById('champHealth')
   champAction = document.getElementById('champAction')
   info = document.getElementById('infoWindow')
-  // winReport = document.getElementById('win')
-
   champName.innerText = team1
 
   scene = this
@@ -139,13 +130,10 @@ function create () {
       }
     })
   })
-  // cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
-  cursor.setPosition(0, 0)
+  cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
+  // cursor.setPosition(0, 0)
   setIndex(cursor)
   // console.log(actors)
-  if (restart) {
-    console.log(actors)
-  }
 }
 
 function update () {
@@ -175,9 +163,9 @@ function findDest (idx, val, axis) {
   }
   if (axis === 'y') {
     if (val === 48) {
-      dest = idx + 15
+      dest = idx + 19
     } else {
-      dest = idx - 15
+      dest = idx - 19
     }
   }
   // console.log('dest is:', dest)
@@ -233,7 +221,6 @@ function attack (dest) {
 }
 
 function endGame () {
-  winner = true
   document.getElementById('battleInfo').innerText = JSON.stringify(actors)
   info.innerText = `Game over, winner is ${activeTeam}`
   let winBox = document.getElementById('winBox')
@@ -254,6 +241,8 @@ function checkGameOver () {
     }
   })
   if (gameOver) {
+    cursor.destroy()
+    winner = true
     setTimeout(endGame, 2400)
     scene.cameras.main.fade(2500, 76, 17, 30)
   // scene.sys.game.destroy(true)
@@ -384,10 +373,10 @@ function setIndex (target) {
 
 function checkTile () {
   let idx = cursor.getData('idx')
-  let derCoords = getCoordsFromIndex(idx)
+  // let derCoords = getCoordsFromIndex(idx)
   // console.log('cursor coords are', cursor.x, cursor.y)
-  console.log('idx =', idx)
-  console.log('derCoords:', derCoords)
+  // console.log('idx =', idx)
+  // console.log('derCoords:', derCoords)
   // console.log('index of derCoords:', getIndexFromCoords(derCoords))
   // console.log(' ')
   let tile = map[idx]
@@ -456,7 +445,7 @@ function findNeighbours (idx) {
       let newX = (attackerCoords[0] + itX)
       let newY = (attackerCoords[1] + itY)
       let neighbourIdx = getIndexFromCoords([newX, newY])
-      if (newX >= 0 && newX <= 864 && newY >= 0 && newY < 864) { neighbours.push(neighbourIdx) }
+      if (newX >= 0 && newX <= 864 && newY >= 0 && newY < 720) { neighbours.push(neighbourIdx) }
     }
   }
   return neighbours
