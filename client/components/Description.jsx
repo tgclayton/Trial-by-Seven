@@ -1,7 +1,7 @@
 import React from 'react'
 
 class Description extends React.Component {
-  render(){
+  render () {
     return (
       <div className="descriptionBorder">
         <div className="descriptionDiv">
@@ -35,18 +35,16 @@ class Description extends React.Component {
             </p>
           </div>
 
-
         </div>
       </div>
-    );
+    )
   }
 }
 
 export default Description
 
+{ /*
 
-{/*           
-          
             <div>
               <div className="logoDiv">
                 <img src="/images/sword.png" />
@@ -79,4 +77,4 @@ export default Description
               Cruel fate, that it be on opposing sides of the field
             </p>
           </div>
-           */}
+           */ }
