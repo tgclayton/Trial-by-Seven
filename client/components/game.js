@@ -255,7 +255,6 @@ function checkGameOver () {
   if (gameOver) {
     setTimeout(endGame, 2400)
     scene.cameras.main.fade(2500, 76, 17, 30)
-  // scene.sys.game.destroy(true)
   }
 }
 
@@ -591,18 +590,11 @@ function keyDown (e) {
         }
         break
       case 'o':
-        setTimeout(endGame, 2000)
+        setTimeout(endGame(), 2000)
         scene.cameras.main.fade(2000, 76, 17, 30)
-        // rgba(76, 17, 30, 0.70)
-        // preload()
-        // this.registry.destroy()
-        // this.events.off()
-        // this.scene.restart()
+
         break
       case 'n':
-        restart = true
-        // this.sys.game.destroy(true)
-        game = new Phaser.Game(config)
         break
     }
   }
