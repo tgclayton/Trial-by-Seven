@@ -3,7 +3,6 @@ class ChampionTwo extends React.Component {
   render () {
     return (
       <div className="gamePanel2">
-        <div className="panelHorizontal"></div>
         <h1 className="championUnit">How to play:</h1>
         <h2 className="championAction"> Use the WASD keys to move your player and attack your opponent. The first player to kill all of the oposition wins.</h2>
         <div className="panelHorizontal"></div>
