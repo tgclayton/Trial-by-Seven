@@ -66,7 +66,7 @@ export const classes = {
     class: 'heavy',
     name: 'Sentinel',
     sprite: 'heavy',
-    actions: 5000,
+    actions: 5,
     health: 50
   },
   swordsman: {
