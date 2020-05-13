@@ -27,6 +27,7 @@ getBattleInfo () {
   let actors = document.getElementById('battleInfo').innerText
   let winner = document.getElementById('champName').innerText
   actors = JSON.parse(actors)
+  console.log(actors)
   this.setState({
     actors: actors,
     winner: winner

@@ -244,7 +244,7 @@ padding: 10px;
 }
 
 .gameDiv{
-  /* margin-top: 20px; */
+  margin-top: 20px;
   height: 788px;
   /* width: 980px; */
   border: 10px solid rgb(5, 5, 153);
@@ -334,8 +334,8 @@ font-family: alagard;
 .brMainContainer{
   background-image: url('endTitle.png');
   margin: 0 auto;
-  height: 90%;
-  width: 90%
+  height: 90vh;
+  width: 100vw
 }
 
 .brPanel{
@@ -402,10 +402,11 @@ font-family: alagard;
   }
 
 .brButtonBlock{
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: .5%;
+  /* padding-top: .5%; */
   }
 
 .brButton{
@@ -483,7 +484,7 @@ font-family: alagard;
 
 .endgame-container {
   height: 788px;
-  width: 980px;
+  width: 932px;
   position: absolute;
   margin-top: 20px;
   background-color: rgba(0, 0, 0, 0);

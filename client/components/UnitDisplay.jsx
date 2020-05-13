@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class UnitDisplay extends Component {
-  render() {
-    
+  render () {
     const unitType = this.props.type
     const name = this.props.name
     const survived = this.props.survived
@@ -21,11 +20,10 @@ class UnitDisplay extends Component {
       ' He was struck and has stepped through the black gate.',
       ' He was mortally wounded and left the world alone and screaming.',
       ' He took a cruel cut and healers have no hope left for him.',
-      ' He cracked under the strain and is now a broken man.',
+      ' He cracked under the strain and is now a broken man.'
     ]
 
-        
-    function randomPortrait(){
+    function randomPortrait () {
       let randomFloat = Math.random() * (3 - 1) + 1
       let randomInt = Math.round(randomFloat)
 
@@ -33,25 +31,24 @@ class UnitDisplay extends Component {
       return portraitSrc
     }
 
-
-    function skullySummon(){
+    function skullySummon () {
       let skullyState = (survived) ? 'visible' : 'hidden'
       return skullyState
     }
 
-    function battleStyle(){
+    function battleStyle () {
       switch (true) {
         case kills === 5:
-          style = ' became the God of Death and slew ' + kills + ' foes.';
+          style = ' became the God of Death and slew ' + kills + ' foes.'
           return style
         case kills === 4:
-          style = ' bathed in blood and slew ' + kills + ' foes.';
+          style = ' bathed in blood and slew ' + kills + ' foes.'
           return style
         case kills === 3:
-          style = " earned his Warrior's name by killing " + kills + ' foes.';
+          style = " earned his Warrior's name by killing " + kills + ' foes.'
           return style
         case kills === 2:
-          style = ' fought valliantly and put ' + kills + ' foes into the mud.';
+          style = ' fought valliantly and put ' + kills + ' foes into the mud.'
           return style
         case kills === 1:
           style = ' held his own and killed ' + kills + ' enemy warrior.'
@@ -61,26 +58,26 @@ class UnitDisplay extends Component {
           return style
       }
     }
-     
-    function currentStateGenerator(){
-      //assign random array key based on result
+
+    function currentStateGenerator () {
+      // assign random array key based on result
       let min = (!survived) ? 0 : 4
       let max = (!survived) ? 5 : 9
-      
+
       let stateIndexFloat = Math.random() * (max - min) + min
       var stateIndexInt = Math.round(stateIndexFloat)
       let currentStateText = currentState[stateIndexInt]
       return currentStateText
     }
-    
+
     return (
       <div className='udUnitContainer'>
         <div className='udImageContainer'>
           <div className='udImageRondel'>
             <div className='skullyBox'>
-              <img className='skully' style={{visibility:skullySummon()}} src='images/portraits/deadFace.png' />
+              <img className='skully' style={{ visibility: skullySummon() }} src='images/portraits/deadFace.png' />
             </div>
-           <img className = 'udPortrait'src={randomPortrait()} />
+            <img className = 'udPortrait'src={randomPortrait()} />
           </div>
         </div>
         <div className='udTextHolder'>
@@ -88,11 +85,11 @@ class UnitDisplay extends Component {
             {name}
             {battleStyle()}
             {currentStateGenerator()}
-           </p>
+          </p>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default UnitDisplay;
+export default UnitDisplay
