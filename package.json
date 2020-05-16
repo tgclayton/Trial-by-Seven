@@ -1,10 +1,10 @@
 {
-  "name": "boilerplate-react-webpack",
+  "name": "trial-by-seven",
   "version": "0.2.2",
   "description": "A webpack React starter",
   "repository": "https://github.com/dev-academy-challenges/boilerplate-react-webpack.git",
   "main": "server/index.js",
-  "author": "EDA",
+  "author": "Tom, Alicia, MattK, Stan, Karel",
   "license": "ISC",
   "scripts": {
     "client": "webpack-dev-server --hot --inline",
