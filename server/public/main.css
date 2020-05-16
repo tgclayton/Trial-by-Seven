@@ -336,6 +336,10 @@ font-family: alagard;
 .brMainContainer{
   background-image: url('endTitle.png');
   margin: 0 auto;
+  height: 90%;
+  width: 90%;
+  height: 90vh;
+  width: 100vw;
   height: 90vh;
   width: 100vw
 }
@@ -360,6 +364,8 @@ font-family: alagard;
   height: 15%;
   padding-top:1%;
   margin-bottom: 1%;
+  padding-right: 2%;
+  padding-left: 2%;
   font-family: alagard;
   font-size: 450%;
   color: #FEAD01;
@@ -408,7 +414,7 @@ font-family: alagard;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding-top: .5%; */
+  margin-top: 13%;
   }
 
 .brButton{
@@ -479,7 +485,7 @@ font-family: alagard;
 
 .skully{
   position: absolute;
-  width: 2.5%;
+  width: 10px;
   transform: translateY(5%);
  }
 
