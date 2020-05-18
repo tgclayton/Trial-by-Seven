@@ -115,7 +115,7 @@ function create () {
   })
   cursor.setPosition(actors[0].units[0].x, actors[0].units[0].y)
   // cursor.setPosition(0, 0)
-  setIndex(cursor)
+  setTargetData(cursor)
   // console.log(actors)
 }
 
@@ -305,22 +305,21 @@ function setfixedMovement (val, axis) {
         newTarget.setData('notMoving', true)
       }, 300)
       // console.log('target is:', target)
-      setIndex(target)
+      setTargetData(target)
     })
   }
 }
 
-function setIndex (target) {
-  // console.log(target.x, target.y)
+function setXY (target) {
+  let targetObj = determineTargetType(target)
   let x
   let y
-  if (target !== cursor) {
-    x = target.physObj.x / 48
-    y = (target.physObj.y / 48) * 19
-  } else {
-    x = cursor.x / 48
-    y = (cursor.y / 48) * 19
-  }
+  x = targetObj.x / 48
+  y = (targetObj.y / 48) * 19
+  return [x, y]
+}
+
+function adjustForEdgeOverrun (x, y) {
   if (x > 18) {
     x = 18
   } else if (x < 0) {
@@ -331,26 +330,46 @@ function setIndex (target) {
   } else if (y < 0) {
     y = 0
   }
+  return [x, y]
+}
+
+function determineTargetType (target) {
+  if (target !== cursor) {
+    return target.physObj
+  } else {
+    return cursor
+  }
+}
+
+function updateUnitInfo (target, x, y) {
+  champAction.innerText = `Actions: ${target.actions}`
+  if (target.actions < 1) {
+    target.status.setTexture('done')
+    info.innerText = 'Unit has run out of actions'
+    selectUnit()
+  }
+  map[target.idx].occupied = false
+  map[target.idx].occupant = null
+  map[target.idx].occupantTeam = null
+  target.idx = x + y
+  x = x * 48
+  y = (y / 19) * 48
+  target.x = x
+  target.y = y
+  map[target.idx].occupied = true
+  map[target.idx].occupant = target.name
+  map[target.idx].occupantTeam = target.teamName
+}
+
+function setTargetData (target) {
+  let xyArr = setXY(target)
+  xyArr = adjustForEdgeOverrun(xyArr[0], xyArr[1])
+  let x = xyArr[0]
+  let y = xyArr[1]
   if (target === cursor) {
     cursor.setData('idx', x + y)
   } else {
-    champAction.innerText = `Actions: ${target.actions}`
-    if (target.actions < 1) {
-      target.status.setTexture('done')
-      info.innerText = 'Unit has run out of actions'
-      selectUnit()
-    }
-    map[target.idx].occupied = false
-    map[target.idx].occupant = null
-    map[target.idx].occupantTeam = null
-    target.idx = x + y
-    x = x * 48
-    y = (y / 19) * 48
-    target.x = x
-    target.y = y
-    map[target.idx].occupied = true
-    map[target.idx].occupant = target.name
-    map[target.idx].occupantTeam = target.teamName
+    updateUnitInfo(target, x, y)
   }
 }
 
@@ -358,7 +377,7 @@ function checkTile () {
   let idx = cursor.getData('idx')
   // let derCoords = getCoordsFromIndex(idx)
   // console.log('cursor coords are', cursor.x, cursor.y)
-  console.log('idx =', idx)
+  // console.log('idx =', idx)
   // console.log('derCoords:', derCoords)
   // console.log('index of derCoords:', getIndexFromCoords(derCoords))
   // console.log(' ')
@@ -414,7 +433,7 @@ function attackMode () {
     cursor.setTexture('bcursor')
     cursor.setPosition(selectedUnit.x, selectedUnit.y)
     targets.push(selectedUnit)
-    setIndex(cursor)
+    setTargetData(cursor)
   }
 }
 
@@ -508,7 +527,7 @@ function setDataWindow (target) {
 function endTurn () {
   let enemy = actors[getIdxOfInactiveTeam()].units.find(unit => unit.dead === false)
   cursor.setPosition(enemy.x, enemy.y)
-  setIndex(cursor)
+  setTargetData(cursor)
   restoreActions()
   setStatus()
   if (activeTeam === team1) {
