@@ -365,7 +365,6 @@ function updateUnitInfo (target, x, y) {
 }
 
 function setTargetData (target) {
-  clearPrevLocationInfo(target)
   let xyArr = setXY(target)
   xyArr = adjustForEdgeOverrun(xyArr[0], xyArr[1])
   let x = xyArr[0]
@@ -373,6 +372,7 @@ function setTargetData (target) {
   if (target === cursor) {
     cursor.setData('idx', x + y)
   } else {
+    clearPrevLocationInfo(target)
     updateUnitInfo(target, x, y)
   }
 }
@@ -545,6 +545,16 @@ function endTurn () {
   gameDiv.classList.toggle('red-border')
 }
 
+function cycleTeam () {
+  let idx = getIdxOfActiveTeam()
+  // console.log(idx)
+  let next = actors[idx].units.find(unit => unit.actions > 0)
+
+  cursor.setPosition(next.x, next.y)
+  setTargetData(cursor)
+  selectUnit()
+}
+
 function keyDown (e) {
   info.innerText = ''
   if (winner) {
@@ -602,6 +612,9 @@ function keyDown (e) {
         break
       case 'n':
         console.log(actors)
+        break
+      case 'b':
+        cycleTeam()
         break
     }
   }
