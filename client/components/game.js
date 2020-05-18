@@ -341,6 +341,12 @@ function determineTargetType (target) {
   }
 }
 
+function clearPrevLocationInfo (target) {
+  map[target.idx].occupied = false
+  map[target.idx].occupant = null
+  map[target.idx].occupantTeam = null
+}
+
 function updateUnitInfo (target, x, y) {
   champAction.innerText = `Actions: ${target.actions}`
   if (target.actions < 1) {
@@ -348,9 +354,6 @@ function updateUnitInfo (target, x, y) {
     info.innerText = 'Unit has run out of actions'
     selectUnit()
   }
-  map[target.idx].occupied = false
-  map[target.idx].occupant = null
-  map[target.idx].occupantTeam = null
   target.idx = x + y
   x = x * 48
   y = (y / 19) * 48
@@ -362,6 +365,7 @@ function updateUnitInfo (target, x, y) {
 }
 
 function setTargetData (target) {
+  clearPrevLocationInfo(target)
   let xyArr = setXY(target)
   xyArr = adjustForEdgeOverrun(xyArr[0], xyArr[1])
   let x = xyArr[0]
