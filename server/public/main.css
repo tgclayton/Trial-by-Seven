@@ -21,7 +21,10 @@ body {
   font-family: 'alagard'
 }
 
-
+.game-window {
+  border: 2px solid #FEAD01;
+  background-color: rgba(76, 17, 30, 0.938);
+}
 
 
 
