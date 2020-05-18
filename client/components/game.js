@@ -237,6 +237,7 @@ function checkDead (target) {
     map[target.idx].occupied = false
     map[target.idx].occupant = null
     map[target.idx].occupantTeam = null
+    target.idx = null
     target.physObj.destroy()
     selectedUnit.kills.push(target.name)
     info.innerText = `${target.name} was brutally murdered`
