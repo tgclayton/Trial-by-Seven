@@ -54,7 +54,7 @@ export const classes = {
     ammo: 5
   },
   spearman: {
-    damage: 10,
+    damage: 15,
     class: 'spearman',
     name: 'Lancer',
     sprite: 'spear',
@@ -62,7 +62,7 @@ export const classes = {
     health: 30
   },
   heavy: {
-    damage: 30,
+    damage: 20,
     class: 'heavy',
     name: 'Sentinel',
     sprite: 'heavy',
