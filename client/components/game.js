@@ -39,6 +39,7 @@ var champHealth
 var champAction
 var info
 var champPortrait
+var cycleIdx = 0
 // function getTeamNames(){
 
 // }
@@ -521,10 +522,18 @@ function endTurn () {
 }
 
 function cycleTeam () {
-  let idx = getIdxOfActiveTeam()
+  let teamIdx = getIdxOfActiveTeam()
+  if (cycleIdx === 4) {
+    cycleIdx = 0
+  }
   // console.log(idx)
-  let next = actors[idx].units.find(unit => unit.actions > 0)
-
+  let name = null
+  if (selectedUnit) {
+    name = selectedUnit.name
+    selectUnit()
+  }
+  let next = actors[teamIdx].units.find((unit, idx) => unit.actions > 0 && idx >= cycleIdx && unit.name !== name)
+  cycleIdx = actors[teamIdx].units.findIndex(unit => unit.name === next.name)
   cursor.setPosition(next.x, next.y)
   setTargetData(cursor)
   selectUnit()
