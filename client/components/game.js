@@ -364,6 +364,7 @@ function setTargetData (target) {
   let y = xyArr[1]
   if (target === cursor) {
     cursor.setData('idx', x + y)
+    checkTile()
   } else {
     clearPrevLocationInfo(target)
     updateUnitInfo(target, x, y)
@@ -388,8 +389,12 @@ function checkTile () {
     }
     let occupant = actors[teamIdx].units.filter(unit => unit.name === tile.occupant)
     setDataWindow(occupant[0])
+    if (tile.occupant === 'obstacle') {
+      info.innerText = 'Tile contains an obstacle'
+    }
   } else {
     info.innerText = 'Tile is empty'
+    setDataWindow()
   }
 }
 
