@@ -37,22 +37,12 @@ var champAttack
 var champHealth
 var champAction
 var info
-var restart = false
 var champPortrait
 // function getTeamNames(){
 
 // }
 
 function preload () {
-  if (restart) {
-    team1 = null
-    team2 = null
-    activeTeam = null
-    actors = null
-    map = null
-    restart = false
-  }
-  // setTimeout()
   team1 = document.getElementById('stupid-info-box1').innerText
   team2 = document.getElementById('stupid-info-box2').innerText
   // winInfo = document.getElementById('stupid-info-box3')
@@ -122,13 +112,13 @@ function create () {
 function update () {
 }
 
-function getCoordsFromIndex (idx) {
+export function getCoordsFromIndex (idx) {
   var x = (idx % 19) * 48
   var y = (Math.floor(idx / 19)) * 48
   return [x, y]
 }
 
-function getIndexFromCoords (coords) {
+export function getIndexFromCoords (coords) {
   let x = coords[0] / 48
   let y = (coords[1] / 48) * 19
   let idx = x + y
@@ -251,9 +241,9 @@ function setfixedMovement (val, axis) {
   let dest = findDest(cursor.getData('idx'), val, axis)
   if (aMode) {
     inRange = false
-    let neighbours = findNeighbours(selectedUnit.idx)
-    console.log(neighbours)
-    neighbours.forEach(n => {
+    let tilesInRange = selectedUnit.range()
+    console.log(tilesInRange)
+    tilesInRange.forEach(n => {
       if (n === dest) {
         inRange = true
       }
@@ -442,23 +432,6 @@ function attackMode () {
   }
 }
 
-function findNeighbours (idx) {
-  let neighbours = []
-  let attackerCoords = getCoordsFromIndex(idx)
-  console.log(attackerCoords)
-  for (let i = 0; i < 9; i++) {
-    if (i !== 4) {
-      let itX = (Math.floor(i / 3) - 1) * 48
-      let itY = ((i % 3) - 1) * 48
-      let newX = (attackerCoords[0] + itX)
-      let newY = (attackerCoords[1] + itY)
-      let neighbourIdx = getIndexFromCoords([newX, newY])
-      if (newX >= 0 && newX <= 864 && newY >= 0 && newY < 720) { neighbours.push(neighbourIdx) }
-    }
-  }
-  return neighbours
-}
-
 function changeCursorColor (context) {
   let sprite
   if (cursor.getData('sprite') === 'gcursor') {
@@ -616,6 +589,9 @@ function keyDown (e) {
         break
       case 'b':
         cycleTeam()
+        break
+      case 'y':
+        console.log(selectedUnit)
         break
     }
   }
