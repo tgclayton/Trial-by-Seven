@@ -19,16 +19,10 @@ export function melee (idx) {
 }
 
 export function spear () {
-  // let attackerCoords = getCoordsFromIndex(this.idx)
-  // console.log(this.idx)
   let neighbours = melee(this.idx)
-  let spearNeighbours = []
-  spearNeighbours.push((this.idx - width * 2))
-  spearNeighbours.push((this.idx - 2))
-  spearNeighbours.push((this.idx + width * 2))
-  spearNeighbours.push((this.idx + 2))
-  spearNeighboursforEach(tile => {
-  })
+  neighbours.push((this.idx - width * 2))
+  neighbours.push((this.idx - 2))
+  neighbours.push((this.idx + width * 2))
+  neighbours.push((this.idx + 2))
   return neighbours
-  // })
 }
