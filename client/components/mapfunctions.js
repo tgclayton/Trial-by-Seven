@@ -1,5 +1,5 @@
 import mapData from '../../server/public/assets/maps/finalmap.json'
-import { melee } from './combatFunctions'
+import { melee, spear } from './combatFunctions'
 var names = ['Euvrouin', 'Simond', 'Parsival', 'Leofrick', 'Garret', 'Uthbert', 'Ulfrik', 'Gauward', 'Grim', 'Thorvald', 'Roland', 'Nieles', 'Berrick', 'Harlaw', 'Ralf', 'Albrecht', 'Giliam', 'Aethelwulf', 'Brand', 'Bjorn', 'Helmaer', 'Aenfin', 'Lambert', 'Ardulf', 'Lany', 'Elwic', 'Ebehrt', 'Edric', 'Piersym', 'Georguy', 'Peregrine', 'Grewill']
 
 var portraitSelect = {
@@ -140,6 +140,9 @@ export function createActors (team1, team2) {
     unit.sprite = 'r' + unit.sprite
     unit.name = `${ranName} the ${unit.name}`
     unit.range = melee
+    if (unit.class === 'spearman') {
+      unit.range = spear
+    }
     idx = idx + 38
     unit.idx = idx
     unit.dead = false

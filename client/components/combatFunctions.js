@@ -1,8 +1,8 @@
-import { getCoordsFromIndex, getIndexFromCoords } from './game'
+import { getCoordsFromIndex, getIndexFromCoords, width } from './game'
 
-export function melee () {
+export function melee (idx) {
   let neighbours = []
-  let attackerCoords = getCoordsFromIndex(this.idx)
+  let attackerCoords = getCoordsFromIndex(idx)
   // console.log(attackerCoords)
   for (let i = 0; i < 9; i++) {
     if (i !== 4) {
@@ -14,6 +14,21 @@ export function melee () {
       if (newX >= 0 && newX <= 864 && newY >= 0 && newY < 720) { neighbours.push(neighbourIdx) }
     }
   }
-  console.log(neighbours)
+  // console.log(neighbours)
   return neighbours
+}
+
+export function spear () {
+  // let attackerCoords = getCoordsFromIndex(this.idx)
+  // console.log(this.idx)
+  let neighbours = melee(this.idx)
+  let spearNeighbours = []
+  spearNeighbours.push((this.idx - width * 2))
+  spearNeighbours.push((this.idx - 2))
+  spearNeighbours.push((this.idx + width * 2))
+  spearNeighbours.push((this.idx + 2))
+  spearNeighboursforEach(tile => {
+  })
+  return neighbours
+  // })
 }

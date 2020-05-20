@@ -18,7 +18,8 @@ export default {
     update: update
   }
 }
-
+export var height = 16
+export var width = 19
 var map
 var keyPressed
 var actors
@@ -241,8 +242,8 @@ function setfixedMovement (val, axis) {
   let dest = findDest(cursor.getData('idx'), val, axis)
   if (aMode) {
     inRange = false
-    let tilesInRange = selectedUnit.range()
-    console.log(tilesInRange)
+    let tilesInRange = selectedUnit.range(selectedUnit.idx)
+    // console.log(tilesInRange)
     tilesInRange.forEach(n => {
       if (n === dest) {
         inRange = true
