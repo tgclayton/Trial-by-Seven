@@ -168,7 +168,10 @@ function checkDestOccupant (dest) {
 
 function attack (dest) {
   if (selectedUnit.actions > 0) {
-    if (map[dest].occupantTeam === activeTeam) {
+    if (map[dest].occupant === selectedUnit.name) {
+      info.innerText = 'Attacking yourself is an unhealthy life choice'
+    } else if (map[dest].occupantTeam === activeTeam) {
+
       info.innerText = 'Probably shouldnt try to mutilate this poor chap'
     } else {
       let idx = getIdxOfActiveTeam()
