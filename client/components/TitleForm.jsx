@@ -68,10 +68,9 @@ class TitleForm extends React.Component {
                   <button className='brButton alagard-text'>Fight!</button>
                 </ Link>
               </div>
-              {/* <Link to='/game'>Temporary Link to Report</Link> */}
             </Form>
           </div>
-
+          <div className = "blocking-box"></div>
         </div>
       </div>
     )
