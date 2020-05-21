@@ -8,8 +8,8 @@ class TitleForm extends React.Component {
     super(props)
 
     this.state = {
-      playerOne: '',
-      playerTwo: ''
+      playerOne: null,
+      playerTwo: null
     }
 
     this.submitHandler = this.submitHandler.bind(this)
@@ -36,6 +36,10 @@ class TitleForm extends React.Component {
   }
 
   render () {
+    if (this.state.playerOne && this.state.playerTwo) {
+      let box = document.getElementById('fight-button-block')
+      box.classList.toggle('hidden')
+    }
     return (
       <div className="formContainerDiv alagard-text">
         <div className="formBodyBorder alagard-text">
@@ -70,7 +74,7 @@ class TitleForm extends React.Component {
               </div>
             </Form>
           </div>
-          <div className = "blocking-box"></div>
+          <div id = 'fight-button-block' className = "blocking-box"></div>
         </div>
       </div>
     )
