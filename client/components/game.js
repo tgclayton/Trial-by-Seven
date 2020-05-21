@@ -202,9 +202,6 @@ function endGame () {
   winBox.classList.toggle('hidden')
   let endRes = document.getElementById('endRes')
   endRes.innerText = `Game over, winner is ${activeTeam}`
-  // let game = document.getElementById('gameDiv')
-  // game.classList.toggle('invis')
-  restart = true
 }
 
 function checkGameOver () {
@@ -588,7 +585,11 @@ function keyDown (e) {
         console.log(map)
         break
       case 'q': // enter attack mode
-        attackMode()
+        if (selectedUnit.actions > 2) {
+          attackMode()
+        } else {
+          info.innerText = 'Unit does not have enough actions to attack'
+        }
         break
       case 'r': //  fire attack
         if (aMode) {
