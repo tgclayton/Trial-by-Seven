@@ -160,7 +160,9 @@ function checkDestOccupant (dest) {
     info.innerText = 'You cannot move through this obstacle'
     return false
   } else {
-    attack(dest)
+    if (selectedUnit.actions >= 2) {
+      attack(dest)
+    }
   }
 }
 
@@ -585,15 +587,13 @@ function keyDown (e) {
         console.log(map)
         break
       case 'q': // enter attack mode
-        if (selectedUnit.actions > 2) {
-          attackMode()
-        } else {
-          info.innerText = 'Unit does not have enough actions to attack'
-        }
+        attackMode()
         break
       case 'r': //  fire attack
-        if (aMode) {
+        if (aMode && selectedUnit.actions >= 2) {
           attack(cursor.getData('idx'))
+        } else {
+          info.innerText = 'Unit does not have enough actions to attack'
         }
         break
       case 'o':
