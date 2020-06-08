@@ -17,22 +17,22 @@ var team1Units = ['swordsman', 'heavy', 'swordsman', 'scout', 'spearman']
 var team2Units = ['scout', 'scout', 'swordsman', 'spearman', 'heavy']
 const actors = [{ name: team1Name, units: [] }, { name: team2Name, units: [] }]
 
-export function nameFinder1 () {
-  // request.get('/api/v1/players')
-  // .then(res => {
-  //  return team1Name = res.body.player[0].playerOne
-  // })
-  return 'team2'
-}
+// export function nameFinder1 () {
+//   // request.get('/api/v1/players')
+//   // .then(res => {
+//   //  return team1Name = res.body.player[0].playerOne
+//   // })
+//   return 'team2'
+// }
 
-export function nameFinder2 () {
-  // request.get('/api/v1/players')
-  // .then(res => {
-  //   team2Name = res.body.player[0].playerTwo
-  //   return team2Name
-  // })
-  return 'team1'
-}
+// export function nameFinder2 () {
+//   // request.get('/api/v1/players')
+//   // .then(res => {
+//   //   team2Name = res.body.player[0].playerTwo
+//   //   return team2Name
+//   // })
+//   return 'team1'
+// }
 
 export const classes = {
   scout: {
@@ -45,7 +45,6 @@ export const classes = {
   },
   archer: {
     damage: 10,
-
     class: 'archer',
     name: 'Archer',
     sprite: 'archer',
@@ -121,6 +120,10 @@ function getPortrait (type) {
   return portraitSrc
 }
 
+export function createActors2 (team1, team2) {
+let idx = 19
+}
+
 export function createActors (team1, team2) {
   var actorArr = actors
   let idx = 19
@@ -131,6 +134,7 @@ export function createActors (team1, team2) {
   let unit = []
   let current
   let ranName
+
   for (let i = 0; i < teamSize; i++) {
     current = team1Units[i]
     unit = JSON.parse(JSON.stringify(classes[current]))

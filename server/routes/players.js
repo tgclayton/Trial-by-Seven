@@ -10,27 +10,27 @@ router.get('/players', (req, res) => {
     .then(player => {
       res.json({
         player
-      }) 
+      })
     })
 })
 
-//POST /players
+// POST /players
 router.post('/players', (req, res) => {
   // console.log('players.js')
   db.addPlayer(req.body)
-  .then(() => {
-    res.status(201).send()
+    .then(() => {
+      res.status(201).send()
     })
-  .catch(err => {
-    res.status(500).send('DATABASE ERROR: ' + err.message)
+    .catch(err => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
 // router.post('/', (req,res) => {
-//   // let name = req.body.player_name 
+//   // let name = req.body.player_name
 //   let name = 'my gosh' //works
 //   console.log(req.body) //empty {}
-  
+
 //   return db.addPlayer(name)
 //     .then(() => {
 //       res.json({ player_name: name })
@@ -39,7 +39,3 @@ router.post('/players', (req, res) => {
 //       res.status(500).send('DATABASE ERROR: ' + err.message)
 //     })
 // })
-
-
-
-
