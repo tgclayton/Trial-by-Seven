@@ -121,7 +121,7 @@ function getPortrait (type) {
 }
 
 export function createActors2 (team1, team2) {
-let idx = 19
+  let idx = 19
 }
 
 export function createActors (team1, team2) {
