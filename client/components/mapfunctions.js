@@ -38,16 +38,16 @@ export const classes = {
   scout: {
     damage: 10,
     class: 'scout',
-    name: 'Scout',
-    sprite: 'scout',
+    // name: 'Scout',
+    spriteType: 'scout',
     actions: 8,
     health: 20
   },
   archer: {
     damage: 10,
     class: 'archer',
-    name: 'Archer',
-    sprite: 'archer',
+    // name: 'Archer',
+    spriteType: 'archer',
     actions: 5,
     health: 10,
     ammo: 5
@@ -55,24 +55,24 @@ export const classes = {
   spearman: {
     damage: 15,
     class: 'spearman',
-    name: 'Lancer',
-    sprite: 'spear',
+    // name: 'Lancer',
+    spriteType: 'spear',
     actions: 6,
     health: 30
   },
   heavy: {
     damage: 20,
     class: 'heavy',
-    name: 'Sentinel',
-    sprite: 'heavy',
+    // name: 'Sentinel',
+    spriteType: 'heavy',
     actions: 5,
     health: 50
   },
   swordsman: {
     damage: 25,
     class: 'swordsman',
-    name: 'Swordsman',
-    sprite: '2hand',
+    // name: 'Swordsman',
+    spriteType: '2hand',
     actions: 6,
     health: 40
   }
@@ -120,53 +120,83 @@ function getPortrait (type) {
   return portraitSrc
 }
 
-export function createActors2 (team1, team2) {
-  let idx = 19
+function capitalise (name) {
+  let first = name.charAt(0)
+  first = first.toUpperCase()
+  name = name.slice(1, name.length)
+  return first + name
+}
+
+function createTeam (units, idx, team, letter, names) {
+  const unitArr = units.map(unit => {
+    const ranName = names[Math.floor(Math.random() * names.length)]
+    names = names.filter(name => name !== ranName)
+    let newUnit = {
+      teamName: team,
+      sprite: letter + classes[unit].spriteType,
+      name: `${ranName} the ${capitalise(unit)}`,
+      'range': (classes[unit].class === 'spearman') ? spear : melee,
+      idx: idx,
+      dead: false,
+      kills: [],
+      portrait: getPortrait(unit)
+    }
+    idx += 38
+    Object.assign(newUnit, classes[unit])
+    return newUnit
+  })
+  return unitArr
 }
 
 export function createActors (team1, team2) {
-  var actorArr = actors
-  let idx = 19
-  // let team1 = actorArr[0].name
-  // let team2 = actorArr[1].name
-  actorArr[0].name = team1
-  actorArr[1].name = team2
-  let unit = []
-  let current
-  let ranName
-
-  for (let i = 0; i < teamSize; i++) {
-    current = team1Units[i]
-    unit = JSON.parse(JSON.stringify(classes[current]))
-    ranName = names[Math.floor(Math.random() * names.length)]
-    names = names.filter(name => name !== ranName)
-    unit.teamName = team1
-    unit.sprite = 'r' + unit.sprite
-    unit.name = `${ranName} the ${unit.name}`
-    unit.range = melee
-    if (unit.class === 'spearman') {
-      unit.range = spear
-    }
-    idx = idx + 38
-    unit.idx = idx
-    unit.dead = false
-    unit.kills = []
-    unit.portrait = getPortrait(unit.class)
-    actorArr[0].units.push(unit)
-
-    current = team2Units[i]
-    unit = JSON.parse(JSON.stringify(classes[current]))
-    ranName = names[Math.floor(Math.random() * names.length)]
-    names = names.filter(name => name !== ranName)
-    unit.range = melee
-    unit.teamName = team2
-    unit.name = `${ranName} the ${unit.name}`
-    unit.sprite = 'l' + unit.sprite
-    unit.idx = idx + 18
-    unit.portrait = getPortrait(unit.class)
-    unit.dead = false
-    unit.kills = []
-    actorArr[1].units.push(unit)
-  }
-  return actorArr
+  let team1Arr = createTeam(team1Units, 57, team1, 'r', names)
+  let team2Arr = createTeam(team2Units, 75, team2, 'l', names)
+  return [{ name: team1, units: team1Arr }, { name: team2, units: team2Arr }]
 }
+
+// export function createActors (team1, team2) {
+//   var actorArr = actors
+//   let idx = 19
+//   // let team1 = actorArr[0].name
+//   // let team2 = actorArr[1].name
+//   actorArr[0].name = team1
+//   actorArr[1].name = team2
+//   let unit = []
+//   let current
+//   let ranName
+
+//   for (let i = 0; i < teamSize; i++) {
+//     current = team1Units[i]
+//     unit = JSON.parse(JSON.stringify(classes[current]))
+//     ranName = names[Math.floor(Math.random() * names.length)]
+//     names = names.filter(name => name !== ranName)
+//     unit.teamName = team1
+//     unit.sprite = 'r' + unit.sprite
+//     unit.name = `${ranName} the ${unit.name}`
+//     unit.range = melee
+//     if (unit.class === 'spearman') {
+//       unit.range = spear
+//     }
+//     idx = idx + 38
+//     unit.idx = idx
+//     unit.dead = false
+//     unit.kills = []
+//     unit.portrait = getPortrait(unit.class)
+//     actorArr[0].units.push(unit)
+
+//     current = team2Units[i]
+//     unit = JSON.parse(JSON.stringify(classes[current]))
+//     ranName = names[Math.floor(Math.random() * names.length)]
+//     names = names.filter(name => name !== ranName)
+//     unit.range = melee
+//     unit.teamName = team2
+//     unit.name = `${ranName} the ${unit.name}`
+//     unit.sprite = 'l' + unit.sprite
+//     unit.idx = idx + 18
+//     unit.portrait = getPortrait(unit.class)
+//     unit.dead = false
+//     unit.kills = []
+//     actorArr[1].units.push(unit)
+//   }
+//   return actorArr
+// }
