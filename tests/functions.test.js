@@ -41,16 +41,16 @@ export const classes = {
   scout: {
     damage: 10,
     class: 'scout',
-    name: 'Scout',
-    sprite: 'scout',
+    className: 'Scout',
+    spriteType: 'scout',
     actions: 8,
     health: 20
   },
   archer: {
     damage: 10,
     class: 'archer',
-    name: 'Archer',
-    sprite: 'archer',
+    className: 'Archer',
+    spriteType: 'archer',
     actions: 5,
     health: 10,
     ammo: 5
@@ -58,66 +58,53 @@ export const classes = {
   spearman: {
     damage: 15,
     class: 'spearman',
-    name: 'Lancer',
-    sprite: 'spear',
+    className: 'Lancer',
+    spriteType: 'spear',
     actions: 6,
     health: 30
   },
   heavy: {
     damage: 20,
     class: 'heavy',
-    name: 'Sentinel',
-    sprite: 'heavy',
+    className: 'Sentinel',
+    spriteType: 'heavy',
     actions: 5,
     health: 50
   },
   swordsman: {
     damage: 25,
     class: 'swordsman',
-    name: 'Swordsman',
-    sprite: '2hand',
+    className: 'Swordsman',
+    spriteType: '2hand',
     actions: 6,
     health: 40
   }
 }
 
-function createActors2 (team1, team2) {
-  let idx1 = 19
-  let idx2 = 38
-  const team1Arr = team1Units.map(unit => {
-    idx1 += 38
+function createTeam (units, idx, team, letter, names) {
+  const unitArr = units.map(unit => {
     const ranName = names[Math.floor(Math.random() * names.length)]
     names = names.filter(name => name !== ranName)
     let newUnit = {
-      teamName: team1,
-      sprite: 'r' + unit.sprite,
-      name: `${ranName} the ${unit.name}`,
-      'range': (unit.class === 'spearman') ? spear : melee,
-      idx: idx1,
+      teamName: team,
+      sprite: letter + classes[unit].spriteType,
+      name: `${ranName} the ${classes[unit].className}`,
+      'range': (classes[unit].class === 'spearman') ? spear : melee,
+      idx: idx,
       dead: false,
       kills: [],
       portrait: getPortrait(unit)
     }
+    idx += 38
     Object.assign(newUnit, classes[unit])
     return newUnit
   })
-  const team2Arr = team2Units.map(unit => {
-    idx2 += 38
-    const ranName = names[Math.floor(Math.random() * names.length)]
-    names = names.filter(name => name !== ranName)
-    let newUnit = {
-      teamName: team1,
-      sprite: 'r' + unit.sprite,
-      name: `${ranName} the ${unit.name}`,
-      'range': (unit.class === 'spearman') ? spear : melee,
-      idx: idx2,
-      dead: false,
-      kills: [],
-      portrait: getPortrait(unit.class)
-    }
-    Object.assign(newUnit, classes[unit])
-    return newUnit
-  })
+  return unitArr
+}
+
+function createActors2 (team1, team2) {
+  let team1Arr = createTeam(team1Units, 57, team1, 'l', names)
+  let team2Arr = createTeam(team2Units, 75, team2, 'r', names)
   return [{ name: team1, units: team1Arr }, { name: team2, units: team2Arr }]
 }
 
